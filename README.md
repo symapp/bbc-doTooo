@@ -4,9 +4,9 @@ Eine Dokumentationsvorlage mit den minimalen Anforderungen.
 
 ## Projektmitarbeiter
 
-* [Levin Zehnder](https://git.bbcag.ch/bzehnl) (Scrum Master, Product Owner, Team Member)
-* [Mattia Gisiger](https://git.bbcag.ch/bgisim) (Product Owner, Team Member)
-* [Simao Dias Almeida](https://git.bbcag.ch//bdiass) (Product Owner, Team Member)
+* [Levin Zehnder](https://git.bbcag.ch/bzehnl) (Projektleiter)
+* [Mattia Gisiger](https://git.bbcag.ch/bgisim)
+* [Simao Dias Almeida](https://git.bbcag.ch//bdiass)
 
 ## Dokumentation
 
