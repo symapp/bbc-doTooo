@@ -29,6 +29,33 @@ Eine Simple ToDo-App, um zu erledigende Aufgaben zu organisieren. Man kann Aufga
 > *Als \<Rolle\> möchte ich \<Ziel/Wunsch\>, um \<Nutzen\>.*
 
 
+|Rolle   |Ziel   |Nutzen   |   |
+|---|---|---|---|
+|Als Benutzer   |möchte ich alle ToDo's angezeigt bekommen,   |um eine Übersicht zu haben   |Die ToDo's werden minimalistisch aufgelistet   |
+|Als Benutzer   |möchte ich die Details eines Todo's sehen   |um mehr Informationen zu sehen   |Alle Informationen des ToDo's wird ohne zu scrollen vollständig angezeigt   |
+|Als Benutzer   |möchte ich ToDo's erstellen können   |   |auf einer Erstellseite   |
+|Als Benutzer   |möchte ich ToDo's löschen können   |   |Per knopfdruck auf der Detailseite   |
+|Als Benutzer   |möchte ich ToDo's editieren können   |   |Auf einer Editierseite, die bestehenden Daten des ToDo's werden geladen   |
+|Als Benutzer   |möchte ich ToDo's suchen können    |um nur die gewünschten Todo's angezeigt zu bekommen   |über ein Suchsymbol kann man per Eingabe nach einem Begriff suchen   |
+|Als Benutzer   |möchte ich ToDo's filtern können   |um nur die gewünschten Todo's angezeigt zu bekommen   |über ein Filtersymbol kann man filtern   |
+|Als Benutzer   |möchte ich ein ToDo als erledigt kennzeichnen   |   |mit einer Swipe Geste   |
+
+
+
+
+
+
+Als Benutzer	möchte ich alle ToDo's angezeigt bekommen,	um eine Übersicht zu haben	Die ToDo's werden minimalistisch aufgelistet
+Als Benutzer	möchte ich die Details eines Todo's sehen	um mehr Informationen zu sehen	Alle Informationen des ToDo's wird ohne zu scrollen vollständig angezeigt
+Als Benutzer	möchte ich ToDo's erstellen können		auf einer Erstellseite
+Als Benutzer	möchte ich ToDo's löschen können		Per knopfdruck auf der Detailseite
+Als Benutzer	möchte ich ToDo's editieren können		Auf einer Editierseite, die bestehenden Daten des ToDo's werden geladen
+Als Benutzer	möchte ich ToDo's suchen können 	um nur die gewünschten Todo's angezeigt zu bekommen	über ein Suchsymbol kann man per Eingabe nach einem Begriff suchen
+Als Benutzer	möchte ich ToDo's filtern können	um nur die gewünschten Todo's angezeigt zu bekommen	über ein Filtersymbol kann man filtern
+Als Benutzer	möchte ich ein ToDo als erledigt kennzeichnen		mit einer Swipe Geste
+
+
+
 # 4 Mockups und App Struktur
 
 ![App Struktur Beispiel](images/app-structure-doc-temp.png)
