@@ -1,4 +1,4 @@
-# ***App-/Projektname***
+# DoTooo
 > *Alles was schräg geschrieben ist und/oder mit einem > als Quote steht wird mit euren Texten ersetzt!*  
 > *Den vorhandenen Text löschen.*  
 > *Mindestens die bestehenden Überschriften müssen vorhanden sein. Es kann jedoch immer noch erwetert werden je nach Projekt.*  
@@ -7,16 +7,18 @@
 
 ## Inhalt
 
-* [1 Abstract (Kurzbeschreibung)](#1-abstract-kurzbeschreibung)
-* [2 Konkurrenzanalyse](#2-konkurrenzanalyse)
-* [3 User Storys](#3-user-storys)
-* [4 Mockups und App Struktur](#4-mockups-und-app-struktur)
-* [5 Technische Realisierung](#5-technische-realisierung)
-* [6 Fazit](#6-fazit)
+- [DoTooo](#dotooo)
+  - [Inhalt](#inhalt)
+- [1 Abstract (Kurzbeschreibung)](#1-abstract-kurzbeschreibung)
+- [2 Konkurrenzanalyse](#2-konkurrenzanalyse)
+- [3 User Storys](#3-user-storys)
+- [4 Mockups und App Struktur](#4-mockups-und-app-struktur)
+- [5 Technische Realisierung](#5-technische-realisierung)
+- [6 Fazit](#6-fazit)
 
 # 1 Abstract (Kurzbeschreibung)
 
-> *An dieser Stelle kommt eine kurze Einführung, die in 5-10 Sätzen das Projekt beschreibt.*
+Eine Simple ToDo-App, um zu erledigende Aufgaben zu organisieren. Man kann Aufgaben erstellen, ansehen und als erledigt markieren. Auf der Startseite werden alle Aufgaben in einer Liste dargestellt. In der Menuleiste ist eine Lupe zu sehen mit welcher man nach Aufgaben suchen kann. Neben der Lupe ist ein Meatballmenu zu sehen, bei welchem man Filter einstellen kann. Durch einen FloatingButton am unteren rechten Rand der App, gelangt man zum Screen, auf welchem man eine neue Aufgabe erstellen kann. Mit einem Klick auf ein Listenelement gelangt man zur Detailseite der jeweiligen Aufgabe. Auf der Detailseite kann man eine Aufgabe als erledigt markieren, editieren, löschen und die Detailbeschreibung der Aufgabe sehen. Um die Aufgaben nach Wichtigkeit zu sortieren, kann man einer Aufgabe eine Farbe zuweisen. Zudem kann einer Aufgabe eine Zeit zugewiesen werden.
 
 # 2 Konkurrenzanalyse
 

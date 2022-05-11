@@ -12,7 +12,8 @@
 * 
 
 ## Daily Scrum
-> Zu welcher Zeit wird jeweils das Daily Scrum Meeting gehalten.
+
+9:00 am
 
 *Im Homeoffice werden die Dailys im Channel des Projektteams gehalten!*
 
@@ -28,4 +29,5 @@
 3. Von anderen Benutzer getestet
 
 ## Codestyle
-> Wie soll der Code formatiert sein?
+
+Autoformating Funktion von Android Studio
