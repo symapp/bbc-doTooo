@@ -1,6 +1,4 @@
-# Documentation template
-
-Eine Dokumentationsvorlage mit den minimalen Anforderungen.
+# DoTooo
 
 ## Projektmitarbeiter
 
