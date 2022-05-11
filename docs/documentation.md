@@ -24,6 +24,29 @@ Eine Simple ToDo-App, um zu erledigende Aufgaben zu organisieren. Man kann Aufga
 
 > *Konkurrenzanalyse des Auftrages.*
 
+Konkurrenz-Apps: Microsoft ToDo's (https://play.google.com/store/apps/details?id=com.microsoft.todos&hl=de_CH&gl=US)
+                 Google Tasks (https://play.google.com/store/apps/details?id=com.google.android.apps.tasks&hl=de_CH&gl=US) 
+
+
+Was macht die Konkurrenz gut:
+- Modernes, übersichtliches Design und einfache Bedienung
+- App ist allgemein einfach und zweckdienlich gehalten
+- Kompabilität mit anderen Produkten des Anbieters (z.B. Google Kalender)
+- Viele verschiedene Funktionalitäten
+- Plattformübergreifend/Geräteübergreifend
+- Viele Anpassungsmöglichkeiten
+- Kostenfrei
+ 
+Was macht die Konkurrenz schlecht:
+- Nicht vertraulicher Umgang mit Daten
+- Anmeldung/Registrierung erforderlich
+
+Wie können wir uns von der Konkurrenz abheben: 
+- Klar signalisierter Umgang mit User-Daten
+- anderes Design
+
+
+
 # 3 User Storys
 
 > *Als \<Rolle\> möchte ich \<Ziel/Wunsch\>, um \<Nutzen\>.*
@@ -45,14 +68,6 @@ Eine Simple ToDo-App, um zu erledigende Aufgaben zu organisieren. Man kann Aufga
 
 
 
-Als Benutzer	möchte ich alle ToDo's angezeigt bekommen,	um eine Übersicht zu haben	Die ToDo's werden minimalistisch aufgelistet
-Als Benutzer	möchte ich die Details eines Todo's sehen	um mehr Informationen zu sehen	Alle Informationen des ToDo's wird ohne zu scrollen vollständig angezeigt
-Als Benutzer	möchte ich ToDo's erstellen können		auf einer Erstellseite
-Als Benutzer	möchte ich ToDo's löschen können		Per knopfdruck auf der Detailseite
-Als Benutzer	möchte ich ToDo's editieren können		Auf einer Editierseite, die bestehenden Daten des ToDo's werden geladen
-Als Benutzer	möchte ich ToDo's suchen können 	um nur die gewünschten Todo's angezeigt zu bekommen	über ein Suchsymbol kann man per Eingabe nach einem Begriff suchen
-Als Benutzer	möchte ich ToDo's filtern können	um nur die gewünschten Todo's angezeigt zu bekommen	über ein Filtersymbol kann man filtern
-Als Benutzer	möchte ich ein ToDo als erledigt kennzeichnen		mit einer Swipe Geste
 
 
 
