@@ -13,11 +13,7 @@
 
 ## Daily Scrum
 
-9:00 am
-
-*Im Homeoffice werden die Dailys im Channel des Projektteams gehalten!*
-
-*z.B. 08h37*
+9:00 (Mittwoch, Donnerstag und Freitag)
 
 ## Definition of Done
 
