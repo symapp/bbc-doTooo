@@ -9,16 +9,12 @@
 ## Dokumentation
 
 * [Dokumentation](docs/documentation.md)
-* 
 
 ## Daily Scrum
 
 9:00 (Mittwoch, Donnerstag und Freitag)
 
 ## Definition of Done
-
-> Hier definiert das Team ab wann ein Issue geclosed werden kann.  
-> Mindestens folgende drei müssen vorhanden sein:
 
 1. Die Userstory ist angemessen dokumentiert
 2. Testprotokolle vorhanden aud ausgefüllt
