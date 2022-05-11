@@ -15,9 +15,6 @@
 
 9:00 am
 
-*Im Homeoffice werden die Dailys im Channel des Projektteams gehalten!*
-
-*z.B. 08h37*
 
 ## Definition of Done
 
