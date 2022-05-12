@@ -9,15 +9,16 @@
 ## Inhalt
 
 - [DoTooo](#dotooo)
-    - [Inhalt](#inhalt)
-- [1 Abstract (Kurzbeschreibung)](#1-abstract-kurzbeschreibung)
-- [2 Konkurrenzanalyse](#2-konkurrenzanalyse)
-- [3 User Storys](#3-user-storys)
-- [4 Mockups und App Struktur](#4-mockups-und-app-struktur)
-- [5 Technische Realisierung](#5-technische-realisierung)
-- [6 Fazit](#6-fazit)
+  - [Inhalt](#inhalt)
+  - [1 Abstract (Kurzbeschreibung)](#1-abstract-kurzbeschreibung)
+  - [2 Konkurrenzanalyse](#2-konkurrenzanalyse)
+  - [3 User Storys](#3-user-storys)
+  - [Optional](#optional)
+  - [4 Mockups und App Struktur](#4-mockups-und-app-struktur)
+  - [5 Technische Realisierung](#5-technische-realisierung)
+  - [6 Fazit](#6-fazit)
 
-# 1 Abstract (Kurzbeschreibung)
+## 1 Abstract (Kurzbeschreibung)
 
 Eine Simple ToDo-App, um zu erledigende Aufgaben zu organisieren. Man kann Aufgaben erstellen, ansehen und als erledigt
 markieren. Auf der Startseite werden alle Aufgaben in einer Liste dargestellt. In der Menuleiste ist eine Lupe zu sehen
@@ -28,7 +29,7 @@ Aufgabe. Auf der Detailseite kann man eine Aufgabe als erledigt markieren, editi
 der Aufgabe sehen. Um die Aufgaben nach Wichtigkeit zu sortieren, kann man einer Aufgabe eine Farbe zuweisen. Zudem kann
 einer Aufgabe eine Zeit zugewiesen werden.
 
-# 2 Konkurrenzanalyse
+## 2 Konkurrenzanalyse
 
 > *Konkurrenzanalyse des Auftrages.*
 
@@ -55,7 +56,7 @@ Wie können wir uns von der Konkurrenz abheben:
 
 
 
-# 3 User Storys
+## 3 User Storys
 
 | Rolle        | Ziel                                             | Nutzen                                              | Akzeptanzkriterien                                                                                                                |
 |--------------|--------------------------------------------------|-----------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------|
@@ -75,7 +76,7 @@ Wie können wir uns von der Konkurrenz abheben:
 | Als Benutzer | möchte ich ein ToDo in der Hauptseite als erledigt kennzeichnen können | um schneller zu sein                | Ein ToDo kann auch in der Hauptseite als erledigt markiert werden.                                          |
 | Als Benutzer | möchte ich ein ToDo direkt von der Hauptseite editieren                | um schneller beim Editieren zu sein | Von der Hauptseite aus kann man, ohne in die Detailseite navigieren zu müssen, in die Editierseite gelangen. |
 
-# 4 Mockups und App Struktur
+## 4 Mockups und App Struktur
 
 ![App Struktur Beispiel](images/app-structure-doc-temp.png)
 
@@ -96,11 +97,11 @@ Wie können wir uns von der Konkurrenz abheben:
 > ***5. Registration***   
 > ...
 
-# 5 Technische Realisierung
+## 5 Technische Realisierung
 
 > *Beschreibt hier, wie ihr eure komplexe Komponente technisch umgesetzt habt. Zur Darstellung der technischen Umsetzung wird ein UML-Diagramm empfohlen, welches zusätzlich in Textform beschrieben wird. Erklärt kurz die wichtigsten Klassen und Methoden und deren Zusammenspiel. Eine Fachperson, welche dieses Kapitel liest, sollte schnell nachvollziehen können, wie die externe Komponente realisiert wurde.*
 
-# 6 Fazit
+## 6 Fazit
 
 > *Hier kommt eure Reflexion zum Projekt*
 > * *Was lief gut/schlecht?*
