@@ -3,7 +3,6 @@
 > *Alles was schräg geschrieben ist und/oder mit einem > als Quote steht wird mit euren Texten ersetzt!*  
 > *Den vorhandenen Text löschen.*  
 > *Mindestens die bestehenden Überschriften müssen vorhanden sein. Es kann jedoch immer noch erwetert werden je nach Projekt.*
-
 > *Kann auch in einzelne Files ausgelagert werden und im **[Readme](README.md)** verlinkt werden.*
 
 ## Inhalt
@@ -33,11 +32,13 @@ einer Aufgabe eine Zeit zugewiesen werden.
 
 > *Konkurrenzanalyse des Auftrages.*
 
-Konkurrenz-Apps: Microsoft ToDo's (https://play.google.com/store/apps/details?id=com.microsoft.todos&hl=de_CH&gl=US)
-                 Google Tasks (https://play.google.com/store/apps/details?id=com.google.android.apps.tasks&hl=de_CH&gl=US) 
+Konkurrenz-Apps:
 
+- [Microsoft ToDo's](https://play.google.com/store/apps/details?id=com.microsoft.todos&hl=de_CH&gl=US)
+- [Google Tasks](https://play.google.com/store/apps/details?id=com.google.android.apps.tasks&hl=de_CH&gl=US)
 
 Was macht die Konkurrenz gut:
+
 - Modernes, übersichtliches Design und einfache Bedienung
 - App ist allgemein einfach und zweckdienlich gehalten
 - Kompabilität mit anderen Produkten des Anbieters (z.B. Google Kalender)
@@ -45,16 +46,16 @@ Was macht die Konkurrenz gut:
 - Plattformübergreifend/Geräteübergreifend
 - Viele Anpassungsmöglichkeiten
 - Kostenfrei
- 
+
 Was macht die Konkurrenz schlecht:
+
 - Nicht vertraulicher Umgang mit Daten
 - Anmeldung/Registrierung erforderlich
 
-Wie können wir uns von der Konkurrenz abheben: 
+Wie können wir uns von der Konkurrenz abheben:
+
 - Klar signalisierter Umgang mit User-Daten
 - anderes Design
-
-
 
 ## 3 User Storys
 
@@ -84,17 +85,13 @@ Wie können wir uns von der Konkurrenz abheben:
 > ***1. Startactivity***  
 > *Innerhalb der StartActivity wird dem Benutzer zentral ein Login-Formular  präsentiert. Oberhalb des Formulars wird das Logo der App platziert. Die Eingabefelder sollten möglichst in den oberen zwei Drittel des Bildschirms platziert werden damit die Tastatur diese nicht überdeckt.
 > Unter den Eingabefelder sind zwei Buttons platziert, «Login» und «Registrieren». Dabei soll der Login-Button farblich hervorgehoben werden da dieser öfters benutzt wird. Der «Registrieren»-Button wird im Normalfall einmal benutzt deshalb soll dieser neutral oder sogar weniger prominent dargestellt werden.*
-
 > ***2. Badi-Galerie***  
 > *In der «Badi-Galerie»-Ansicht wird dem Benutzer ein Grid mit den favorisierten Schwimmbäder angezeigt. Jedes einzelne Schwimmbad wird mit einem Bild präsentiert. In der in der unteren Ecke jedes Bildes wird die aktuelle Temperatur angezeigt. Darunter den Namen der Badi und der Ort. In der Auflistung muss auf und ab navigiert werden können da man mehr Schwimmbäder hinzufügen kann als auf dem Display Platz haben. Ein Floating-Action-Button mit einem Plus-Icon ist unten rechts am Screen platziert um neue Schwimmbäder in die eigene Liste aufzunehmen. In der Actionbar am oberen Rand wird rechts ein Kontextmenü platziert welches mit dem entsprechenden Button geöffnet werden kann. Darin sind die Punkte Einstellungen, Hilfe und Logout zu finden.*
-
-> ***3. Badidetails***   
+> ***3. Badidetails***
 > ...
-
-> ***4. Badiauswahl***   
+> ***4. Badiauswahl***
 > ...
-
-> ***5. Registration***   
+> ***5. Registration***
 > ...
 
 ## 5 Technische Realisierung
@@ -102,10 +99,3 @@ Wie können wir uns von der Konkurrenz abheben:
 > *Beschreibt hier, wie ihr eure komplexe Komponente technisch umgesetzt habt. Zur Darstellung der technischen Umsetzung wird ein UML-Diagramm empfohlen, welches zusätzlich in Textform beschrieben wird. Erklärt kurz die wichtigsten Klassen und Methoden und deren Zusammenspiel. Eine Fachperson, welche dieses Kapitel liest, sollte schnell nachvollziehen können, wie die externe Komponente realisiert wurde.*
 
 ## 6 Fazit
-
-> *Hier kommt eure Reflexion zum Projekt*
-> * *Was lief gut/schlecht?*
-> * *Wie seid ihr mit dem Ergebniss zufrieden?*
-> * *Was habt ihr gelernt?*
-> * *War alles vorhanden oder was fehlte noch?*
-> * *Usw.*
