@@ -12,6 +12,7 @@ import androidx.room.Update;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import ch.bbcag.dotooo.entity.Task;
 import ch.bbcag.dotooo.DateConverter;
@@ -21,6 +22,7 @@ public interface TaskRoomDao {
     @Transaction
     @Query("SELECT * FROM task ORDER BY date ASC")
     List<Task> getAll();
+
 
     @Transaction
     @Query("SELECT * FROM task WHERE title LIKE '%' || :title || '%' ORDER BY date ASC")
@@ -47,4 +49,9 @@ public interface TaskRoomDao {
 
     @Delete
     void delete(Task task);
+
+    @Transaction
+    @Query("SELECT task.date FROM task")
+    @TypeConverters(DateConverter.class)
+    List<Date> getAllDates();
 }

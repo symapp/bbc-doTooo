@@ -35,7 +35,7 @@ public class Task {
 
 
     public String toString() {
-        return id + " " + title + " " + description + " " ;
+        return id + " " + title + " " + description + " " + date ;
     }
 
     public int getId() {
