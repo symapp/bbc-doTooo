@@ -18,8 +18,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        setContentView(R.layout.activity_main);
+        addToDosToClickableList();
+    }
+
+    private void addToDosToClickableList() {
         ListView listView = findViewById(R.id.list);
         ArrayAdapter<Task> arrayAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1);
 
@@ -27,13 +35,11 @@ public class MainActivity extends AppCompatActivity {
         TaskRoomDao taskDao= database.getTaskDao();
 
         Task task1 = new Task();
-        task1.setId(1);
         task1.setTitle("First Task");
         task1.setDescription("asdfasdfasdf");
         taskDao.insert(task1);
 
         Task task2 = new Task();
-        task2.setId(2);
         task2.setTitle("Second Task");
         task2.setDescription("Shessh what a task");
         taskDao.insert(task2);
