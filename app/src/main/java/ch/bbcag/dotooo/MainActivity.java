@@ -30,7 +30,16 @@ public class MainActivity extends AppCompatActivity {
         task1.setDescription("asdfasdfasdf");
         taskDao.insert(task1);
 
-        arrayAdapter.add(task1);
+        Task task2 = new Task();
+        task1.setId(2);
+        task1.setTitle("Second Task");
+        task1.setDescription("Shessh what a task");
+        taskDao.insert(task2);
+
+
+
+
+        arrayAdapter.addAll(taskDao.getAll());
         listView.setAdapter(arrayAdapter);
     }
 }
