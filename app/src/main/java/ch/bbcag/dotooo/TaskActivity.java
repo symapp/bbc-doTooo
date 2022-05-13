@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 public class TaskActivity extends AppCompatActivity {
 
@@ -32,6 +33,10 @@ public class TaskActivity extends AppCompatActivity {
         title = intent.getStringExtra("taskTitle");
         description = intent.getStringExtra("taskDescription");
         setTitle(title);
+        TextView titleTextField = (TextView) findViewById(R.id.title);
+        titleTextField.setText(title);
+        TextView descriptionTextField = (TextView) findViewById(R.id.description);
+        descriptionTextField.setText(description);
     }
 
     @Override
