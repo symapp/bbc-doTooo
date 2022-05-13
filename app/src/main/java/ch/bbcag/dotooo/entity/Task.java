@@ -27,8 +27,11 @@ public class Task {
     @ColumnInfo(name="isDone")
     private Boolean isDone;
 
-    @ColumnInfo(name="colorId")
-    private int colorId;
+    @ColumnInfo(name="colorHex")
+    private String colorHex;
+
+    @ColumnInfo(name="colorName")
+    private String colorName;
 
     public int getId() {
         return id;
@@ -70,11 +73,19 @@ public class Task {
         isDone = done;
     }
 
-    public int getColorId() {
-        return colorId;
+    public String getColorHex() {
+        return colorHex;
     }
 
-    public void setColorId(int colorId) {
-        this.colorId = colorId;
+    public void setColorHex(String colorHex) {
+        this.colorHex = colorHex;
+    }
+
+    public String getColorName() {
+        return colorName;
+    }
+
+    public void setColorName(String colorName) {
+        this.colorName = colorName;
     }
 }

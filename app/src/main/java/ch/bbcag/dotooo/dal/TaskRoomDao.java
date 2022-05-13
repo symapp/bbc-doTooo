@@ -14,31 +14,30 @@ import java.util.Date;
 import java.util.List;
 
 import ch.bbcag.dotooo.entity.Task;
-import ch.bbcag.dotooo.entity.TaskWithColor;
 import ch.bbcag.dotooo.DateConverter;
 
 @Dao
 public interface TaskRoomDao {
     @Transaction
     @Query("SELECT * FROM task ORDER BY date ASC")
-    List<TaskWithColor> getAll();
+    List<Task> getAll();
 
     @Transaction
     @Query("SELECT * FROM task WHERE title LIKE '%' || :title || '%' ORDER BY date ASC")
-    List<TaskWithColor> getTasksByTitle(String title);
+    List<Task> getTasksByTitle(String title);
 
     @Transaction
     @Query("SELECT * FROM task WHERE description LIKE '%' || :description || '%' ORDER BY date ASC")
-    List<TaskWithColor> getTasksByDescription(String description);
+    List<Task> getTasksByDescription(String description);
 
     @Transaction
     @TypeConverters(DateConverter.class)
     @Query("SELECT * FROM task WHERE date = :date ORDER BY date ASC")
-    List<TaskWithColor> getTaskByDate(Date date);
+    List<Task> getTaskByDate(Date date);
 
     @Transaction
     @Query("SELECT * FROM task WHERE isDone = :done ORDER BY date ASC")
-    List<TaskWithColor> getTasksByCompleted(boolean done);
+    List<Task> getTasksByCompleted(boolean done);
 
     @Update
     void update(Task task);
