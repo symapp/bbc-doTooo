@@ -4,7 +4,10 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+
 import androidx.room.Transaction;
+import androidx.room.TypeConverters;
+
 import androidx.room.Update;
 
 import java.util.Date;
@@ -12,6 +15,8 @@ import java.util.List;
 
 import ch.bbcag.dotooo.entity.Task;
 import ch.bbcag.dotooo.entity.TaskWithColor;
+import ch.bbcag.dotooo.DateConverter;
+import ch.bbcag.dotooo.Entity.Task;
 
 @Dao
 public interface TaskRoomDao {
@@ -28,6 +33,7 @@ public interface TaskRoomDao {
     List<TaskWithColor> getTasksByDescription(String description);
 
     @Transaction
+    @TypeConverters(DateConverter.class)
     @Query("SELECT * FROM task WHERE date = :date ORDER BY date ASC")
     List<TaskWithColor> getTaskByDate(Date date);
 
