@@ -81,7 +81,7 @@ Wie können wir uns von der Konkurrenz abheben:
 
 ![App Struktur Beispiel](images/app-structure.png)
 
-![Mockup Beispiel](images/mockups-doc-temp.png)
+![Mockup Beispiel](images/mockup.png)
 > ***1. MainActivity***  
 > In der MainAcitivity werden alle ausstehenden ToDO's nach Datum sortiert angezeigt.
 > ***2. ToDoACtivity***
