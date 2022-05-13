@@ -79,20 +79,15 @@ Wie können wir uns von der Konkurrenz abheben:
 
 ## 4 Mockups und App Struktur
 
-![App Struktur Beispiel](images/app-structure-doc-temp.png)
+![App Struktur Beispiel](images/app-structure.png)
 
 ![Mockup Beispiel](images/mockups-doc-temp.png)
-> ***1. Startactivity***  
-> *Innerhalb der StartActivity wird dem Benutzer zentral ein Login-Formular  präsentiert. Oberhalb des Formulars wird das Logo der App platziert. Die Eingabefelder sollten möglichst in den oberen zwei Drittel des Bildschirms platziert werden damit die Tastatur diese nicht überdeckt.
-> Unter den Eingabefelder sind zwei Buttons platziert, «Login» und «Registrieren». Dabei soll der Login-Button farblich hervorgehoben werden da dieser öfters benutzt wird. Der «Registrieren»-Button wird im Normalfall einmal benutzt deshalb soll dieser neutral oder sogar weniger prominent dargestellt werden.*
-> ***2. Badi-Galerie***  
-> *In der «Badi-Galerie»-Ansicht wird dem Benutzer ein Grid mit den favorisierten Schwimmbäder angezeigt. Jedes einzelne Schwimmbad wird mit einem Bild präsentiert. In der in der unteren Ecke jedes Bildes wird die aktuelle Temperatur angezeigt. Darunter den Namen der Badi und der Ort. In der Auflistung muss auf und ab navigiert werden können da man mehr Schwimmbäder hinzufügen kann als auf dem Display Platz haben. Ein Floating-Action-Button mit einem Plus-Icon ist unten rechts am Screen platziert um neue Schwimmbäder in die eigene Liste aufzunehmen. In der Actionbar am oberen Rand wird rechts ein Kontextmenü platziert welches mit dem entsprechenden Button geöffnet werden kann. Darin sind die Punkte Einstellungen, Hilfe und Logout zu finden.*
-> ***3. Badidetails***
-> ...
-> ***4. Badiauswahl***
-> ...
-> ***5. Registration***
-> ...
+> ***1. MainActivity***  
+> In der MainAcitivity werden alle ausstehenden ToDO's nach Datum sortiert angezeigt.
+> ***2. ToDoACtivity***
+> Wenn der Benutzer in der MainActivity auf ein ToDo klickt, gelangt er zu dieser Seite. Auf dieser Seite werden dem Benutzer alle Daten von dem gewählten ToDo angezeigt.
+> ***3. ToDoFormActivity***
+> Auf dieser Seite befindet sich das Formular zum Erstellen oder Bearbeiten eines ToDO's.
 
 ## 5 Technische Realisierung
 
