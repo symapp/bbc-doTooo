@@ -3,8 +3,10 @@ package ch.bbcag.dotooo.Entity;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-
+import androidx.room.TypeConverters;
 import java.util.Date;
+
+import ch.bbcag.dotooo.DateConverter;
 
 @Entity
 public class Task {
@@ -19,6 +21,7 @@ public class Task {
     private String description;
 
     @ColumnInfo(name="date")
+    @TypeConverters(DateConverter.class)
     private Date date;
 
     @ColumnInfo(name="isDone")
