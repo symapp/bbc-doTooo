@@ -28,8 +28,6 @@ public class MainActivity extends AppCompatActivity {
         task1.setId(1);
         task1.setTitle("First Task");
         task1.setDescription("asdfasdfasdf");
-
-
         taskDao.insert(task1);
 
         arrayAdapter.add(task1);
