@@ -30,6 +30,19 @@ public class Task {
     @ColumnInfo(name="colorId")
     private int colorId;
 
+
+    public String toString() {
+        return title + " " + description;
+    }
+
+
+
+
+
+
+
+
+
     public int getId() {
         return id;
     }
