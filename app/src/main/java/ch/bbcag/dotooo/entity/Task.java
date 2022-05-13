@@ -10,7 +10,7 @@ import ch.bbcag.dotooo.DateConverter;
 
 @Entity
 public class Task {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name="taskId")
     private int id;
 
@@ -35,7 +35,7 @@ public class Task {
 
 
     public String toString() {
-        return title + " " + description;
+        return id + " " + title + " " + description;
     }
 
 
