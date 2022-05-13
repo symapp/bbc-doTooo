@@ -16,7 +16,6 @@ import java.util.List;
 import ch.bbcag.dotooo.entity.Task;
 import ch.bbcag.dotooo.entity.TaskWithColor;
 import ch.bbcag.dotooo.DateConverter;
-import ch.bbcag.dotooo.Entity.Task;
 
 @Dao
 public interface TaskRoomDao {
