@@ -1,10 +1,5 @@
 # DoTooo
 
-> *Alles was schräg geschrieben ist und/oder mit einem > als Quote steht wird mit euren Texten ersetzt!*  
-> *Den vorhandenen Text löschen.*  
-> *Mindestens die bestehenden Überschriften müssen vorhanden sein. Es kann jedoch immer noch erwetert werden je nach Projekt.*
-> *Kann auch in einzelne Files ausgelagert werden und im **[Readme](README.md)** verlinkt werden.*
-
 ## Inhalt
 
 - [DoTooo](#dotooo)
@@ -29,8 +24,6 @@ der Aufgabe sehen. Um die Aufgaben nach Wichtigkeit zu sortieren, kann man einer
 einer Aufgabe eine Zeit zugewiesen werden.
 
 ## 2 Konkurrenzanalyse
-
-> *Konkurrenzanalyse des Auftrages.*
 
 Konkurrenz-Apps:
 
