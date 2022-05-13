@@ -3,19 +3,35 @@ package ch.bbcag.dotooo;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
 public class TaskActivity extends AppCompatActivity {
 
+    private int id;
+
+    private String title;
+
+    private String description;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_task);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+    }
+
+    protected void onStart() {
+        super.onStart();
+        setContentView(R.layout.activity_task);
+        Intent intent = getIntent();
+        id = intent.getIntExtra("taskId", 0);
+        title = intent.getStringExtra("taskTitle");
+        description = intent.getStringExtra("taskDescription");
+        setTitle(title);
     }
 
     @Override
