@@ -4,11 +4,13 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.TypeConverters;
 import androidx.room.Update;
 
 import java.util.Date;
 import java.util.List;
 
+import ch.bbcag.dotooo.DateConverter;
 import ch.bbcag.dotooo.Entity.Task;
 
 @Dao
@@ -22,6 +24,7 @@ public interface TaskRoomDao {
     @Query("SELECT * FROM task WHERE description LIKE '%:description%' ORDER BY date ASC")
     List<Task> getTasksByDescription(String description);
 
+    @TypeConverters(DateConverter.class)
     @Query("SELECT * FROM task WHERE date = :date ORDER BY date ASC")
     List<Task> getTaskByDate(Date date);
 
