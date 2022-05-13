@@ -9,6 +9,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.util.Date;
+
 import ch.bbcag.dotooo.dal.TaskRoomDao;
 import ch.bbcag.dotooo.dal.TaskRoomDatabase;
 import ch.bbcag.dotooo.entity.Task;
@@ -18,6 +20,23 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        addExampleToDosToDatabase();
+    }
+
+    private void addExampleToDosToDatabase() {
+        TaskRoomDatabase database = TaskRoomDatabase.getInstance(getApplicationContext());
+        TaskRoomDao taskDao= database.getTaskDao();
+
+        Task task1 = new Task();
+        task1.setTitle("First Task");
+        task1.setDescription("asdfasdfasdf");
+        task1.setDate(new Date(2022 - 1900, 4, 13));
+        taskDao.insert(task1);
+
+        Task task2 = new Task();
+        task2.setTitle("Second Task");
+        task2.setDescription("Shessh what a task");
+        taskDao.insert(task2);
     }
 
     @Override
@@ -33,16 +52,6 @@ public class MainActivity extends AppCompatActivity {
 
         TaskRoomDatabase database = TaskRoomDatabase.getInstance(getApplicationContext());
         TaskRoomDao taskDao= database.getTaskDao();
-
-        Task task1 = new Task();
-        task1.setTitle("First Task");
-        task1.setDescription("asdfasdfasdf");
-        taskDao.insert(task1);
-
-        Task task2 = new Task();
-        task2.setTitle("Second Task");
-        task2.setDescription("Shessh what a task");
-        taskDao.insert(task2);
 
         arrayAdapter.addAll(taskDao.getAll());
         listView.setAdapter(arrayAdapter);
