@@ -1,4 +1,4 @@
-package ch.bbcag.dotooo.Entity;
+package ch.bbcag.dotooo.entity;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -24,8 +24,8 @@ public class Task {
     @ColumnInfo(name="isDone")
     private Boolean isDone;
 
-    @ColumnInfo(name="color")
-    private String color;
+    @ColumnInfo(name="colorId")
+    private int colorId;
 
     public int getId() {
         return id;
@@ -67,11 +67,11 @@ public class Task {
         isDone = done;
     }
 
-    public String getColor() {
-        return color;
+    public int getColorId() {
+        return colorId;
     }
 
-    public void setColor(String color) {
-        this.color = color;
+    public void setColorId(int colorId) {
+        this.colorId = colorId;
     }
 }

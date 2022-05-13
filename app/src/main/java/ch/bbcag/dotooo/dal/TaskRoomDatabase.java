@@ -6,7 +6,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-import ch.bbcag.dotooo.Entity.Task;
+import ch.bbcag.dotooo.entity.Task;
 
 @Database(
         entities = {Task.class},
