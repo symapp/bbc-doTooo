@@ -38,7 +38,6 @@ public class Task {
         return id + " " + title + " " + description + " " ;
     }
 
-
     public int getId() {
         return id;
     }

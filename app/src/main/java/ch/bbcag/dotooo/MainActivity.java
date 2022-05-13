@@ -21,7 +21,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addExampleToDosToDatabase();
+
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        setContentView(R.layout.activity_main);
+        addToDosToClickableList();
+    }
+
 
     private void addExampleToDosToDatabase() {
         TaskRoomDatabase database = TaskRoomDatabase.getInstance(getApplicationContext());
@@ -30,20 +39,13 @@ public class MainActivity extends AppCompatActivity {
         Task task1 = new Task();
         task1.setTitle("First Task");
         task1.setDescription("asdfasdfasdf");
-        task1.setDate(new Date(2022 - 1900, 4, 13));
+        task1.setDate(new Date(2022 - 1900, 4, 12));
         taskDao.insert(task1);
 
         Task task2 = new Task();
         task2.setTitle("Second Task");
         task2.setDescription("Shessh what a task");
         taskDao.insert(task2);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        setContentView(R.layout.activity_main);
-        addToDosToClickableList();
     }
 
     private void addToDosToClickableList() {
