@@ -12,7 +12,6 @@ import ch.bbcag.dotooo.entity.Task;
 
 public class MainActivity extends AppCompatActivity {
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
