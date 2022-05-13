@@ -24,16 +24,16 @@ public class MainActivity extends AppCompatActivity {
         TaskRoomDao taskDao= database.getTaskDao();
 
         Task task1 = new Task();
+        task1.setId(1);
         task1.setTitle("First Task");
         task1.setDescription("asdfasdfasdf");
         taskDao.insert(task1);
 
         Task task2 = new Task();
+        task2.setId(2);
         task2.setTitle("Second Task");
         task2.setDescription("Shessh what a task");
         taskDao.insert(task2);
-
-
 
 
         arrayAdapter.addAll(taskDao.getAll());
