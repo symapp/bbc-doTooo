@@ -6,7 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class TaskActivity extends AppCompatActivity {
 
@@ -23,6 +26,7 @@ public class TaskActivity extends AppCompatActivity {
         if (actionBar != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+        initFloatingActionButton();
     }
 
     protected void onStart() {
@@ -47,5 +51,16 @@ public class TaskActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void initFloatingActionButton() {
+        FloatingActionButton fab = findViewById(R.id.fab2);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), CreateTaskActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
