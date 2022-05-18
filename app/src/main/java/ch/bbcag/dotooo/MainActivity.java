@@ -1,6 +1,9 @@
 package ch.bbcag.dotooo;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,13 +28,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initFloatingActionButton();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
         addToDosToClickableList();
-
     }
 
     private void addToDosToClickableList() {
