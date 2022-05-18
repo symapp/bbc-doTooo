@@ -15,8 +15,6 @@ import android.widget.Spinner;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import org.apache.commons.lang3.time.DateUtils;
-
 import java.util.Calendar;
 import java.util.Date;
 
@@ -180,7 +178,7 @@ public class CreateTaskActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(title)) {
             title = "Unnamed Task";
         }
-        System.out.println(title);
+
         EditText editTextDescription = findViewById(R.id.text_input_task_description);
         String description = editTextDescription.getText().toString();
 

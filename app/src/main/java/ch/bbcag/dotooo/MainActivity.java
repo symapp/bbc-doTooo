@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
 
         initFloatingActionButton();
         initTaskList();
-        System.out.println("bimbim");
     }
 
     private void initTaskList() {
@@ -53,8 +52,6 @@ public class MainActivity extends AppCompatActivity {
             taskDate.setTime(DateUtils.truncate(task.getDate(), Calendar.DAY_OF_MONTH));
             Calendar nowDate = Calendar.getInstance();
             nowDate.setTime(DateUtils.truncate(new Date(), Calendar.DAY_OF_MONTH));
-
-            System.out.println(task.getTitle());
 
             return !taskDate.before(nowDate);
         });
