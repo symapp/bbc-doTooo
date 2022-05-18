@@ -34,6 +34,18 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/detailColorView"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        app:cardCornerRadius="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toTopOf="@+id/title"
+        app:layout_constraintBottom_toBottomOf="@+id/title"
+        app:cardBackgroundColor="@color/white"
+        />
+
+
     <TextView
         android:id="@+id/dateTitle"
         android:layout_width="wrap_content"
@@ -75,6 +87,18 @@
         android:textSize="20dp"
         android:layout_marginTop="8dp"
          />
+
+
+    <Button
+        android:id="@+id/deleteButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/description"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        android:layout_marginTop="16dp"
+        android:drawableBottom="@drawable/task_alt-48px.xml"
+
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

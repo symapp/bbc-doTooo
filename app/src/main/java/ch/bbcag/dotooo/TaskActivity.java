@@ -2,8 +2,10 @@ package ch.bbcag.dotooo;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -51,6 +53,8 @@ public class TaskActivity extends AppCompatActivity {
         descriptionTextField.setText(description);
         TextView dateTextField = (TextView) findViewById(R.id.date);
         dateTextField.setText(date);
+        CardView colorCardView = (CardView) findViewById(R.id.detailColorView);
+        colorCardView.setCardBackgroundColor(Color.parseColor(colorHex));
     }
 
     @Override
