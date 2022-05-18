@@ -96,7 +96,9 @@
         app:layout_constraintTop_toBottomOf="@+id/description"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         android:layout_marginTop="16dp"
-        android:drawableBottom="@drawable/task_alt-48px.xml"
+        android:text="Completed"
+        android:backgroundTint="@color/grey"
+
 
         />
 
