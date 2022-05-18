@@ -14,6 +14,8 @@ import android.widget.ListView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -45,9 +47,13 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), TaskActivity.class);
             Task selected = (Task) parent.getItemAtPosition(position);
 
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
             intent.putExtra("taskId", selected.getId());
             intent.putExtra("taskTitle", selected.getTitle());
             intent.putExtra("taskDescription", selected.getDescription());
+            intent.putExtra("taskDate", dateFormat.format(selected.getDate()));
+            intent.putExtra("taskColorHex", selected.getColorHex());
             startActivity(intent);
         };
         listView.setOnItemClickListener(mListClickHandler);
