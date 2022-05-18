@@ -1,6 +1,9 @@
 package ch.bbcag.dotooo;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -36,8 +39,6 @@ public class MainActivity extends AppCompatActivity {
 
         TaskRoomDatabase database = TaskRoomDatabase.getInstance(getApplicationContext());
         TaskRoomDao taskDao= database.getTaskDao();
-
-        
 
     }
 
@@ -82,5 +83,16 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         };
         listView.setOnItemClickListener(mListClickHandler);
+    }
+    ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new ItemTouchHelper.SimpleCallback(0) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+        }
     }
 }
