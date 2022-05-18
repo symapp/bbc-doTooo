@@ -1,5 +1,6 @@
 package ch.bbcag.dotooo.entity;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -33,9 +34,37 @@ public class Task {
     @ColumnInfo(name="colorName")
     private String colorName;
 
+    public Task(String title, String description, Date selectedDate, String colorName) {
+        this.title = title;
+        this.description = description;
+        this.date = selectedDate;
+        isDone = false;
+        this.colorName = colorName;
+        if (colorName.equals("White")) {
+            this.colorHex = "#ffffff";
+        } else if (colorName.equals("Red")) {
+            this.colorHex = "#d1422c";
+        } else if (colorName.equals("Blue")) {
+            this.colorHex = "#0400d4";
+        } else if (colorName.equals("Green")) {
+            this.colorHex = "#20bd4a";
+        } else if (colorName.equals("Yellow")) {
+            this.colorHex = "#ebe307";
+        } else if (colorName.equals("Purple")) {
+            this.colorHex = "#9307eb";
+        } else if (colorName.equals("Gray")) {
+            this.colorHex = "#6b6b6b";
+        } else if (colorName.equals("Black")) {
+            this.colorHex = "#000000";
+        } else {
+            this.colorHex = "#ffffff";
+        }
+    };
+
+    public Task() {};
 
     public String toString() {
-        return id + " " + title + " " + description + " " + date ;
+        return title + " " + description + " " + date + " " + colorHex;
     }
 
     public int getId() {

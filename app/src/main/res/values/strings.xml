@@ -9,4 +9,29 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+
+    <string-array name="colors">
+        <item>White</item>
+        <item>Red</item>
+        <item>Blue</item>
+        <item>Green</item>
+        <item>Yellow</item>
+        <item>Purple</item>
+        <item>Gray</item>
+        <item>Black</item>
+    </string-array>
+    <color name="DoToooBlue">#2A56C6</color>
+    <string name="add_task">Add Task</string>
+    <string name="button_cancel">CANCEL</string>
+    <string name="button_save">SAVE</string>
+    <string name="create_activity_name">Create Task</string>
+    <string name="description_title">DESCRIPTION</string>
+    <string name="input_title_color">COLOR</string>
+    <string name="input_title_date">DATE</string>
+    <string name="input_title_name">NAME</string>
+    <string name="main_activity_title">DoTooo</string>
+    <string name="task_description_hint">Task description</string>
+    <string name="task_name_hint">New task</string>
+
 </resources>

@@ -11,10 +11,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Date;
-import java.util.List;
 
 import ch.bbcag.dotooo.dal.TaskRoomDao;
 import ch.bbcag.dotooo.dal.TaskRoomDatabase;
@@ -27,22 +27,22 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
         addExampleToDosToDatabase();
+        initFloatingActionButton();
     }
 
 
     @Override
     protected void onStart() {
         super.onStart();
-        setContentView(R.layout.activity_main);
         addToDosToClickableList();
 
         TaskRoomDatabase database = TaskRoomDatabase.getInstance(getApplicationContext());
         TaskRoomDao taskDao= database.getTaskDao();
 
+        TaskRoomDao taskDao = database.getTaskDao();
     }
-
-
 
     private void addExampleToDosToDatabase() {
         TaskRoomDatabase database = TaskRoomDatabase.getInstance(getApplicationContext());
@@ -94,5 +94,15 @@ public class MainActivity extends AppCompatActivity {
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
 
         }
+
+    private void initFloatingActionButton() {
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), CreateTaskActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
