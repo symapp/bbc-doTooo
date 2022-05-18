@@ -26,7 +26,7 @@ public class TaskActivity extends AppCompatActivity {
         if (actionBar != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        initFloatingActionButton();
+//        initFloatingActionButton();
     }
 
     protected void onStart() {
@@ -53,14 +53,14 @@ public class TaskActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void initFloatingActionButton() {
-        FloatingActionButton fab = findViewById(R.id.fab2);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), CreateTaskActivity.class);
-                startActivity(intent);
-            }
-        });
-    }
+//    private void initFloatingActionButton() {
+//        FloatingActionButton fab = findViewById(R.id.fab2);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(getApplicationContext(), CreateTaskActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+//    }
 }
