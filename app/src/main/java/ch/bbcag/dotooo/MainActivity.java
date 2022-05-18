@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,14 +40,14 @@ public class MainActivity extends AppCompatActivity {
         addToDosToClickableList();
 
         TaskRoomDatabase database = TaskRoomDatabase.getInstance(getApplicationContext());
-        TaskRoomDao taskDao= database.getTaskDao();
-
         TaskRoomDao taskDao = database.getTaskDao();
+
+
     }
 
     private void addExampleToDosToDatabase() {
         TaskRoomDatabase database = TaskRoomDatabase.getInstance(getApplicationContext());
-        TaskRoomDao taskDao= database.getTaskDao();
+        TaskRoomDao taskDao = database.getTaskDao();
 
         Task task1 = new Task();
         task1.setTitle("First Task");
@@ -63,11 +64,11 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void addToDosToClickableList() {
-        ListView listView = findViewById(R.id.list);
-        ArrayAdapter<Task> arrayAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1);
+         ArrayAdapter<Task> arrayAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1);
+         ListView listView = findViewById(R.id.list);
 
         TaskRoomDatabase database = TaskRoomDatabase.getInstance(getApplicationContext());
-        TaskRoomDao taskDao= database.getTaskDao();
+        TaskRoomDao taskDao = database.getTaskDao();
 
         arrayAdapter.addAll(taskDao.getAll());
         listView.setAdapter(arrayAdapter);
@@ -75,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
         AdapterView.OnItemClickListener mListClickHandler = (parent, v, position, id) -> {
             Intent intent = new Intent(getApplicationContext(), TaskActivity.class);
-            Task selected = (Task)parent.getItemAtPosition(position);
+            Task selected = (Task) parent.getItemAtPosition(position);
 
             intent.putExtra("taskId", selected.getId());
             intent.putExtra("taskTitle", selected.getTitle());
@@ -84,25 +85,17 @@ public class MainActivity extends AppCompatActivity {
         };
         listView.setOnItemClickListener(mListClickHandler);
     }
-    ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new ItemTouchHelper.SimpleCallback(0) {
-        @Override
-        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-            return false;
+
+
+        private void initFloatingActionButton() {
+            FloatingActionButton fab = findViewById(R.id.fab);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getApplicationContext(), CreateTaskActivity.class);
+                    startActivity(intent);
+                }
+            });
         }
 
-        @Override
-        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-
-        }
-
-    private void initFloatingActionButton() {
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), CreateTaskActivity.class);
-                startActivity(intent);
-            }
-        });
-    }
 }
