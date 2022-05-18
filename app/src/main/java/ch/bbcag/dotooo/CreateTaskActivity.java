@@ -15,6 +15,8 @@ import android.widget.Spinner;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.apache.commons.lang3.time.DateUtils;
+
 import java.util.Calendar;
 import java.util.Date;
 
@@ -92,10 +94,10 @@ public class CreateTaskActivity extends AppCompatActivity {
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                selectedDate = new Date(year-1900, month, day);
                 month = month + 1;
                 String date = makeDateString(day, month, year);
                 dateButton.setText(date);
-                selectedDate = new Date(year, month, day);
             }
         };
 
@@ -178,7 +180,7 @@ public class CreateTaskActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(title)) {
             title = "Unnamed Task";
         }
-
+        System.out.println(title);
         EditText editTextDescription = findViewById(R.id.text_input_task_description);
         String description = editTextDescription.getText().toString();
 

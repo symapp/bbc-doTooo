@@ -4,6 +4,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
+
+import java.util.Calendar;
 import java.util.Date;
 
 import ch.bbcag.dotooo.DateConverter;

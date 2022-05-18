@@ -20,7 +20,6 @@ public interface TaskRoomDao {
     @Query("SELECT * FROM task ORDER BY date ASC")
     List<Task> getAll();
 
-
     @Transaction
     @Query("SELECT * FROM task WHERE title LIKE '%' || :title || '%' ORDER BY date ASC")
     List<Task> getTasksByTitle(String title);
