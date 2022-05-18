@@ -40,9 +40,7 @@ public class MainActivity extends AppCompatActivity {
         addToDosToClickableList();
 
         TaskRoomDatabase database = TaskRoomDatabase.getInstance(getApplicationContext());
-        TaskRoomDao taskDao = database.getTaskDao();
-
-
+        TaskRoomDao taskDao= database.getTaskDao();
     }
 
     private void addExampleToDosToDatabase() {
@@ -86,16 +84,14 @@ public class MainActivity extends AppCompatActivity {
         listView.setOnItemClickListener(mListClickHandler);
     }
 
-
-        private void initFloatingActionButton() {
-            FloatingActionButton fab = findViewById(R.id.fab);
-            fab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(getApplicationContext(), CreateTaskActivity.class);
-                    startActivity(intent);
-                }
-            });
-        }
-
+    private void initFloatingActionButton() {
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), CreateTaskActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
 }
