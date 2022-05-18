@@ -35,33 +35,47 @@
 
 
     <TextView
-        android:id="@+id/Date"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:id="@+id/dateTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="Date"
         app:layout_constraintLeft_toRightOf="@+id/guideline1"
         app:layout_constraintTop_toBottomOf="@+id/title" />
 
     <TextView
-        android:id="@+id/description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:id="@+id/date"
+        app:layout_constraintLeft_toRightOf="@+id/guideline1"
+        app:layout_constraintTop_toBottomOf="@+id/dateTitle"
+        android:layout_marginTop="8dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="20dp"
+        android:text="18.05.2222"
+        />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab2"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_margin="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:contentDescription="@string/add_task"
-        android:src="@drawable/baseline_add_white_48"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:text="Description"
+        app:layout_constraintTop_toBottomOf="@+id/date"
+        app:layout_constraintLeft_toRightOf="@+id/guideline1"
+        android:layout_marginTop="16dp"
+        android:id="@+id/descriptionTitle"
+        />
+
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/guideline1"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionTitle"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="20dp"
+        android:layout_marginTop="8dp"
+         />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
