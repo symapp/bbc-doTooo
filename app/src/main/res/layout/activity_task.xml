@@ -52,7 +52,6 @@
         android:layout_marginTop="8dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="20dp"
-        android:text="18.05.2222"
         />
 
     <TextView

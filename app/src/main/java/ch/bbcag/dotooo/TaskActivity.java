@@ -49,6 +49,8 @@ public class TaskActivity extends AppCompatActivity {
         titleTextField.setText(title);
         TextView descriptionTextField = (TextView) findViewById(R.id.description);
         descriptionTextField.setText(description);
+        TextView dateTextField = (TextView) findViewById(R.id.date);
+        dateTextField.setText(date);
     }
 
     @Override
