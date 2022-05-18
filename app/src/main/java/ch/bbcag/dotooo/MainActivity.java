@@ -1,5 +1,7 @@
 package ch.bbcag.dotooo;
 
+import static androidx.room.util.StringUtil.newStringBuilder;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -33,6 +35,21 @@ public class MainActivity extends AppCompatActivity {
         addToDosToClickableList();
     }
 
+    public String getCorrectDateStringFromDate(Date date) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate = dateFormat.format(date);
+
+        int yearInt = Integer.parseInt(formattedDate.substring(0, 4));
+        int monthInt = Integer.parseInt(formattedDate.substring(5, 7));
+        int dayInt = Integer.parseInt(formattedDate.substring(8, 10));
+
+        String year = Integer.toString(yearInt - 1900);
+        String month = Integer.toString(monthInt-1);
+        String day = Integer.toString(dayInt);
+
+        return day + "-" + month + "-" + year;
+    }
+
     private void addToDosToClickableList() {
         ListView listView = findViewById(R.id.list);
 
@@ -47,13 +64,12 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), TaskActivity.class);
             Task selected = (Task) parent.getItemAtPosition(position);
 
-            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
             intent.putExtra("taskId", selected.getId());
             intent.putExtra("taskTitle", selected.getTitle());
             intent.putExtra("taskDescription", selected.getDescription());
-            intent.putExtra("taskDate", dateFormat.format(selected.getDate()));
             intent.putExtra("taskColorHex", selected.getColorHex());
+            String formattedDate = getCorrectDateStringFromDate(selected.getDate());
+            intent.putExtra("taskDate", formattedDate);
             startActivity(intent);
         };
         listView.setOnItemClickListener(mListClickHandler);
