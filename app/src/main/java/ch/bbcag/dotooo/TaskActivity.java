@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.Date;
+
 public class TaskActivity extends AppCompatActivity {
 
     private int id;
@@ -18,6 +20,10 @@ public class TaskActivity extends AppCompatActivity {
     private String title;
 
     private String description;
+
+    private String date;
+
+    private String colorHex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +42,8 @@ public class TaskActivity extends AppCompatActivity {
         id = intent.getIntExtra("taskId", 0);
         title = intent.getStringExtra("taskTitle");
         description = intent.getStringExtra("taskDescription");
+        date = intent.getStringExtra("taskDate");
+        colorHex = intent.getStringExtra("taskColorHex");
         setTitle(title);
         TextView titleTextField = (TextView) findViewById(R.id.title);
         titleTextField.setText(title);

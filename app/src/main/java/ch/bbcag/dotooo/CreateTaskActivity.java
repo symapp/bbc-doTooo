@@ -1,26 +1,26 @@
 package ch.bbcag.dotooo;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
-
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Calendar;
 import java.util.Date;
 
+import ch.bbcag.dotooo.adapter.ColorAdapter;
 import ch.bbcag.dotooo.dal.TaskRoomDatabase;
+import ch.bbcag.dotooo.entity.Color;
 import ch.bbcag.dotooo.entity.Task;
 
 public class CreateTaskActivity extends AppCompatActivity {
@@ -28,6 +28,7 @@ public class CreateTaskActivity extends AppCompatActivity {
     private DatePickerDialog datePickerDialog;
     private Button dateButton;
     private Date selectedDate = new Date();
+    private String selectedColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +60,6 @@ public class CreateTaskActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
 
     private String getTodaysDate() {
         Calendar cal = Calendar.getInstance();
@@ -143,10 +143,24 @@ public class CreateTaskActivity extends AppCompatActivity {
 
     private void initColorSpinner() {
         Spinner colorSpinner = findViewById(R.id.color_picker);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.colors, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        colorSpinner.setAdapter(adapter);
+
+        ColorAdapter colorAdapter = new ColorAdapter(getApplicationContext());
+        colorSpinner.setAdapter(colorAdapter);
+
+        colorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Color[] colors = Color.class.getEnumConstants();
+                assert colors != null;
+                selectedColor = colors[i].getDisplayName();
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 
     private void redirectToHome() {
@@ -168,10 +182,7 @@ public class CreateTaskActivity extends AppCompatActivity {
         EditText editTextDescription = findViewById(R.id.text_input_task_description);
         String description = editTextDescription.getText().toString();
 
-        Spinner colorSpinner = findViewById(R.id.color_picker);
-        String colorName = colorSpinner.getItemAtPosition(colorSpinner.getSelectedItemPosition()).toString();
-
-        TaskRoomDatabase.getInstance(getApplicationContext()).getTaskDao().insert(new Task(title, description, selectedDate, colorName));
+        TaskRoomDatabase.getInstance(getApplicationContext()).getTaskDao().insert(new Task(title, description, selectedDate, selectedColor));
 
         redirectToHome();
     }
