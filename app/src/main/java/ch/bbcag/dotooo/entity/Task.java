@@ -1,6 +1,5 @@
 package ch.bbcag.dotooo.entity;
 
-import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -40,28 +39,35 @@ public class Task {
         this.date = selectedDate;
         isDone = false;
         this.colorName = colorName;
-        if (colorName.equals("White")) {
-            this.colorHex = "#ffffff";
-        } else if (colorName.equals("Red")) {
-            this.colorHex = "#d1422c";
-        } else if (colorName.equals("Blue")) {
-            this.colorHex = "#0400d4";
-        } else if (colorName.equals("Green")) {
-            this.colorHex = "#20bd4a";
-        } else if (colorName.equals("Yellow")) {
-            this.colorHex = "#ebe307";
-        } else if (colorName.equals("Purple")) {
-            this.colorHex = "#9307eb";
-        } else if (colorName.equals("Gray")) {
-            this.colorHex = "#6b6b6b";
-        } else if (colorName.equals("Black")) {
-            this.colorHex = "#000000";
-        } else {
-            this.colorHex = "#ffffff";
+        switch (colorName) {
+            case "Red":
+                this.colorHex = "#d1422c";
+                break;
+            case "Blue":
+                this.colorHex = "#0400d4";
+                break;
+            case "Green":
+                this.colorHex = "#20bd4a";
+                break;
+            case "Yellow":
+                this.colorHex = "#ebe307";
+                break;
+            case "Purple":
+                this.colorHex = "#9307eb";
+                break;
+            case "Gray":
+                this.colorHex = "#6b6b6b";
+                break;
+            case "Black":
+                this.colorHex = "#000000";
+                break;
+            default:
+                this.colorHex = "#ffffff";
+                break;
         }
-    };
+    }
 
-    public Task() {};
+    public Task() {}
 
     public String toString() {
         return title + " " + description + " " + date + " " + colorHex;

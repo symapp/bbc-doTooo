@@ -12,13 +12,12 @@
 
 
     <string-array name="colors">
-        <item>White</item>
+        <item>Gray</item>
         <item>Red</item>
         <item>Blue</item>
         <item>Green</item>
         <item>Yellow</item>
         <item>Purple</item>
-        <item>Gray</item>
         <item>Black</item>
     </string-array>
     <color name="DoToooBlue">#2A56C6</color>
