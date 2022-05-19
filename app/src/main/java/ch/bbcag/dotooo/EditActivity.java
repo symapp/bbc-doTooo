@@ -56,26 +56,26 @@ public class EditActivity extends AppCompatActivity {
 
         initDatePicker();
         dateButton = findViewById(R.id.datePickerButton);
-        dateButton.setText(getCorrectDateStringFromDate(task.getDate()));
+        dateButton.setText(getDateAsString(task.getDate()));
 
         setValues();
     }
 
-
-
-    private String getCorrectDateStringFromDate(Date date) {
+    private String getDateAsString(Date date) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String formattedDate = dateFormat.format(date);
 
-        int yearInt = Integer.parseInt(formattedDate.substring(0, 4));
-        int monthInt = Integer.parseInt(formattedDate.substring(5, 7));
-        int dayInt = Integer.parseInt(formattedDate.substring(8, 10));
+        int year = Integer.parseInt(formattedDate.substring(0, 4));
+        int month = Integer.parseInt(formattedDate.substring(5, 7));
+        int day = Integer.parseInt(formattedDate.substring(8,10));
 
-        String year = Integer.toString(yearInt - 1900);
-        String month = Integer.toString(monthInt - 1);
-        String day = Integer.toString(dayInt);
+        year = year-1900;
 
-        return day + "-" + month + "-" + year;
+        if(year < 1000) {
+            year = year+1900;
+        }
+
+        return makeDateString(day, month, year);
     }
 
     private void setValues() {
@@ -135,7 +135,7 @@ public class EditActivity extends AppCompatActivity {
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                month = month + 1;
+//                month = month + 1;
                 String date = makeDateString(day, month, year);
                 dateButton.setText(date);
                 task.setDate(new Date(year, month, day));
