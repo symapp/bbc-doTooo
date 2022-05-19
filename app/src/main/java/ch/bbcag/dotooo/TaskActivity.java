@@ -18,6 +18,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.Date;
 
 import ch.bbcag.dotooo.dal.TaskRoomDatabase;
+import ch.bbcag.dotooo.entity.Task;
 
 public class TaskActivity extends AppCompatActivity {
 
@@ -72,20 +73,17 @@ public class TaskActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        Intent intent = null;
         if (itemId == android.R.id.home) {
             onBackPressed();
             return true;
         }
         if (itemId == R.id.action_delete) {
-            intent = new Intent(getApplicationContext(), MainActivity.class);
             delteTask();
-            startActivity(intent);
+            redirectToHome();
             return true;
         }
         if (itemId == R.id.action_edit) {
-            intent = new Intent(getApplicationContext(), EditActivity.class);
-            startActivity(intent);
+            redirectToEdit();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -93,9 +91,17 @@ public class TaskActivity extends AppCompatActivity {
 
     private void delteTask() {
         TaskRoomDatabase.getInstance(getApplicationContext()).getTaskDao().deleteById(id);
+    }
 
     private void redirectToHome() {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
+    }
+
+    private void redirectToEdit() {
+        Intent intent = new Intent(getApplicationContext(), EditActivity.class);
+        Task selected = TaskRoomDatabase.getInstance(getApplicationContext()).getTaskDao().getTaskById(id);
+        intent.putExtra("taskId", selected.getId());
         startActivity(intent);
     }
 

@@ -43,6 +43,10 @@ public interface TaskRoomDao {
     List<Task> getUnclompetedTasks();
 
     @Transaction
+    @Query("SELECT * FROM task WHERE taskId = :id")
+    Task getTaskById(Integer id);
+
+    @Transaction
     @Query("UPDATE task SET isDone = 1 WHERE taskId = :id")
     void completeTask(Integer id);
 
