@@ -117,16 +117,17 @@ public class TaskActivity extends AppCompatActivity {
 
     private void redirectToEdit() {
         Intent intent = new Intent(getApplicationContext(), EditActivity.class);
-        Task selected = TaskRoomDatabase.getInstance(getApplicationContext()).getTaskDao().getTaskById(id);
+        Task selected = TaskRoomDatabase.getInstance(getApplicationContext()).getTaskDao().getById(id);
         intent.putExtra("taskId", selected.getId());
         startActivity(intent);
     }
 
-    public void completeTask() {
+
     public void updateTaskById(Integer id) {
         task.setDone(true);
         TaskRoomDatabase.getInstance(getApplicationContext()).getTaskDao().update(task);
     }
+
 
     public void completeTask(View view) {
         updateTaskById(id);
