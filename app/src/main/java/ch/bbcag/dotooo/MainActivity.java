@@ -35,21 +35,6 @@ public class MainActivity extends AppCompatActivity {
         addToDosToClickableList();
     }
 
-    private String getCorrectDateStringFromDate(Date date) {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String formattedDate = dateFormat.format(date);
-
-        int yearInt = Integer.parseInt(formattedDate.substring(0, 4));
-        int monthInt = Integer.parseInt(formattedDate.substring(5, 7));
-        int dayInt = Integer.parseInt(formattedDate.substring(8, 10));
-
-        String year = Integer.toString(yearInt - 1900);
-        String month = Integer.toString(monthInt-1);
-        String day = Integer.toString(dayInt);
-
-        return day + "-" + month + "-" + year;
-    }
-
     private void addToDosToClickableList() {
         ListView listView = findViewById(R.id.list);
 
@@ -65,8 +50,6 @@ public class MainActivity extends AppCompatActivity {
             Task selected = (Task) parent.getItemAtPosition(position);
 
             intent.putExtra("taskId", selected.getId());
-            String formattedDate = getCorrectDateStringFromDate(selected.getDate());
-            intent.putExtra("taskDate", formattedDate);
             startActivity(intent);
         };
         listView.setOnItemClickListener(mListClickHandler);
