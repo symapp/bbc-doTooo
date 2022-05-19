@@ -56,23 +56,9 @@ public class TaskAdapter extends ArrayAdapter<Task> implements View.OnClickListe
         if (currentItemView == null || isTask != (boolean) convertView.getTag()) {
             if (isTask) {
                 currentItemView = LayoutInflater.from(getContext()).inflate(R.layout.task_row_item, parent, false);
-
-
             } else {
                 currentItemView = LayoutInflater.from(getContext()).inflate(R.layout.day_row_item, parent, false);
                 currentItemView.setEnabled(false);
-
-                if (currentTaskPosition.getTitle().equals("?notTask!No Tasks")){
-                    int pixels = (int) (48 * mContext.getResources().getDisplayMetrics().density);
-                    currentItemView.setLayoutParams(new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, pixels));
-
-                    TextView headerTitle = currentItemView.findViewById(R.id.header_title);
-                    headerTitle.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                    headerTitle.setTextSize(pixels/6);
-                    headerTitle.setTextColor(Color.parseColor("#aaaaaa"));
-
-                }
-
             }
 
             currentItemView.setTag(isTask);
