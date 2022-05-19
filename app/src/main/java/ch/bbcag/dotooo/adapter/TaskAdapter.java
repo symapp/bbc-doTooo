@@ -18,6 +18,7 @@ import ch.bbcag.dotooo.R;
 import ch.bbcag.dotooo.entity.Task;
 
 public class TaskAdapter extends ArrayAdapter<Task> implements View.OnClickListener {
+
     private ArrayList<Task> tasks;
     Context mContext;
 
@@ -38,6 +39,7 @@ public class TaskAdapter extends ArrayAdapter<Task> implements View.OnClickListe
 
         View currentItemView = convertView;
 
+        // set isTask
         boolean isTask = true;
         Task currentTaskPosition = getItem(position);
         if (currentTaskPosition == null) {
@@ -46,6 +48,8 @@ public class TaskAdapter extends ArrayAdapter<Task> implements View.OnClickListe
         }
         if (currentTaskPosition.getTitle().charAt(0) == '?') isTask = false;
 
+
+        // inflate
         if (currentItemView == null || isTask != (boolean) convertView.getTag()) {
             if (isTask) {
                 currentItemView = LayoutInflater.from(getContext()).inflate(R.layout.task_row_item, parent, false);
@@ -59,9 +63,8 @@ public class TaskAdapter extends ArrayAdapter<Task> implements View.OnClickListe
         }
 
 
-        // then according to the position of the view assign the desired image for the same
+        // set values
         if (isTask) {
-            // set text, etc
             TextView taskName = currentItemView.findViewById(R.id.task_name);
             if (taskName != null) taskName.setText(currentTaskPosition.getTitle());
 
@@ -77,7 +80,6 @@ public class TaskAdapter extends ArrayAdapter<Task> implements View.OnClickListe
                 headerSubtitle = args[2];
             }
 
-            // set text, etc
             TextView headerTitleTextView = currentItemView.findViewById(R.id.header_title);
             if (headerTitleTextView != null) headerTitleTextView.setText(headerTitle);
 
@@ -86,7 +88,6 @@ public class TaskAdapter extends ArrayAdapter<Task> implements View.OnClickListe
         }
 
 
-        // then return the recyclable view
         return currentItemView;
     }
 }

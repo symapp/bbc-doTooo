@@ -1,9 +1,9 @@
 package ch.bbcag.dotooo;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import org.apache.commons.lang3.time.DateUtils;
@@ -15,7 +15,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -27,7 +26,11 @@ import ch.bbcag.dotooo.entity.Task;
 
 public class MainActivity extends AppCompatActivity {
 
-    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    @SuppressLint("SimpleDateFormat")
+    DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+
+    @SuppressLint("SimpleDateFormat")
+    SimpleDateFormat weekDayFormatter = new SimpleDateFormat("EEEE");
 
     TaskRoomDao taskDao;
 
@@ -45,8 +48,37 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initTaskList() {
+        
         ArrayList<Task> allTasks = (ArrayList<Task>) taskDao.getAll();
+        ArrayList<Task> TasksWithDay = getFormattedTaskListByDay(allTasks);
 
+        ListView listView = findViewById(R.id.task_list);
+        TaskAdapter adapter = new TaskAdapter(TasksWithDay, getApplicationContext());
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener((parent, v, position, id) -> {
+            Task selected = (Task) parent.getItemAtPosition(position);
+
+            // return if it's not a task
+            if (selected.getTitle().charAt(0) == '?') return;
+
+            // intent
+            Intent intent = new Intent(getApplicationContext(), TaskActivity.class);
+            intent.putExtra("taskId", selected.getId());
+            intent.putExtra("taskTitle", selected.getTitle());
+            intent.putExtra("taskDescription", selected.getDescription());
+            intent.putExtra("taskDate", dateFormatter.format(selected.getDate()));
+            intent.putExtra("taskColorHex", selected.getColorHex());
+            startActivity(intent);
+        });
+    }
+
+    private ArrayList<Task> getFormattedTaskListByDay(ArrayList<Task> allTasks) {
+
+        // get weekdays
+        String dayOfTheWeekToday = weekDayFormatter.format(new Date()).toUpperCase();
+        String dayOfTheWeekTomorrow = weekDayFormatter.format(new Date()).toUpperCase();
+
+        // sort late
         ArrayList<Task> lateTasks = new ArrayList<>(allTasks);
         lateTasks.removeIf(task -> {
             Calendar taskDate = Calendar.getInstance();
@@ -57,9 +89,11 @@ public class MainActivity extends AppCompatActivity {
             return !taskDate.before(nowDate);
         });
 
+        // sort today
         ArrayList<Task> todayTasks = new ArrayList<>(allTasks);
         todayTasks.removeIf(task -> !DateUtils.isSameDay(new Date(), task.getDate()));
 
+        // sort tomorrow
         ArrayList<Task> tomorrowTasks = new ArrayList<>(allTasks);
         tomorrowTasks.removeIf(task -> {
             Calendar taskDate = Calendar.getInstance();
@@ -73,67 +107,24 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        AdapterView.OnItemClickListener mListClickHandler = (parent, v, position, id) -> {
-            Task selected = (Task) parent.getItemAtPosition(position);
-
-            if (selected.getTitle().charAt(0) == '?') return;
-
-            Intent intent = new Intent(getApplicationContext(), TaskActivity.class);
-            intent.putExtra("taskId", selected.getId());
-            intent.putExtra("taskTitle", selected.getTitle());
-            intent.putExtra("taskDescription", selected.getDescription());
-            intent.putExtra("taskDate", dateFormat.format(selected.getDate()));
-            intent.putExtra("taskColorHex", selected.getColorHex());
-            startActivity(intent);
-        };
-
-
-        String dayOfTheWeekToday = new SimpleDateFormat("EEEE").format(new Date()).toUpperCase();
-        String dayOfTheWeekTomorrow = new SimpleDateFormat("EEEE").format(new Date()).toUpperCase();
 
         ArrayList<Task> tasks = new ArrayList<>();
 
+        // config late
         if (lateTasks.size() > 0) {
             tasks.add(new Task("?notTask!Late!", "", new Date(), Color.BLACK.getDisplayName()));
             tasks.addAll(lateTasks);
         }
-
+        // config today
         tasks.add(new Task("?notTask!Today!" + dayOfTheWeekToday, "", new Date(), Color.BLACK.getDisplayName()));
-        if (todayTasks.size() > 0) {
-            tasks.addAll(todayTasks);
-        } else {
-            tasks.add(new Task("?notTask!noTasks", "", new Date(), Color.BLACK.getDisplayName()));
-        }
-
+        if (todayTasks.size() > 0) tasks.addAll(todayTasks);
+        else tasks.add(new Task("?notTask!noTasks", "", new Date(), Color.BLACK.getDisplayName()));
+        // config tomorrow
         tasks.add(new Task("?notTask!Tomorrow!" + dayOfTheWeekTomorrow, "", new Date(), Color.BLACK.getDisplayName()));
-        if (tomorrowTasks.size() > 0) {
-            tasks.addAll(tomorrowTasks);
-        } else {
-            tasks.add(new Task("?notTask!No Tasks", "", new Date(), Color.BLACK.getDisplayName()));
-        }
+        if (tomorrowTasks.size() > 0) tasks.addAll(tomorrowTasks);
+        else tasks.add(new Task("?notTask!No Tasks", "", new Date(), Color.BLACK.getDisplayName()));
 
-        ListView listView = (ListView) findViewById(R.id.task_list);
-        TaskAdapter adapter = new TaskAdapter(tasks, getApplicationContext());
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(mListClickHandler);
-
-
-
-
-//        ListView todayTasksList = (ListView) findViewById(R.id.list_today);
-//        TaskAdapter todayAdapter = new TaskAdapter(todayTasks, getApplicationContext());
-//        todayTasksList.setAdapter(todayAdapter);
-//        todayTasksList.setOnItemClickListener(mListClickHandler);
-//
-//        ListView lateTasksList = (ListView) findViewById(R.id.list_late);
-//        TaskAdapter lateAdapter = new TaskAdapter(lateTasks, getApplicationContext());
-//        lateTasksList.setAdapter(lateAdapter);
-//        lateTasksList.setOnItemClickListener(mListClickHandler);
-//
-//        ListView tomorrowTaskList = (ListView) findViewById(R.id.list_tomorrow);
-//        TaskAdapter tomorrowAdapter = new TaskAdapter(tomorrowTasks, getApplicationContext());
-//        tomorrowTaskList.setAdapter(tomorrowAdapter);
-//        tomorrowTaskList.setOnItemClickListener(mListClickHandler);
+        return tasks;
     }
 
 
