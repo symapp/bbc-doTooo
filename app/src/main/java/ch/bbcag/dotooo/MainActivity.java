@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         TaskRoomDatabase database = TaskRoomDatabase.getInstance(getApplicationContext());
         TaskRoomDao taskDao = database.getTaskDao();
 
-        TaskAdapter arrayAdapter = new TaskAdapter((ArrayList<Task>) taskDao.getAll(), getApplicationContext());
+        TaskAdapter arrayAdapter = new TaskAdapter((ArrayList<Task>) taskDao.getUnclompetedTasks(), getApplicationContext());
         listView.setAdapter(arrayAdapter);
 
         // setup click listener

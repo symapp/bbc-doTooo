@@ -15,6 +15,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Date;
 
+import ch.bbcag.dotooo.dal.TaskRoomDao;
+import ch.bbcag.dotooo.dal.TaskRoomDatabase;
+
 public class TaskActivity extends AppCompatActivity {
 
     private int id;
@@ -72,7 +75,9 @@ public class TaskActivity extends AppCompatActivity {
     }
 
     public void completeTask() {
-
+        TaskRoomDatabase database = TaskRoomDatabase.getInstance(getApplicationContext());
+        TaskRoomDao taskDao = database.getTaskDao();
+        taskDao.completeTask(id);
         redirectToHome();
     }
 }
