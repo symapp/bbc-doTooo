@@ -110,7 +110,18 @@ public class MainActivity extends AppCompatActivity {
             return !taskDate.equals(nowDate);
         });
 
+        // sort other
+        ArrayList<Task> otherTasks = new ArrayList<>(allTasks);
+        otherTasks.removeIf(task -> {
+            Calendar taskDate = Calendar.getInstance();
+            taskDate.setTime(DateUtils.truncate(task.getDate(), Calendar.DAY_OF_MONTH));
+            Calendar nowDate = Calendar.getInstance();
+            nowDate.setTime(DateUtils.truncate(new Date(), Calendar.DAY_OF_MONTH));
 
+            nowDate.add(Calendar.DAY_OF_MONTH, 1);
+
+            return !taskDate.after(nowDate);
+        });
 
         ArrayList<Task> tasks = new ArrayList<>();
 
@@ -124,15 +135,21 @@ public class MainActivity extends AppCompatActivity {
         if (todayTasks.size() > 0) {
             tasks.addAll(todayTasks);
         } else {
-            tasks.add(new Task("?notTask!No Tasks", "", new Date(), Color.BLACK.getDisplayName()));
+            tasks.add(new Task("?notTask!No tasks today", "", new Date(), Color.BLACK.getDisplayName()));
         }
         // config tomorrow
         tasks.add(new Task("?notTask!Tomorrow!" + dayOfTheWeekTomorrow, "", new Date(), Color.BLACK.getDisplayName()));
         if (tomorrowTasks.size() > 0) {
             tasks.addAll(tomorrowTasks);
         } else {
-            tasks.add(new Task("?notTask!No Tasks", "", new Date(), Color.BLACK.getDisplayName()));
+            tasks.add(new Task("?notTask!No tasks tomorrow", "", new Date(), Color.BLACK.getDisplayName()));
         }
+        // config other
+        if (otherTasks.size() > 0) {
+            tasks.add(new Task("?notTask!Other!" + dayOfTheWeekTomorrow, "", new Date(), Color.BLACK.getDisplayName()));
+            tasks.addAll(otherTasks);
+        }
+
 
         return tasks;
     }

@@ -42,22 +42,35 @@ public class TaskAdapter extends ArrayAdapter<Task> implements View.OnClickListe
 
         View currentItemView = convertView;
 
-        // set isTask
-        boolean isTask = true;
         Task currentTaskPosition = getItem(position);
-        if (currentTaskPosition == null) {
-            assert currentItemView != null;
-            return currentItemView;
+
+
+        // set isTask
+
+        int isTask = 1;
+        if (currentTaskPosition.getTitle().charAt(0) == '?') {
+            if (currentTaskPosition.getTitle().startsWith("?notTask!No")) {
+                isTask = 3;
+            } else {
+                isTask = 2;
+            }
         }
-        if (currentTaskPosition.getTitle().charAt(0) == '?') isTask = false;
+
+
+
+
 
 
         // inflate
-        if (currentItemView == null || isTask != (boolean) convertView.getTag()) {
-            if (isTask) {
+        if (currentItemView == null || convertView.getTag() != null) {
+            if (isTask == 1) {
                 currentItemView = LayoutInflater.from(getContext()).inflate(R.layout.task_row_item, parent, false);
-            } else {
+            } else if (isTask == 2) {
                 currentItemView = LayoutInflater.from(getContext()).inflate(R.layout.day_row_item, parent, false);
+                currentItemView.setEnabled(false);
+            } else {
+                System.out.println(isTask);
+                currentItemView = LayoutInflater.from(getContext()).inflate(R.layout.no_task_row_item, parent, false);
                 currentItemView.setEnabled(false);
             }
 
@@ -66,13 +79,13 @@ public class TaskAdapter extends ArrayAdapter<Task> implements View.OnClickListe
 
 
         // set values
-        if (isTask) {
+        if (isTask == 1) {
             TextView taskName = currentItemView.findViewById(R.id.task_name);
             if (taskName != null) taskName.setText(currentTaskPosition.getTitle());
 
             CardView cardView = currentItemView.findViewById(R.id.color_card);
             if (cardView != null) cardView.setCardBackgroundColor(Color.parseColor(currentTaskPosition.getColorHex()));
-        } else {
+        } else if (isTask == 2) {
             // get args
             String title = currentTaskPosition.getTitle().substring(1);
             String[] args = title.split("!");
