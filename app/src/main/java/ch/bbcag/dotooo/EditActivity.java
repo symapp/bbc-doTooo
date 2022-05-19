@@ -61,6 +61,8 @@ public class EditActivity extends AppCompatActivity {
         setValues();
     }
 
+
+
     private String getCorrectDateStringFromDate(Date date) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String formattedDate = dateFormat.format(date);
@@ -136,7 +138,7 @@ public class EditActivity extends AppCompatActivity {
                 month = month + 1;
                 String date = makeDateString(day, month, year);
                 dateButton.setText(date);
-                selectedDate = new Date(year, month, day);
+                task.setDate(new Date(year, month, day));
             }
         };
 
@@ -178,7 +180,6 @@ public class EditActivity extends AppCompatActivity {
         if (month == 12)
             return "December";
 
-        //default should never happen
         return "January";
     }
 
@@ -196,10 +197,15 @@ public class EditActivity extends AppCompatActivity {
 
     private void saveTask(View view) {
         EditText editTextTitle = (EditText) findViewById(R.id.text_input_task_name);
-        String title = editTextTitle.getText().toString();
-        if (TextUtils.isEmpty(title)) {
-            title = "Unnamed Task";
+        task.setTitle(editTextTitle.getText().toString());
+        if (TextUtils.isEmpty(task.getTitle())) {
+            task.setTitle("Unnamed Task");
         }
+
+        EditText editTextDescription = (EditText) findViewById(R.id.text_input_task_description);
+        task.setDescription(editTextDescription.getText().toString());
+
+        TaskRoomDatabase.getInstance(getApplicationContext()).getTaskDao().update(task);
 
         redirectToHome();
     }
