@@ -118,7 +118,11 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                     .replace(R.id.fragment_container_view, filterFragment, null)
                     .commit();
         } else {
-            fm.beginTransaction().remove(getSupportFragmentManager().getFragments().get(0)).commit();
+            for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+                if (fragment != null) {
+                    getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+                }
+            }
         }
     }
 
