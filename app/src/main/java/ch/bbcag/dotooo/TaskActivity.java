@@ -19,6 +19,7 @@ import java.util.Date;
 
 import ch.bbcag.dotooo.dal.TaskRoomDao;
 import ch.bbcag.dotooo.dal.TaskRoomDatabase;
+import ch.bbcag.dotooo.entity.Task;
 
 public class TaskActivity extends AppCompatActivity {
 
@@ -94,16 +95,25 @@ public class TaskActivity extends AppCompatActivity {
 
     private void delteTask() {
         TaskRoomDatabase.getInstance(getApplicationContext()).getTaskDao().deleteById(id);
+    }
 
-    private void redirectToHome() {
+    public void redirectToHome() {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
     }
 
-    public void completeTask() {
+    public void updateTaskById(Integer id) {
         TaskRoomDatabase database = TaskRoomDatabase.getInstance(getApplicationContext());
         TaskRoomDao taskDao = database.getTaskDao();
-        taskDao.completeTask(id);
+        Task task = taskDao.getById(id);
+        System.out.println(task.getDone());
+        task.setDone(true);
+        System.out.println(task.getDone());
+        taskDao.update(task);
+    }
+
+    public void completeTask(View view) {
+        updateTaskById(id);
         redirectToHome();
     }
 }
