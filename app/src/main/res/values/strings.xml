@@ -34,5 +34,7 @@
     <string name="task_name_hint">New task</string>
     <string name="late_title">Late</string>
     <string name="no_tasks">No tasks</string>
+    <string name="search_title">search</string>
+    <string name="search_hint">search</string>
 
 </resources>

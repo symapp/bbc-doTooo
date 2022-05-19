@@ -7,13 +7,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.AdapterView;
+import android.view.Menu;
+import android.view.MenuInflater;
 
 import android.widget.ListView;
+import android.widget.SearchView;
 
 import org.apache.commons.lang3.time.DateUtils;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -30,7 +30,7 @@ import ch.bbcag.dotooo.dal.TaskRoomDatabase;
 import ch.bbcag.dotooo.entity.Color;
 import ch.bbcag.dotooo.entity.Task;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener{
 
     @SuppressLint("SimpleDateFormat")
     DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -38,7 +38,9 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("SimpleDateFormat")
     SimpleDateFormat weekDayFormatter = new SimpleDateFormat("EEEE");
 
-    TaskRoomDao taskDao;
+    private TaskRoomDao taskDao;
+
+    TaskAdapter taskAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,35 @@ public class MainActivity extends AppCompatActivity {
         initTaskList();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+
+        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        searchView.setQueryHint(getString(R.string.search_hint));
+        searchView.setIconified(false);
+        searchView.setOnQueryTextListener(this);
+
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String s) {
+        filterTasks(s);
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String s) {
+        filterTasks(s);
+        return false;
+    }
+
+    private void filterTasks(String filterString) {
+        taskAdapter.getFilter().filter(filterString);
+    }
+
     private void initTaskList() {
 
         ArrayList<Task> allTasks = (ArrayList<Task>) taskDao.getAll();
@@ -62,8 +93,8 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<Task> TasksWithDay = getFormattedTaskListByDay(allTasks);
 
         ListView listView = findViewById(R.id.task_list);
-        TaskAdapter adapter = new TaskAdapter(TasksWithDay, getApplicationContext());
-        listView.setAdapter(adapter);
+        taskAdapter = new TaskAdapter(TasksWithDay, getApplicationContext());
+        listView.setAdapter(taskAdapter);
         listView.setOnItemClickListener((parent, v, position, id) -> {
             Task selected = (Task) parent.getItemAtPosition(position);
 
