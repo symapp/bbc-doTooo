@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.room.Transaction;
 
 
@@ -51,6 +52,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     private boolean isFiltering = false;
 
+    private ItemViewModel viewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,11 +66,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         initFloatingActionButton();
         initTaskList((ArrayList<Task>) taskDao.getAll());
 
-//        if (savedInstanceState == null) {
-//            getSupportFragmentManager().beginTransaction()
-//                    .replace(R.id.fragment_container_view, Filter.class, null)
-//                    .commit();
-//        }
+
     }
 
     @Override
