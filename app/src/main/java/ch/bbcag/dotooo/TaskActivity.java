@@ -66,7 +66,7 @@ public class TaskActivity extends AppCompatActivity {
         descriptionTextField.setText(description);
 
         TextView dateTextField = (TextView) findViewById(R.id.date);
-//        dateTextField.setText(date);
+        dateTextField.setText(getDateAsString(date));
 
         CardView colorCardView = (CardView) findViewById(R.id.detailColorView);
         colorCardView.setCardBackgroundColor(Color.parseColor(colorHex));
@@ -81,7 +81,6 @@ public class TaskActivity extends AppCompatActivity {
         int day = Integer.parseInt(formattedDate.substring(8,10));
 
         year = year-1900;
-        month = month-1;
 
         if(year < 1000) {
             year = year+1900;
