@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initTaskList() {
-        
+
         ArrayList<Task> allTasks = (ArrayList<Task>) taskDao.getAll();
         ArrayList<Task> TasksWithDay = getFormattedTaskListByDay(allTasks);
 
@@ -75,8 +75,12 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Task> getFormattedTaskListByDay(ArrayList<Task> allTasks) {
 
         // get weekdays
-        String dayOfTheWeekToday = weekDayFormatter.format(new Date()).toUpperCase();
-        String dayOfTheWeekTomorrow = weekDayFormatter.format(new Date()).toUpperCase();
+
+        Calendar date = Calendar.getInstance();
+        date.setTime(new Date());
+        String dayOfTheWeekToday = weekDayFormatter.format(date.getTime()).toUpperCase();
+        date.add(Calendar.DAY_OF_MONTH, 1);
+        String dayOfTheWeekTomorrow = weekDayFormatter.format(date.getTime()).toUpperCase();
 
         // sort late
         ArrayList<Task> lateTasks = new ArrayList<>(allTasks);
@@ -117,12 +121,18 @@ public class MainActivity extends AppCompatActivity {
         }
         // config today
         tasks.add(new Task("?notTask!Today!" + dayOfTheWeekToday, "", new Date(), Color.BLACK.getDisplayName()));
-        if (todayTasks.size() > 0) tasks.addAll(todayTasks);
-        else tasks.add(new Task("?notTask!noTasks", "", new Date(), Color.BLACK.getDisplayName()));
+        if (todayTasks.size() > 0) {
+            tasks.addAll(todayTasks);
+        } else {
+            tasks.add(new Task("?notTask!No Tasks", "", new Date(), Color.BLACK.getDisplayName()));
+        }
         // config tomorrow
         tasks.add(new Task("?notTask!Tomorrow!" + dayOfTheWeekTomorrow, "", new Date(), Color.BLACK.getDisplayName()));
-        if (tomorrowTasks.size() > 0) tasks.addAll(tomorrowTasks);
-        else tasks.add(new Task("?notTask!No Tasks", "", new Date(), Color.BLACK.getDisplayName()));
+        if (tomorrowTasks.size() > 0) {
+            tasks.addAll(tomorrowTasks);
+        } else {
+            tasks.add(new Task("?notTask!No Tasks", "", new Date(), Color.BLACK.getDisplayName()));
+        }
 
         return tasks;
     }

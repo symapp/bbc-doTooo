@@ -1,7 +1,9 @@
 package ch.bbcag.dotooo.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import java.util.ArrayList;
 
@@ -54,9 +57,22 @@ public class TaskAdapter extends ArrayAdapter<Task> implements View.OnClickListe
             if (isTask) {
                 currentItemView = LayoutInflater.from(getContext()).inflate(R.layout.task_row_item, parent, false);
 
+
             } else {
                 currentItemView = LayoutInflater.from(getContext()).inflate(R.layout.day_row_item, parent, false);
                 currentItemView.setEnabled(false);
+
+                if (currentTaskPosition.getTitle().equals("?notTask!No Tasks")){
+                    int pixels = (int) (48 * mContext.getResources().getDisplayMetrics().density);
+                    currentItemView.setLayoutParams(new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, pixels));
+
+                    TextView headerTitle = currentItemView.findViewById(R.id.header_title);
+                    headerTitle.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                    headerTitle.setTextSize(pixels/6);
+                    headerTitle.setTextColor(Color.parseColor("#aaaaaa"));
+
+                }
+
             }
 
             currentItemView.setTag(isTask);
