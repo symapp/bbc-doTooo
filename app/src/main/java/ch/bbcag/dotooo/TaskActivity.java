@@ -13,13 +13,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import ch.bbcag.dotooo.dal.TaskRoomDao;
 import ch.bbcag.dotooo.dal.TaskRoomDatabase;
 import ch.bbcag.dotooo.entity.Task;
 
@@ -76,7 +73,7 @@ public class TaskActivity extends AppCompatActivity {
         int dayInt = Integer.parseInt(formattedDate.substring(8, 10));
 
         String year = Integer.toString(yearInt - 1900);
-        String month = Integer.toString(monthInt-1);
+        String month = Integer.toString(monthInt - 1);
         String day = Integer.toString(dayInt);
 
         return day + "-" + month + "-" + year;

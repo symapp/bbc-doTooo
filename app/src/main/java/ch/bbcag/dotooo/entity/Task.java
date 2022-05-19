@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
+
 import java.util.Date;
 
 import ch.bbcag.dotooo.DateConverter;
@@ -11,26 +12,26 @@ import ch.bbcag.dotooo.DateConverter;
 @Entity
 public class Task {
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name="taskId")
+    @ColumnInfo(name = "taskId")
     private int id;
 
-    @ColumnInfo(name="title")
+    @ColumnInfo(name = "title")
     private String title;
 
-    @ColumnInfo(name="description")
+    @ColumnInfo(name = "description")
     private String description;
 
-    @ColumnInfo(name="date")
+    @ColumnInfo(name = "date")
     @TypeConverters(DateConverter.class)
     private Date date;
 
-    @ColumnInfo(name="isDone")
+    @ColumnInfo(name = "isDone")
     private Boolean isDone;
 
-    @ColumnInfo(name="colorHex")
+    @ColumnInfo(name = "colorHex")
     private String colorHex;
 
-    @ColumnInfo(name="colorName")
+    @ColumnInfo(name = "colorName")
     private String colorName;
 
     public Task(String title, String description, Date selectedDate, String colorName) {
@@ -67,7 +68,8 @@ public class Task {
         }
     }
 
-    public Task() {}
+    public Task() {
+    }
 
     public String toString() {
         return title + " " + description + " " + date + " " + colorHex;

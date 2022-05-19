@@ -1,25 +1,19 @@
 package ch.bbcag.dotooo;
 
-import static androidx.room.util.StringUtil.newStringBuilder;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.RecyclerView;
+
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+
 import android.widget.ListView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
-import java.util.Date;
 
 import ch.bbcag.dotooo.adapter.TaskAdapter;
 import ch.bbcag.dotooo.dal.TaskRoomDao;
@@ -57,12 +51,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void initFloatingActionButton() {
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), CreateTaskActivity.class);
-                startActivity(intent);
-            }
+        fab.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), CreateTaskActivity.class);
+            startActivity(intent);
         });
     }
 }
