@@ -69,7 +69,6 @@ public class TaskAdapter extends ArrayAdapter<Task> implements View.OnClickListe
                 currentItemView = LayoutInflater.from(getContext()).inflate(R.layout.day_row_item, parent, false);
                 currentItemView.setEnabled(false);
             } else {
-                System.out.println(isTask);
                 currentItemView = LayoutInflater.from(getContext()).inflate(R.layout.no_task_row_item, parent, false);
                 currentItemView.setEnabled(false);
             }
