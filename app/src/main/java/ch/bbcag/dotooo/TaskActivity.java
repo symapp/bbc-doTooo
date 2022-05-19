@@ -7,6 +7,8 @@ import androidx.cardview.widget.CardView;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -43,6 +45,7 @@ public class TaskActivity extends AppCompatActivity {
         super.onStart();
         setContentView(R.layout.activity_task);
         Intent intent = getIntent();
+
         id = intent.getIntExtra("taskId", 0);
         title = intent.getStringExtra("taskTitle");
         description = intent.getStringExtra("taskDescription");
@@ -60,14 +63,37 @@ public class TaskActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
+        Intent intent = null;
         if (itemId == android.R.id.home) {
             onBackPressed();
             return true;
         }
+        if (itemId == R.id.action_delete) {
+            intent = new Intent(getApplicationContext(), MainActivity.class);
+            delteTask();
+            startActivity(intent);
+            return true;
+        }
+        if (itemId == R.id.action_edit) {
+            intent = new Intent(getApplicationContext(), EditActivity.class);
+            startActivity(intent);
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
+
+    private void delteTask() {
+        TaskRoomDatabase.getInstance(getApplicationContext()).getTaskDao().deleteById(id);
 
     private void redirectToHome() {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);

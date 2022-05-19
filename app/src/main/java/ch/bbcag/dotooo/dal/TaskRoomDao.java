@@ -56,6 +56,10 @@ public interface TaskRoomDao {
     void delete(Task task);
 
     @Transaction
+    @Query("DELETE FROM Task WHERE taskId = :id")
+    void deleteById(Integer id);
+
+    @Transaction
     @Query("SELECT task.date FROM task")
     @TypeConverters(DateConverter.class)
     List<Date> getAllDates();
