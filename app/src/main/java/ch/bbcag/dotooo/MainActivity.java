@@ -1,25 +1,19 @@
 package ch.bbcag.dotooo;
 
-import static androidx.room.util.StringUtil.newStringBuilder;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.RecyclerView;
+
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+
 import android.widget.ListView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
-import java.util.Date;
 
 import ch.bbcag.dotooo.adapter.TaskAdapter;
 import ch.bbcag.dotooo.dal.TaskRoomDao;
@@ -35,28 +29,13 @@ public class MainActivity extends AppCompatActivity {
         addToDosToClickableList();
     }
 
-    public String getCorrectDateStringFromDate(Date date) {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String formattedDate = dateFormat.format(date);
-
-        int yearInt = Integer.parseInt(formattedDate.substring(0, 4));
-        int monthInt = Integer.parseInt(formattedDate.substring(5, 7));
-        int dayInt = Integer.parseInt(formattedDate.substring(8, 10));
-
-        String year = Integer.toString(yearInt - 1900);
-        String month = Integer.toString(monthInt-1);
-        String day = Integer.toString(dayInt);
-
-        return day + "-" + month + "-" + year;
-    }
-
     private void addToDosToClickableList() {
         ListView listView = findViewById(R.id.list);
 
         TaskRoomDatabase database = TaskRoomDatabase.getInstance(getApplicationContext());
         TaskRoomDao taskDao = database.getTaskDao();
 
-        TaskAdapter arrayAdapter = new TaskAdapter((ArrayList<Task>) taskDao.getAll(), getApplicationContext());
+        TaskAdapter arrayAdapter = new TaskAdapter((ArrayList<Task>) taskDao.getUnclompetedTasks(), getApplicationContext());
         listView.setAdapter(arrayAdapter);
 
         // setup click listener
@@ -65,11 +44,6 @@ public class MainActivity extends AppCompatActivity {
             Task selected = (Task) parent.getItemAtPosition(position);
 
             intent.putExtra("taskId", selected.getId());
-            intent.putExtra("taskTitle", selected.getTitle());
-            intent.putExtra("taskDescription", selected.getDescription());
-            intent.putExtra("taskColorHex", selected.getColorHex());
-            String formattedDate = getCorrectDateStringFromDate(selected.getDate());
-            intent.putExtra("taskDate", formattedDate);
             startActivity(intent);
         };
         listView.setOnItemClickListener(mListClickHandler);
@@ -77,12 +51,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void initFloatingActionButton() {
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), CreateTaskActivity.class);
-                startActivity(intent);
-            }
+        fab.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), CreateTaskActivity.class);
+            startActivity(intent);
         });
     }
 }

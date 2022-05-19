@@ -13,14 +13,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import ch.bbcag.dotooo.dal.TaskRoomDatabase;
 import ch.bbcag.dotooo.entity.Task;
 
 public class TaskActivity extends AppCompatActivity {
+
+    private Task task;
 
     private int id;
 
@@ -45,12 +47,12 @@ public class TaskActivity extends AppCompatActivity {
         super.onStart();
         setContentView(R.layout.activity_task);
         Intent intent = getIntent();
-
         id = intent.getIntExtra("taskId", 0);
-        title = intent.getStringExtra("taskTitle");
-        description = intent.getStringExtra("taskDescription");
-        date = intent.getStringExtra("taskDate");
-        colorHex = intent.getStringExtra("taskColorHex");
+        task = TaskRoomDatabase.getInstance(getApplicationContext()).getTaskDao().getById(id);
+        title = task.getTitle();
+        description = task.getDescription();
+        date = getCorrectDateStringFromDate(task.getDate());
+        colorHex = task.getColorHex();
         setTitle(title);
         TextView titleTextField = (TextView) findViewById(R.id.title);
         titleTextField.setText(title);
@@ -60,6 +62,21 @@ public class TaskActivity extends AppCompatActivity {
         dateTextField.setText(date);
         CardView colorCardView = (CardView) findViewById(R.id.detailColorView);
         colorCardView.setCardBackgroundColor(Color.parseColor(colorHex));
+    }
+
+    private String getCorrectDateStringFromDate(Date date) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate = dateFormat.format(date);
+
+        int yearInt = Integer.parseInt(formattedDate.substring(0, 4));
+        int monthInt = Integer.parseInt(formattedDate.substring(5, 7));
+        int dayInt = Integer.parseInt(formattedDate.substring(8, 10));
+
+        String year = Integer.toString(yearInt - 1900);
+        String month = Integer.toString(monthInt - 1);
+        String day = Integer.toString(dayInt);
+
+        return day + "-" + month + "-" + year;
     }
 
     @Override
@@ -93,7 +110,7 @@ public class TaskActivity extends AppCompatActivity {
         TaskRoomDatabase.getInstance(getApplicationContext()).getTaskDao().deleteById(id);
     }
 
-    private void redirectToHome() {
+    public void redirectToHome() {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
     }
@@ -106,7 +123,13 @@ public class TaskActivity extends AppCompatActivity {
     }
 
     public void completeTask() {
+    public void updateTaskById(Integer id) {
+        task.setDone(true);
+        TaskRoomDatabase.getInstance(getApplicationContext()).getTaskDao().update(task);
+    }
 
+    public void completeTask(View view) {
+        updateTaskById(id);
         redirectToHome();
     }
 }

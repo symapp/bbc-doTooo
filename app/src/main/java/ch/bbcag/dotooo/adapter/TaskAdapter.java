@@ -58,7 +58,6 @@ public class TaskAdapter extends ArrayAdapter<Task> implements View.OnClickListe
         cardView.setCardBackgroundColor(Color.parseColor(currentTaskPosition.getColorHex()));
 
 
-
         // then return the recyclable view
         return currentItemView;
     }

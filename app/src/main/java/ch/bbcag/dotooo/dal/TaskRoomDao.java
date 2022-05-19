@@ -44,7 +44,7 @@ public interface TaskRoomDao {
 
     @Transaction
     @Query("SELECT * FROM task WHERE taskId = :id")
-    Task getTaskById(Integer id);
+    Task getById(Integer id);
 
     @Transaction
     @Query("UPDATE task SET isDone = 1 WHERE taskId = :id")
