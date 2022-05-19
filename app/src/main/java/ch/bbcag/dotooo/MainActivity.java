@@ -2,6 +2,10 @@ package ch.bbcag.dotooo;
 
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.room.Transaction;
 
 
 import android.annotation.SuppressLint;
@@ -10,6 +14,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 
+import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.SearchView;
 
@@ -40,7 +45,11 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     private TaskRoomDao taskDao;
 
-    TaskAdapter taskAdapter;
+    private TaskAdapter taskAdapter;
+
+    private ArrayList<Task> tasks;
+
+    private boolean isFiltering = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +61,13 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         taskDao = database.getTaskDao();
 
         initFloatingActionButton();
-        initTaskList();
+        initTaskList((ArrayList<Task>) taskDao.getAll());
+
+//        if (savedInstanceState == null) {
+//            getSupportFragmentManager().beginTransaction()
+//                    .replace(R.id.fragment_container_view, Filter.class, null)
+//                    .commit();
+//        }
     }
 
     @Override
@@ -64,6 +79,15 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         searchView.setQueryHint(getString(R.string.search_hint));
         searchView.setIconified(false);
         searchView.setOnQueryTextListener(this);
+
+        MenuItem filterButton = menu.findItem(R.id.filter);
+        filterButton.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                toggleShowFilter();
+                return false;
+            }
+        });
 
         return true;
     }
@@ -80,13 +104,31 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         return false;
     }
 
+    private void toggleShowFilter() {
+        Filter filterFragment = new Filter();
+        FragmentManager fm = getSupportFragmentManager();
+
+        if (null == fm) return;
+
+        isFiltering = !isFiltering;
+
+
+        if (isFiltering) {
+            fm.beginTransaction()
+                    .replace(R.id.fragment_container_view, filterFragment, null)
+                    .commit();
+        } else {
+            fm.beginTransaction().remove(getSupportFragmentManager().getFragments().get(0)).commit();
+        }
+    }
+
+
+
     private void filterTasks(String filterString) {
         taskAdapter.getFilter().filter(filterString);
     }
 
-    private void initTaskList() {
-
-        ArrayList<Task> allTasks = (ArrayList<Task>) taskDao.getAll();
+    private void initTaskList(ArrayList<Task> allTasks) {
 
         allTasks.removeIf(Task::getDone);
 
