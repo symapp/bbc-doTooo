@@ -36,49 +36,53 @@ public class TaskAdapter extends ArrayAdapter<Task> implements View.OnClickListe
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
-        // get the position of the view from the ArrayAdapter
-        Task currentTaskPosition = getItem(position);
-
-        // then according to the position of the view assign the desired image for the same
-        assert currentTaskPosition != null;
-
-
-        // convertView which is recyclable view
         View currentItemView = convertView;
 
-        // of the recyclable view is null then inflate the custom layout for the same
-        if (currentItemView == null) {
-            if (currentTaskPosition.getTitle().charAt(0) == '?') {
-                // get args
-                String title = currentTaskPosition.getTitle().substring(1);
-                String[] args = title.split("!");
-                String headerTitle = args[1];
-                String headerSubtitle = "";
-                if (args.length > 2) {
-                        headerSubtitle = args[2];
-                }
+        boolean isTask = true;
+        Task currentTaskPosition = getItem(position);
+        if (currentTaskPosition == null) {
+            assert currentItemView != null;
+            return currentItemView;
+        }
+        if (currentTaskPosition.getTitle().charAt(0) == '?') isTask = false;
 
-                currentItemView = LayoutInflater.from(getContext()).inflate(R.layout.day_row_item, parent, false);
-                currentItemView.setEnabled(false);
-
-                // set text, etc
-                TextView headerTitleTextView = currentItemView.findViewById(R.id.header_title);
-                headerTitleTextView.setText(headerTitle);
-
-                TextView headerSubtitleTextView = currentItemView.findViewById(R.id.header_subtitle);
-                headerSubtitleTextView.setText((headerSubtitle));
-
-            } else {
+        if (currentItemView == null || isTask != (boolean) convertView.getTag()) {
+            if (isTask) {
                 currentItemView = LayoutInflater.from(getContext()).inflate(R.layout.task_row_item, parent, false);
 
-                // set text, etc
-                TextView taskName = currentItemView.findViewById(R.id.task_name);
-                taskName.setText(currentTaskPosition.getTitle());
-
-                CardView cardView = currentItemView.findViewById(R.id.color_card);
-                cardView.setCardBackgroundColor(Color.parseColor(currentTaskPosition.getColorHex()));
-
+            } else {
+                currentItemView = LayoutInflater.from(getContext()).inflate(R.layout.day_row_item, parent, false);
+                currentItemView.setEnabled(false);
             }
+
+            currentItemView.setTag(isTask);
+        }
+
+
+        // then according to the position of the view assign the desired image for the same
+        if (isTask) {
+            // set text, etc
+            TextView taskName = currentItemView.findViewById(R.id.task_name);
+            if (taskName != null) taskName.setText(currentTaskPosition.getTitle());
+
+            CardView cardView = currentItemView.findViewById(R.id.color_card);
+            if (cardView != null) cardView.setCardBackgroundColor(Color.parseColor(currentTaskPosition.getColorHex()));
+        } else {
+            // get args
+            String title = currentTaskPosition.getTitle().substring(1);
+            String[] args = title.split("!");
+            String headerTitle = args[1];
+            String headerSubtitle = "";
+            if (args.length > 2) {
+                headerSubtitle = args[2];
+            }
+
+            // set text, etc
+            TextView headerTitleTextView = currentItemView.findViewById(R.id.header_title);
+            if (headerTitleTextView != null) headerTitleTextView.setText(headerTitle);
+
+            TextView headerSubtitleTextView = currentItemView.findViewById(R.id.header_subtitle);
+            if (headerSubtitleTextView != null) headerSubtitleTextView.setText((headerSubtitle));
         }
 
 

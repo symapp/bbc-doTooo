@@ -105,12 +105,12 @@ public class MainActivity extends AppCompatActivity {
             tasks.add(new Task("?notTask!noTasks", "", new Date(), Color.BLACK.getDisplayName()));
         }
 
-//        tasks.add(new Task("?notTask!Tomorrow!" + dayOfTheWeekTomorrow, "", new Date(), Color.BLACK.getDisplayName()));
-//        if (tomorrowTasks.size() > 0) {
-//            tasks.addAll(tomorrowTasks);
-//        } else {
-//            tasks.add(new Task("?notTask!noTasks", "", new Date(), Color.BLACK.getDisplayName()));
-//        }
+        tasks.add(new Task("?notTask!Tomorrow!" + dayOfTheWeekTomorrow, "", new Date(), Color.BLACK.getDisplayName()));
+        if (tomorrowTasks.size() > 0) {
+            tasks.addAll(tomorrowTasks);
+        } else {
+            tasks.add(new Task("?notTask!No Tasks", "", new Date(), Color.BLACK.getDisplayName()));
+        }
 
         ListView listView = (ListView) findViewById(R.id.task_list);
         TaskAdapter adapter = new TaskAdapter(tasks, getApplicationContext());
