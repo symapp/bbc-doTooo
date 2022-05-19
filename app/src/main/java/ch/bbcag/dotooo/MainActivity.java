@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         addToDosToClickableList();
     }
 
-    public String getCorrectDateStringFromDate(Date date) {
+    private String getCorrectDateStringFromDate(Date date) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String formattedDate = dateFormat.format(date);
 
@@ -65,9 +65,6 @@ public class MainActivity extends AppCompatActivity {
             Task selected = (Task) parent.getItemAtPosition(position);
 
             intent.putExtra("taskId", selected.getId());
-            intent.putExtra("taskTitle", selected.getTitle());
-            intent.putExtra("taskDescription", selected.getDescription());
-            intent.putExtra("taskColorHex", selected.getColorHex());
             String formattedDate = getCorrectDateStringFromDate(selected.getDate());
             intent.putExtra("taskDate", formattedDate);
             startActivity(intent);
