@@ -91,11 +91,9 @@ public class TaskActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-<<<<<<< HEAD
     private void delteTask() {
         TaskRoomDatabase.getInstance(getApplicationContext()).getTaskDao().deleteById(id);
 
-=======
     private void redirectToHome() {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
@@ -104,6 +102,5 @@ public class TaskActivity extends AppCompatActivity {
     public void completeTask() {
 
         redirectToHome();
->>>>>>> 65584282a1f42aa9767eb70b573e04fd32a83de2
     }
 }
