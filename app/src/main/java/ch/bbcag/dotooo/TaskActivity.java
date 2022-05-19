@@ -65,4 +65,14 @@ public class TaskActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    private void redirectToHome() {
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
+    }
+
+    public void completeTask() {
+
+        redirectToHome();
+    }
 }

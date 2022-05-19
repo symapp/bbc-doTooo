@@ -38,6 +38,14 @@ public interface TaskRoomDao {
     @Query("SELECT * FROM task WHERE isDone = :done ORDER BY date ASC")
     List<Task> getTasksByCompleted(boolean done);
 
+    @Transaction
+    @Query("SELECT * FROM task WHERE NOT isDone ORDER BY date ASC")
+    List<Task> getUnclompetedTasks();
+
+    @Transaction
+    @Query("UPDATE task SET isDone = 1 WHERE taskId = :id")
+    void completeTask(Integer id);
+
     @Update
     void update(Task task);
 
