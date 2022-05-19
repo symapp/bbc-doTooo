@@ -1,7 +1,7 @@
 package ch.bbcag.dotooo.adapter;
 
 import android.content.Context;
-import android.media.Image;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,15 +10,13 @@ import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 
 import ch.bbcag.dotooo.R;
 import ch.bbcag.dotooo.entity.Color;
 
 public class ColorAdapter extends BaseAdapter {
     Context context;
-    Color[] colors =  Color.class.getEnumConstants();
+    Color[] colors = Color.class.getEnumConstants();
     LayoutInflater inflater;
 
     public ColorAdapter(Context applicationContext) {

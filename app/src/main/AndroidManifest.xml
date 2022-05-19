@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DoTooo">
         <activity
+            android:name=".EditActivity"
+            android:exported="false" />
+        <activity
             android:name=".CreateTaskActivity"
             android:exported="false" />
         <activity
