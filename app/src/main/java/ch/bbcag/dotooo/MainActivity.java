@@ -50,6 +50,9 @@ public class MainActivity extends AppCompatActivity {
     private void initTaskList() {
 
         ArrayList<Task> allTasks = (ArrayList<Task>) taskDao.getAll();
+
+        allTasks.removeIf(Task::getDone);
+
         ArrayList<Task> TasksWithDay = getFormattedTaskListByDay(allTasks);
 
         ListView listView = findViewById(R.id.task_list);
@@ -75,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Task> getFormattedTaskListByDay(ArrayList<Task> allTasks) {
 
         // get weekdays
-
         Calendar date = Calendar.getInstance();
         date.setTime(new Date());
         String dayOfTheWeekToday = weekDayFormatter.format(date.getTime()).toUpperCase();
