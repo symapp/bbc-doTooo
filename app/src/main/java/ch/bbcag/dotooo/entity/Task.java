@@ -5,6 +5,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import ch.bbcag.dotooo.DateConverter;
@@ -40,31 +41,10 @@ public class Task {
         this.date = selectedDate;
         isDone = false;
         this.colorName = colorName;
-        switch (colorName) {
-            case "Red":
-                this.colorHex = "#d1422c";
-                break;
-            case "Blue":
-                this.colorHex = "#0400d4";
-                break;
-            case "Green":
-                this.colorHex = "#20bd4a";
-                break;
-            case "Yellow":
-                this.colorHex = "#ebe307";
-                break;
-            case "Purple":
-                this.colorHex = "#9307eb";
-                break;
-            case "Gray":
-                this.colorHex = "#6b6b6b";
-                break;
-            case "Black":
-                this.colorHex = "#000000";
-                break;
-            default:
-                this.colorHex = "#ffffff";
-                break;
+        for (Color color: Color.values()) {
+            if (color.getDisplayName().equals(colorName)) {
+                setColorHex(color.getHex());
+            }
         }
     }
 

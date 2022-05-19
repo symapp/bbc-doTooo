@@ -32,5 +32,7 @@
     <string name="main_activity_title">DoTooo</string>
     <string name="task_description_hint">Task description</string>
     <string name="task_name_hint">New task</string>
+    <string name="late_title">Late</string>
+    <string name="no_tasks">No tasks</string>
 
 </resources>
