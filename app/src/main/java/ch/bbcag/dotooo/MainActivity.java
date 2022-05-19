@@ -22,6 +22,7 @@ import java.util.Date;
 import ch.bbcag.dotooo.adapter.TaskAdapter;
 import ch.bbcag.dotooo.dal.TaskRoomDao;
 import ch.bbcag.dotooo.dal.TaskRoomDatabase;
+import ch.bbcag.dotooo.entity.Color;
 import ch.bbcag.dotooo.entity.Task;
 
 public class MainActivity extends AppCompatActivity {
@@ -55,8 +56,10 @@ public class MainActivity extends AppCompatActivity {
 
             return !taskDate.before(nowDate);
         });
+
         ArrayList<Task> todayTasks = new ArrayList<>(allTasks);
         todayTasks.removeIf(task -> !DateUtils.isSameDay(new Date(), task.getDate()));
+
         ArrayList<Task> tomorrowTasks = new ArrayList<>(allTasks);
         tomorrowTasks.removeIf(task -> {
             Calendar taskDate = Calendar.getInstance();
@@ -71,9 +74,11 @@ public class MainActivity extends AppCompatActivity {
 
 
         AdapterView.OnItemClickListener mListClickHandler = (parent, v, position, id) -> {
-            Intent intent = new Intent(getApplicationContext(), TaskActivity.class);
             Task selected = (Task) parent.getItemAtPosition(position);
 
+            if (selected.getTitle().charAt(0) == '?') return;
+
+            Intent intent = new Intent(getApplicationContext(), TaskActivity.class);
             intent.putExtra("taskId", selected.getId());
             intent.putExtra("taskTitle", selected.getTitle());
             intent.putExtra("taskDescription", selected.getDescription());
@@ -82,20 +87,53 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         };
 
-        ListView todayTasksList = (ListView) findViewById(R.id.list_today);
-        TaskAdapter todayAdapter = new TaskAdapter(todayTasks, getApplicationContext());
-        todayTasksList.setAdapter(todayAdapter);
-        todayTasksList.setOnItemClickListener(mListClickHandler);
 
-        ListView lateTasksList = (ListView) findViewById(R.id.list_late);
-        TaskAdapter lateAdapter = new TaskAdapter(lateTasks, getApplicationContext());
-        lateTasksList.setAdapter(lateAdapter);
-        lateTasksList.setOnItemClickListener(mListClickHandler);
+        String dayOfTheWeekToday = new SimpleDateFormat("EEEE").format(new Date()).toUpperCase();
+        String dayOfTheWeekTomorrow = new SimpleDateFormat("EEEE").format(new Date()).toUpperCase();
 
-        ListView tomorrowTaskList = (ListView) findViewById(R.id.list_tomorrow);
-        TaskAdapter tomorrowAdapter = new TaskAdapter(tomorrowTasks, getApplicationContext());
-        tomorrowTaskList.setAdapter(tomorrowAdapter);
-        tomorrowTaskList.setOnItemClickListener(mListClickHandler);
+        ArrayList<Task> tasks = new ArrayList<>();
+
+        if (lateTasks.size() > 0) {
+            tasks.add(new Task("?notTask!Late!", "", new Date(), Color.BLACK.getDisplayName()));
+            tasks.addAll(lateTasks);
+        }
+
+        tasks.add(new Task("?notTask!Today!" + dayOfTheWeekToday, "", new Date(), Color.BLACK.getDisplayName()));
+        if (todayTasks.size() > 0) {
+            tasks.addAll(todayTasks);
+        } else {
+            tasks.add(new Task("?notTask!noTasks", "", new Date(), Color.BLACK.getDisplayName()));
+        }
+
+//        tasks.add(new Task("?notTask!Tomorrow!" + dayOfTheWeekTomorrow, "", new Date(), Color.BLACK.getDisplayName()));
+//        if (tomorrowTasks.size() > 0) {
+//            tasks.addAll(tomorrowTasks);
+//        } else {
+//            tasks.add(new Task("?notTask!noTasks", "", new Date(), Color.BLACK.getDisplayName()));
+//        }
+
+        ListView listView = (ListView) findViewById(R.id.task_list);
+        TaskAdapter adapter = new TaskAdapter(tasks, getApplicationContext());
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(mListClickHandler);
+
+
+
+
+//        ListView todayTasksList = (ListView) findViewById(R.id.list_today);
+//        TaskAdapter todayAdapter = new TaskAdapter(todayTasks, getApplicationContext());
+//        todayTasksList.setAdapter(todayAdapter);
+//        todayTasksList.setOnItemClickListener(mListClickHandler);
+//
+//        ListView lateTasksList = (ListView) findViewById(R.id.list_late);
+//        TaskAdapter lateAdapter = new TaskAdapter(lateTasks, getApplicationContext());
+//        lateTasksList.setAdapter(lateAdapter);
+//        lateTasksList.setOnItemClickListener(mListClickHandler);
+//
+//        ListView tomorrowTaskList = (ListView) findViewById(R.id.list_tomorrow);
+//        TaskAdapter tomorrowAdapter = new TaskAdapter(tomorrowTasks, getApplicationContext());
+//        tomorrowTaskList.setAdapter(tomorrowAdapter);
+//        tomorrowTaskList.setOnItemClickListener(mListClickHandler);
     }
 
 
