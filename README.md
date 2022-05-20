@@ -13,7 +13,6 @@
 ## Testing
 
 * [Testing](docs/testing.md)
-* [Testing](docs/testing.md)
 
 ## Daily Scrum
 
