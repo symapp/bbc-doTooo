@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ListView;
 import android.widget.SearchView;
 
@@ -44,11 +43,11 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private TaskAdapter taskAdapter;
 
     private boolean isFiltering = false;
-    private ItemViewModel viewModel;
+    private FilterViewModel viewModel;
 
-    private Color filter_color;
-    private Date filter_date;
-    private Boolean filter_onlyCompleted = Boolean.FALSE;
+    private Color filter_color = null;
+    private Date filter_date = null;
+    private Boolean filter_onlyUncompleted = Boolean.TRUE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,12 +59,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         taskDao = database.getTaskDao();
 
         initFloatingActionButton();
-        initTaskList((ArrayList<Task>) taskDao.getAll(), true);
-
-        viewModel = new ViewModelProvider(this).get(ItemViewModel.class);
-        viewModel.getSelectedColor().observe(this, item -> {
-
-        });
+        initTaskList((ArrayList<Task>) taskDao.getAll());
+        initViewModel();
     }
 
     @Override
@@ -73,26 +68,17 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
 
+        // searchView
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
         searchView.setQueryHint(getString(R.string.search_hint));
         searchView.setIconified(false);
         searchView.setOnQueryTextListener(this);
 
-        searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                setAddDay(!b);
-            }
-        });
-
-
+        // filter
         MenuItem filterButton = menu.findItem(R.id.filter);
-        filterButton.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                toggleShowFilter();
-                return false;
-            }
+        filterButton.setOnMenuItemClickListener(menuItem -> {
+            toggleShowFilter();
+            return false;
         });
 
         return true;
@@ -110,6 +96,29 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         return false;
     }
 
+    private void initViewModel() {
+        viewModel = new ViewModelProvider(this).get(FilterViewModel.class);
+
+        viewModel.setSelectedColor(filter_color);
+        viewModel.setSelectedDate(filter_date);
+        viewModel.setSelectedOnlyUncompleted(filter_onlyUncompleted);
+
+        viewModel.getSelectedColor().observe(this, color -> {
+            this.filter_color = color;
+            loadAllTasks();
+        });
+
+        viewModel.getSelectedDate().observe(this, date -> {
+            this.filter_date = date;
+            loadAllTasks();
+        });
+
+        viewModel.getSelectedOnlyUncompleted().observe(this, b -> {
+            this.filter_onlyUncompleted = b;
+            loadAllTasks();
+        });
+    }
+
     private void toggleShowFilter() {
         Filter filterFragment = new Filter();
         FragmentManager fm = getSupportFragmentManager();
@@ -120,47 +129,30 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             fm.beginTransaction()
                     .replace(R.id.fragment_container_view, filterFragment, null)
                     .commit();
-            setAddDay(false);
         } else {
             for (Fragment fragment : getSupportFragmentManager().getFragments()) {
                 if (fragment != null) {
                     getSupportFragmentManager().beginTransaction().remove(fragment).commit();
                 }
             }
-            setAddDay(true);
         }
-    }
-
-    public void setFilter_color(Color filter_color) {
-        this.filter_color = filter_color;
-        initTaskListWithAllAndNotAddDay();
-    }
-
-    public void setFilter_date(Date filter_date) {
-        this.filter_date = filter_date;
-        initTaskListWithAllAndNotAddDay();
-    }
-
-    public void setFilter_onlyCompleted(Boolean filter_onlyCompleted) {
-        this.filter_onlyCompleted = filter_onlyCompleted;
-        initTaskListWithAllAndNotAddDay();
     }
 
     private void filterTasks(String filterString) {
         taskAdapter.getFilter().filter(filterString);
     }
 
-    private void initTaskListWithAllAndNotAddDay() {
-        initTaskList((ArrayList<Task>) taskDao.getAll(), false);
+    private void loadAllTasks() {
+        initTaskList((ArrayList<Task>) taskDao.getAll());
     }
 
-    private void initTaskList(ArrayList<Task> allTasks, boolean addDay) {
+    private void initTaskList(ArrayList<Task> allTasks) {
 
         if (isFiltering){
             // filter completed
-            if (filter_onlyCompleted != null && !filter_onlyCompleted)
+            if (filter_onlyUncompleted != null && filter_onlyUncompleted)
                 allTasks.removeIf(Task::getDone);
-            else if (filter_onlyCompleted != null) allTasks.removeIf(task -> !task.getDone());
+            else if (filter_onlyUncompleted != null) allTasks.removeIf(task -> !task.getDone());
 
             // filter color
             if (filter_color != null) {
@@ -177,16 +169,13 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 taskDate.setTime(task.getDate());
                 Calendar filterDate = Calendar.getInstance();
                 filterDate.setTime(filter_date);
-                System.out.println(taskDate.get(Calendar.DAY_OF_YEAR));
 
                 return !(taskDate.get(Calendar.DAY_OF_YEAR) == filterDate.get(Calendar.DAY_OF_YEAR) &&
                         taskDate.get(Calendar.YEAR) == filterDate.get(Calendar.YEAR));
             });
         }
 
-
-        ArrayList<Task> TasksWithDay = new ArrayList<>(allTasks);
-        if (addDay) TasksWithDay = getFormattedTaskListByDay(allTasks);
+        ArrayList<Task> TasksWithDay = getFormattedTaskListByDay(allTasks);
 
         ListView listView = findViewById(R.id.task_list);
         taskAdapter = new TaskAdapter(TasksWithDay, getApplicationContext());
@@ -206,10 +195,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             intent.putExtra("taskColorHex", selected.getColorHex());
             startActivity(intent);
         });
-    }
-
-    public void setAddDay(boolean addDay) {
-        initTaskList((ArrayList<Task>) taskDao.getAll(), addDay);
     }
 
     private ArrayList<Task> getFormattedTaskListByDay(ArrayList<Task> allTasks) {

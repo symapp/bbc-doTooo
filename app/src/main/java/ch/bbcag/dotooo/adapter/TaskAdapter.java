@@ -23,23 +23,19 @@ import ch.bbcag.dotooo.entity.Task;
 
 public class TaskAdapter extends BaseAdapter implements View.OnClickListener, Filterable {
 
-    private ArrayList<Task> originalTasks;
+    private final ArrayList<Task> originalTasks;
     private ArrayList<Task> filteredTasks;
-    private Context mContext;
-    private TaskFilter mFilter = new TaskFilter();
-    private LayoutInflater mInflater;
+    private final TaskFilter mFilter = new TaskFilter();
+    private final LayoutInflater mInflater;
 
     public TaskAdapter(ArrayList<Task> tasks, Context context) {
         this.originalTasks = tasks;
         this.filteredTasks = tasks;
-        this.mContext = context;
         mInflater = LayoutInflater.from(context);
     }
 
     @Override
-    public void onClick(View v) {
-        // onClick is set outside
-    }
+    public void onClick(View v) {}
 
     @Override
     public int getCount() {
@@ -151,16 +147,14 @@ public class TaskAdapter extends BaseAdapter implements View.OnClickListener, Fi
 
             FilterResults results = new FilterResults();
 
-            final List<Task> list = originalTasks;
-
-            int count = list.size();
+            int count = ((List<Task>) originalTasks).size();
             final ArrayList<Task> nlist = new ArrayList<>(count);
 
             for (int i = 0; i < count; i++) {
                 Task task = originalTasks.get(i);
                 if (task.getTitle().charAt(0) != '?' && (task.getTitle().toLowerCase().contains(filterString) || task.getDescription().toLowerCase().contains(filterString))) {
-
-                    System.out.println(task.getTitle() + " contains " + filterString + " : " + task.getTitle().toLowerCase().contains(filterString));
+                    nlist.add(task);
+                } else if (task.getTitle().charAt(0) == '?') {
                     nlist.add(task);
                 }
             }

@@ -1,9 +1,12 @@
 package ch.bbcag.dotooo;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -19,6 +22,7 @@ import android.widget.Spinner;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 
 import ch.bbcag.dotooo.adapter.ColorAdapter;
 import ch.bbcag.dotooo.entity.Color;
@@ -26,21 +30,20 @@ import ch.bbcag.dotooo.entity.Color;
 public class Filter extends Fragment {
 
     private Context context;
-
-    private ItemViewModel viewModel;
-
+    private FilterViewModel viewModel;
     private Date selectedDate = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        viewModel = new ViewModelProvider(requireActivity()).get(ItemViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity()).get(FilterViewModel.class);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        assert container != null;
         this.context = container.getContext();
 
         // Inflate the layout for this fragment
@@ -48,16 +51,16 @@ public class Filter extends Fragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         initColorPicker();
         initDatePicker();
         initCompletedSpinner();
     }
 
     private void initCompletedSpinner() {
-        Spinner completedSpinner = (Spinner) getView().findViewById(R.id.completed_button);
+        // setup
+        Spinner completedSpinner = (Spinner) requireView().findViewById(R.id.completed_button);
 
         ArrayList<String> choices = new ArrayList<>();
         choices.add("Uncompleted");
@@ -67,89 +70,124 @@ public class Filter extends Fragment {
         ArrayAdapter<String> completedSpinnerAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_dropdown_item, choices);
         completedSpinner.setAdapter(completedSpinnerAdapter);
 
+
+        // set based on viewModel
+        if (viewModel.getSelectedOnlyUncompleted().getValue() == null) {
+            completedSpinner.setSelection(2);
+        } else if (viewModel.getSelectedOnlyUncompleted().getValue()) {
+            completedSpinner.setSelection(0);
+        } else {
+            completedSpinner.setSelection(1);
+        }
+
+        // listeners
         completedSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 Boolean value = null;
-                if (adapterView.getSelectedItem().equals("Completed")) value = Boolean.TRUE;
-                else if (adapterView.getSelectedItem().equals("Uncompleted")) value = Boolean.FALSE;
-                ((MainActivity) requireActivity()).setFilter_onlyCompleted(value);
+                if (adapterView.getSelectedItem().equals("Completed")) value = Boolean.FALSE;
+                else if (adapterView.getSelectedItem().equals("Uncompleted")) value = Boolean.TRUE;
+                viewModel.setSelectedOnlyUncompleted(value);
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
+            public void onNothingSelected(AdapterView<?> adapterView) {}
+        });
 
+        completedSpinner.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                viewModel.setSelectedOnlyUncompleted(null);
+                completedSpinner.setSelection(2);
+                return true;
             }
         });
     }
 
     private void initColorPicker() {
-        Spinner colorSpinner = getView().findViewById(R.id.color_picker);
+        // setup
+        Spinner colorSpinner = requireView().findViewById(R.id.color_picker);
 
         ColorAdapter colorAdapter = new ColorAdapter(context, true);
         colorSpinner.setAdapter(colorAdapter);
 
+        // set based on viewModel
+        Color selectedColor = viewModel.getSelectedColor().getValue();
+        for (int i = 0; i < colorAdapter.getCount(); i++) {
+            Color color = (Color) colorAdapter.getItem(i);
+            if (selectedColor == null) {
+                if (color == null) {
+                    colorSpinner.setSelection(i);
+                }
+            } else {
+                if (color != null && color.equals(selectedColor)) {
+                    colorSpinner.setSelection(i);
+                }
+            }
+        }
+
+        // listeners
         colorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                ((MainActivity) requireActivity()).setFilter_color((Color) adapterView.getSelectedItem());
+                viewModel.setSelectedColor((Color) adapterView.getSelectedItem());
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
+            public void onNothingSelected(AdapterView<?> adapterView) {}
+        });
 
-            }
+        colorSpinner.setOnLongClickListener(view -> {
+            viewModel.setSelectedColor(null);
+            colorSpinner.setSelection(0);
+            return true;
         });
     }
 
+    @SuppressLint("SetTextI18n")
     private void initDatePicker() {
-        Button dateButton = getView().findViewById(R.id.datePickerButton);
+        Button dateButton = requireView().findViewById(R.id.datePickerButton);
 
-        Button finalDateButton = dateButton;
-        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                selectedDate = new Date(year-1900, month, day);
-                month = month + 1;
-                String date = makeDateString(day, month, year);
-                finalDateButton.setText(date);
-                ((MainActivity) requireActivity()).setFilter_date(selectedDate);
-            }
+        DatePickerDialog.OnDateSetListener dateSetListener = (datePicker, year, month, day) -> {
+            Date selectedDate = new Date(year-1900, month, day);
+            month = month + 1;
+            String date = makeDateString(day, month, year);
+            dateButton.setText(date);
+            viewModel.setSelectedDate(selectedDate);
         };
 
         Calendar cal = Calendar.getInstance();
         int year = cal.get(Calendar.YEAR);
         int month = cal.get(Calendar.MONTH);
         int day = cal.get(Calendar.DAY_OF_MONTH);
-
         DatePickerDialog datePickerDialog = new DatePickerDialog(context, dateSetListener, year, month, day);
 
-        dateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                datePickerDialog.show();
+        dateButton.setOnClickListener(view -> datePickerDialog.show());
+
+        dateButton.setOnLongClickListener(view -> {
+            if (dateButton.getText() == "All") {
+                selectedDate = new Date();
+                dateButton.setText(getTodaysDate());
+                viewModel.setSelectedDate(selectedDate);
+            } else {
+                selectedDate = null;
+                dateButton.setText("All");
+                viewModel.setSelectedDate(null);
             }
+            return true;
         });
 
-        Button finalDateButton1 = dateButton;
-        dateButton.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                if (finalDateButton1.getText() == "All") {
-                    selectedDate = new Date();
-                    finalDateButton1.setText(getTodaysDate());
-                    ((MainActivity) requireActivity()).setFilter_date(selectedDate);
-                } else {
-                    selectedDate = null;
-                    finalDateButton1.setText("All");
-                    ((MainActivity) requireActivity()).setFilter_date(null);
-                }
-                return true;
-            }
-        });
-
-        dateButton = getView().findViewById(R.id.datePickerButton);
-        dateButton.setText("All");
+        // set based on viewModel
+        Date date = viewModel.getSelectedDate().getValue();
+        if (date == null) {
+            dateButton.setText("All");
+            selectedDate = null;
+        } else {
+            Calendar dateCal = Calendar.getInstance();
+            dateCal.setTime(date);
+            selectedDate = date;
+            dateButton.setText(makeDateString(dateCal.get(Calendar.DAY_OF_MONTH), dateCal.get(Calendar.MONTH), dateCal.get(Calendar.YEAR)));
+        }
     }
 
     private String getTodaysDate() {
