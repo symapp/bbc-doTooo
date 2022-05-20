@@ -144,7 +144,7 @@ public class CreateTaskActivity extends AppCompatActivity {
     private void initColorSpinner() {
         Spinner colorSpinner = findViewById(R.id.color_picker);
 
-        ColorAdapter colorAdapter = new ColorAdapter(getApplicationContext());
+        ColorAdapter colorAdapter = new ColorAdapter(getApplicationContext(), false);
         colorSpinner.setAdapter(colorAdapter);
 
         colorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

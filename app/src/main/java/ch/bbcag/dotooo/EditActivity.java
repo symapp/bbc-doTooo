@@ -92,7 +92,7 @@ public class EditActivity extends AppCompatActivity {
         Spinner colorSpinner = findViewById(R.id.color_picker);
 
 
-        ColorAdapter colorAdapter = new ColorAdapter(getApplicationContext());
+        ColorAdapter colorAdapter = new ColorAdapter(getApplicationContext(), false);
         colorSpinner.setSelection(5);
         colorSpinner.setAdapter(colorAdapter);
 

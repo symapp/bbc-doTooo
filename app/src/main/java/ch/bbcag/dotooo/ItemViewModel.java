@@ -9,11 +9,11 @@ import ch.bbcag.dotooo.entity.Color;
 public class ItemViewModel extends ViewModel {
     private final MutableLiveData<Color> selectedColor = new MutableLiveData<>();
 
-    private void setData(Color color) {
+    public void setData(Color color) {
         selectedColor.setValue(color);
     }
 
-    private LiveData<Color> getSelectedColor() {
+    public LiveData<Color> getSelectedColor() {
         return selectedColor;
     }
 }

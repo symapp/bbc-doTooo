@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     private boolean isFiltering = false;
 
+
     private ItemViewModel viewModel;
 
     @Override
@@ -66,7 +67,10 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         initFloatingActionButton();
         initTaskList((ArrayList<Task>) taskDao.getAll());
 
+        viewModel = new ViewModelProvider(this).get(ItemViewModel.class);
+        viewModel.getSelectedColor().observe(this, item -> {
 
+        });
     }
 
     @Override
