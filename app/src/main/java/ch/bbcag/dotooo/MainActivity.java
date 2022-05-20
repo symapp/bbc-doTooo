@@ -1,27 +1,24 @@
 package ch.bbcag.dotooo;
 
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.ViewModelProvider;
-
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
-
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.SearchView;
 
-import org.apache.commons.lang3.time.DateUtils;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import org.apache.commons.lang3.time.DateUtils;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -35,7 +32,7 @@ import ch.bbcag.dotooo.dal.TaskRoomDatabase;
 import ch.bbcag.dotooo.entity.Color;
 import ch.bbcag.dotooo.entity.Task;
 
-public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener{
+public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
     @SuppressLint("SimpleDateFormat")
     DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -167,8 +164,13 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     private void initTaskList(ArrayList<Task> allTasks, boolean addDay) {
 
-        if (filter_only_completed != null && !filter_only_completed) allTasks.removeIf(Task::getDone);
+        if (filter_only_completed != null && !filter_only_completed)
+            allTasks.removeIf(Task::getDone);
         else if (filter_only_completed != null) allTasks.removeIf(task -> !task.getDone());
+
+        if (filter_color != null) {
+            allTasks.removeIf(task -> !task.getColorName().equals(filter_color.getDisplayName()));
+        }
 
         ArrayList<Task> TasksWithDay = new ArrayList<>(allTasks);
         if (addDay) TasksWithDay = getFormattedTaskListByDay(allTasks);

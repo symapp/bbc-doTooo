@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
@@ -141,14 +140,11 @@ public class TaskAdapter extends BaseAdapter implements View.OnClickListener, Fi
 
             for (int i = 0; i < count; i++) {
                 Task task = originalTasks.get(i);
-                if (task.getTitle().charAt(0) != '?') {
-                    if (task.getTitle().toLowerCase().contains(filterString)) {
+                if (task.getTitle().charAt(0) != '?' && (task.getTitle().toLowerCase().contains(filterString) || task.getDescription().toLowerCase().contains(filterString))) {
 
-                        System.out.println(task.getTitle() + " contains " + filterString + " : " + task.getTitle().toLowerCase().contains(filterString));
-                        nlist.add(task);
-                    }
+                    System.out.println(task.getTitle() + " contains " + filterString + " : " + task.getTitle().toLowerCase().contains(filterString));
+                    nlist.add(task);
                 }
-
             }
 
             results.values = nlist;
