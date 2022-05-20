@@ -22,12 +22,12 @@ public class ColorAdapter extends BaseAdapter {
     private ArrayList<Color> colors;
     private LayoutInflater inflater;
 
-    public ColorAdapter(Context applicationContext, boolean haveAll) {
+    public ColorAdapter(Context applicationContext, boolean haveNull) {
         this.context = applicationContext;
         inflater = (LayoutInflater.from(applicationContext));
 
         colors = new ArrayList<>();
-        if (haveAll) colors.add(null);
+        if (haveNull) colors.add(null);
         colors.addAll(Arrays.asList(Objects.requireNonNull(Color.class.getEnumConstants())));
     }
 
