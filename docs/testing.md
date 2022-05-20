@@ -30,9 +30,60 @@ Erwartetes Resultat: Es öffnet sich ein neuer Bildschirm mit dem ActionBar-Tite
 
 ### T-03
 
-Vorbedingungen: Standart-Vorbedingungen, T-03 erfolgreich
+Vorbedingungen: Standart-Vorbedingungen, T-02 erfolgreich
 
 Ablauf:
 
 1. Falls sich der Tester noch nicht auf dem "Create Task" Screen befindet, navigiert der Tester wie bei T-02 zu diesem.
-2. 
+2. Der Tester gibt bei den Eingabefelder "Name" und "Description" etwas ein (z.B Test).
+3. Der Tester wählt eine Farbe aus.
+4. Der Tester klickt anschliessend auf den "Save" Button.
+5. Der Tester verändert das Datum nicht
+
+Erwartetes Resultat: Nach dem Klick auf den "Save" Button, wird der Tester zur Startseite weitergeleitet. Auf dieser ist bei dem Abschnitt "Today" nun das erstellte ToDo zu sehen.
+
+### T-04
+
+Vorbedingungen: Standart-Vorbedingungen, T-03 erfolgreich
+
+Ablauf:
+
+1. Falls noch kein ToDo erstellt wurde, erstellt der Tester ein ToDo wie bei T-03.
+2. Der Tester klickt auf der Startseite auf das eben erstellte ToDo.
+
+Erwartetes Resultat: Nach dem Klick auf das ToDo wird der Tester zur Detailseite des ToDo's weitergeleitet. Auf der Detailseite befinden sich in der ActionBar ein Pfeil, der Titel des ToDos, und drei Punkte. Unter der ActionBar ist ebenfalls der Titel des ToDo's zu sehen. Rechts neben dem Titel wird in einem Viereck die Farbe des ToDo's zu sehen. Unter dem Titel wird das Datum und die Description des ToDo's angezeigt. zudem wird ein grauer "Completed" Button angezeigt.
+
+### T-05
+
+Vorbedingungen: Standart-Vorbedingungen, T-04 erfolgreich
+
+Ablauf:
+
+1. Fals sich der Tester noch nicht auf dem DetailScreen befindet, navigiert der Tester zu diesem wie bei T-04
+2. Der Tester klickt auf die drei Punkte und klickt anschliessend auf "Edit".
+
+Erwartetes Resultat: Nach dem Klick auf den "Edit" Button wird der Tester zur Editierseite des ToDo's weitergeleitet. Auf dieser ist das selbe Formular wie beim erstellen eines ToDo's zu sehen. Jedoch sind die bereits vorhandenen Daten in das Formular eingefüllt.
+
+### T-06
+
+Vorbedingungen: Standart-Vorbedingungen, T-05 erfolgreich
+
+Ablauf:
+
+1. Falls sich der Tester noch nicht auf der Editierseite befindet, navigiert er zu dieser wie bei T-05.
+2. Der Tester verändert beliebige Werte des ToDo's.
+3. Anschliessend klickt der Tester auf den "Save" Button.
+4. Der Tester klickt auf der Startseite das editierte ToDo an.
+
+Erwartetes Resultat: Nach dem Klick auf den "Save" Button, wird der Tester zur Startseite weitergeleitet. Auf der Detailseite werden nun die editierten Werte korrekt angezeigt.
+
+### T-07
+
+Vorbedingungen: Standart-Vorbedingungen, T-04 erfolgreich
+
+Ablauf:
+
+1. Falls sich der Tester noch nicht auf der Detailseite befindet, navigiert er zu dieser wie bei T-04.
+2. Der Tester klickt auf den grauen "Completed" Button.
+
+Erwartetes Resultat: Nach dem Klick auf den "Completed" Button wird der Tester zur Startseite weitergeleitet. Auf dieser ist das ToDo's welches der Tester gerade completed hat nicht mehr zu sehen.
