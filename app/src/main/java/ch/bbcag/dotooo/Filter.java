@@ -20,6 +20,7 @@ import android.widget.Spinner;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 
 import ch.bbcag.dotooo.adapter.ColorAdapter;
 import ch.bbcag.dotooo.entity.Color;
