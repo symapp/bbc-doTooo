@@ -20,7 +20,6 @@
         <item>Purple</item>
         <item>Black</item>
     </string-array>
-    <color name="DoToooBlue">#2A56C6</color>
     <string name="add_task">Add Task</string>
     <string name="button_cancel">CANCEL</string>
     <string name="button_save">SAVE</string>
@@ -38,5 +37,7 @@
     <string name="search_hint">search</string>
     <string name="filter_title">filter</string>
     <string name="completed_title">STATUS</string>
+    <string name="delete_title">Delete</string>
+    <string name="edit_title">Edit</string>
 
 </resources>

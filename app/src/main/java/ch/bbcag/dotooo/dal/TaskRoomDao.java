@@ -11,7 +11,7 @@ import androidx.room.Update;
 import java.util.Date;
 import java.util.List;
 
-import ch.bbcag.dotooo.DateConverter;
+import ch.bbcag.dotooo.helper.DateConverter;
 import ch.bbcag.dotooo.entity.Task;
 
 @Dao

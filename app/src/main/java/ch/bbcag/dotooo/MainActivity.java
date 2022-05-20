@@ -19,8 +19,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.apache.commons.lang3.time.DateUtils;
 
-import org.apache.commons.lang3.time.DateUtils;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -32,6 +30,7 @@ import ch.bbcag.dotooo.dal.TaskRoomDao;
 import ch.bbcag.dotooo.dal.TaskRoomDatabase;
 import ch.bbcag.dotooo.entity.Color;
 import ch.bbcag.dotooo.entity.Task;
+import ch.bbcag.dotooo.viewmodel.FilterViewModel;
 
 public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
@@ -130,7 +129,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     }
 
     private void toggleShowFilter() {
-        Filter filterFragment = new Filter();
+        FilterFragment filterFragment = new FilterFragment();
         FragmentManager fm = getSupportFragmentManager();
 
         isFiltering = !isFiltering;

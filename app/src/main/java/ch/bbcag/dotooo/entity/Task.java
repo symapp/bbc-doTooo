@@ -7,7 +7,7 @@ import androidx.room.TypeConverters;
 
 import java.util.Date;
 
-import ch.bbcag.dotooo.DateConverter;
+import ch.bbcag.dotooo.helper.DateConverter;
 
 @Entity
 public class Task {
