@@ -32,8 +32,6 @@ public class EditActivity extends AppCompatActivity {
 
     private Task task;
 
-    private String selectedColor;
-
     private DatePickerDialog datePickerDialog;
 
     private Button dateButton;
@@ -152,31 +150,33 @@ public class EditActivity extends AppCompatActivity {
     }
 
     private String getMonthFormat(int month) {
-        if (month == 1)
-            return "January";
-        if (month == 2)
-            return "February";
-        if (month == 3)
-            return "March";
-        if (month == 4)
-            return "April";
-        if (month == 5)
-            return "May";
-        if (month == 6)
-            return "June";
-        if (month == 7)
-            return "Juli";
-        if (month == 8)
-            return "August";
-        if (month == 9)
-            return "September";
-        if (month == 10)
-            return "October";
-        if (month == 11)
-            return "November";
-        if (month == 12)
-            return "December";
+       switch (month) {
+           case 1:
+               return "January";
+           case 2:
+               return "February";
+           case 3:
+               return "March";
+           case 4:
+               return "April";
+           case 5:
+               return "May";
+           case 6:
+               return "June";
+           case 7:
+               return "Juli";
+           case 8:
+               return "August";
+           case 9:
+               return "September";
+           case 10:
+               return "October";
+           case 11:
+               return "November";
+           case 12:
+               return "December";
 
+       }
         return "January";
     }
 
