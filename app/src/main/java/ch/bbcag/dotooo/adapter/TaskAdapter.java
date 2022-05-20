@@ -2,6 +2,7 @@ package ch.bbcag.dotooo.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,6 +66,9 @@ public class TaskAdapter extends BaseAdapter implements View.OnClickListener, Fi
 
 
         // set isTask
+        // 1 -> task
+        // 2 -> day
+        // 3 -> empty group
         int isTask = 1;
         if (currentTaskPosition.getTitle().charAt(0) == '?') {
             if (currentTaskPosition.getTitle().startsWith("?notTask!No")) {
@@ -94,11 +98,25 @@ public class TaskAdapter extends BaseAdapter implements View.OnClickListener, Fi
         // set values
         if (isTask == 1) {
             TextView taskName = currentItemView.findViewById(R.id.task_name);
-            if (taskName != null) taskName.setText(currentTaskPosition.getTitle());
+            if (taskName != null) {
+                taskName.setText(currentTaskPosition.getTitle());
+                if (currentTaskPosition.getDone()) {
+                    taskName.setTextColor(Color.parseColor("#999999"));
+                    currentItemView.setBackgroundColor(Color.parseColor("#fafafa"));
+                }
+            }
+
 
             CardView cardView = currentItemView.findViewById(R.id.color_card);
-            if (cardView != null)
+            if (cardView != null){
                 cardView.setCardBackgroundColor(Color.parseColor(currentTaskPosition.getColorHex()));
+                if (currentTaskPosition.getDone()) {
+                    String color = currentTaskPosition.getColorHex();
+                    color = color.charAt(0) + "50" + color.substring(1);
+                    cardView.setCardBackgroundColor(Color.parseColor(color));
+                    cardView.setElevation(0f);
+                }
+            }
         } else if (isTask == 2) {
             // get args
             String title = currentTaskPosition.getTitle().substring(1);

@@ -41,21 +41,14 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     SimpleDateFormat weekDayFormatter = new SimpleDateFormat("EEEE");
 
     private TaskRoomDao taskDao;
-
     private TaskAdapter taskAdapter;
 
-    private ArrayList<Task> tasks;
-
     private boolean isFiltering = false;
-
-
     private ItemViewModel viewModel;
 
     private Color filter_color;
-
     private Date filter_date;
-
-    private Boolean filter_only_completed;
+    private Boolean filter_onlyCompleted = Boolean.FALSE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,7 +116,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
         isFiltering = !isFiltering;
 
-
         if (isFiltering) {
             fm.beginTransaction()
                     .replace(R.id.fragment_container_view, filterFragment, null)
@@ -149,8 +141,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         initTaskListWithAllAndNotAddDay();
     }
 
-    public void setFilter_only_completed(Boolean filter_only_completed) {
-        this.filter_only_completed = filter_only_completed;
+    public void setFilter_onlyCompleted(Boolean filter_onlyCompleted) {
+        this.filter_onlyCompleted = filter_onlyCompleted;
         initTaskListWithAllAndNotAddDay();
     }
 
@@ -164,13 +156,34 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     private void initTaskList(ArrayList<Task> allTasks, boolean addDay) {
 
-        if (filter_only_completed != null && !filter_only_completed)
-            allTasks.removeIf(Task::getDone);
-        else if (filter_only_completed != null) allTasks.removeIf(task -> !task.getDone());
+        if (isFiltering){
+            // filter completed
+            if (filter_onlyCompleted != null && !filter_onlyCompleted)
+                allTasks.removeIf(Task::getDone);
+            else if (filter_onlyCompleted != null) allTasks.removeIf(task -> !task.getDone());
 
-        if (filter_color != null) {
-            allTasks.removeIf(task -> !task.getColorName().equals(filter_color.getDisplayName()));
+            // filter color
+            if (filter_color != null) {
+                allTasks.removeIf(task -> !task.getColorName().equals(filter_color.getDisplayName()));
+            }
+        } else {
+            allTasks.removeIf(Task::getDone);
         }
+
+        // filter date
+        if (filter_date != null) {
+            allTasks.removeIf(task -> {
+                Calendar taskDate = Calendar.getInstance();
+                taskDate.setTime(task.getDate());
+                Calendar filterDate = Calendar.getInstance();
+                filterDate.setTime(filter_date);
+                System.out.println(taskDate.get(Calendar.DAY_OF_YEAR));
+
+                return !(taskDate.get(Calendar.DAY_OF_YEAR) == filterDate.get(Calendar.DAY_OF_YEAR) &&
+                        taskDate.get(Calendar.YEAR) == filterDate.get(Calendar.YEAR));
+            });
+        }
+
 
         ArrayList<Task> TasksWithDay = new ArrayList<>(allTasks);
         if (addDay) TasksWithDay = getFormattedTaskListByDay(allTasks);

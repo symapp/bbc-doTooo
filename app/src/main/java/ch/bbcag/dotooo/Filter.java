@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
@@ -20,7 +19,6 @@ import android.widget.Spinner;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Objects;
 
 import ch.bbcag.dotooo.adapter.ColorAdapter;
 import ch.bbcag.dotooo.entity.Color;
@@ -31,7 +29,7 @@ public class Filter extends Fragment {
 
     private ItemViewModel viewModel;
 
-    private Date selectedDate;
+    private Date selectedDate = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,9 +60,9 @@ public class Filter extends Fragment {
         Spinner completedSpinner = (Spinner) getView().findViewById(R.id.completed_button);
 
         ArrayList<String> choices = new ArrayList<>();
-        choices.add("All");
-        choices.add("Completed");
         choices.add("Uncompleted");
+        choices.add("Completed");
+        choices.add("All");
 
         ArrayAdapter<String> completedSpinnerAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_dropdown_item, choices);
         completedSpinner.setAdapter(completedSpinnerAdapter);
@@ -75,7 +73,7 @@ public class Filter extends Fragment {
                 Boolean value = null;
                 if (adapterView.getSelectedItem().equals("Completed")) value = Boolean.TRUE;
                 else if (adapterView.getSelectedItem().equals("Uncompleted")) value = Boolean.FALSE;
-                ((MainActivity) requireActivity()).setFilter_only_completed(value);
+                ((MainActivity) requireActivity()).setFilter_onlyCompleted(value);
             }
 
             @Override
@@ -115,6 +113,7 @@ public class Filter extends Fragment {
                 month = month + 1;
                 String date = makeDateString(day, month, year);
                 finalDateButton.setText(date);
+                ((MainActivity) requireActivity()).setFilter_date(selectedDate);
             }
         };
 
@@ -132,8 +131,25 @@ public class Filter extends Fragment {
             }
         });
 
+        Button finalDateButton1 = dateButton;
+        dateButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                if (finalDateButton1.getText() == "All") {
+                    selectedDate = new Date();
+                    finalDateButton1.setText(getTodaysDate());
+                    ((MainActivity) requireActivity()).setFilter_date(selectedDate);
+                } else {
+                    selectedDate = null;
+                    finalDateButton1.setText("All");
+                    ((MainActivity) requireActivity()).setFilter_date(null);
+                }
+                return true;
+            }
+        });
+
         dateButton = getView().findViewById(R.id.datePickerButton);
-        dateButton.setText(getTodaysDate());
+        dateButton.setText("All");
     }
 
     private String getTodaysDate() {
