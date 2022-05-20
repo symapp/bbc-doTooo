@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -53,6 +54,31 @@ public class Filter extends Fragment {
 
         initColorPicker();
         initDatePicker();
+        initCompletedSpinner();
+    }
+
+    private void initCompletedSpinner() {
+        Spinner completedSpinner = (Spinner) getView().findViewById(R.id.completed_button);
+
+        ArrayList<String> choices = new ArrayList<>();
+        choices.add("All");
+        choices.add("Completed");
+        choices.add("Uncompleted");
+
+        ArrayAdapter<String> completedSpinnerAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_dropdown_item, choices);
+        completedSpinner.setAdapter(completedSpinnerAdapter);
+
+        completedSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                System.out.println(adapterView.getSelectedItem());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 
     private void initColorPicker() {
