@@ -31,13 +31,9 @@ public class EditActivity extends AppCompatActivity {
 
     private Task task;
 
-    private String selectedColor;
-
     private DatePickerDialog datePickerDialog;
 
     private Button dateButton;
-
-    private Date selectedDate = new Date();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,25 +51,26 @@ public class EditActivity extends AppCompatActivity {
 
         initDatePicker();
         dateButton = findViewById(R.id.datePickerButton);
-        dateButton.setText(getCorrectDateStringFromDate(task.getDate()));
+        dateButton.setText(getDateAsString(task.getDate()));
 
         setValues();
     }
 
-
-    private String getCorrectDateStringFromDate(Date date) {
+    private String getDateAsString(Date date) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String formattedDate = dateFormat.format(date);
 
-        int yearInt = Integer.parseInt(formattedDate.substring(0, 4));
-        int monthInt = Integer.parseInt(formattedDate.substring(5, 7));
-        int dayInt = Integer.parseInt(formattedDate.substring(8, 10));
+        int year = Integer.parseInt(formattedDate.substring(0, 4));
+        int month = Integer.parseInt(formattedDate.substring(5, 7));
+        int day = Integer.parseInt(formattedDate.substring(8,10));
 
-        String year = Integer.toString(yearInt - 1900);
-        String month = Integer.toString(monthInt - 1);
-        String day = Integer.toString(dayInt);
+        year = year-1900;
 
-        return day + "-" + month + "-" + year;
+        if(year < 1000) {
+            year = year+1900;
+        }
+
+        return makeDateString(day, month, year);
     }
 
     private void setValues() {
@@ -90,8 +87,7 @@ public class EditActivity extends AppCompatActivity {
         Spinner colorSpinner = findViewById(R.id.color_picker);
 
 
-        ColorAdapter colorAdapter = new ColorAdapter(getApplicationContext(), false);
-        colorSpinner.setSelection(5);
+        ColorAdapter colorAdapter = new ColorAdapter(getApplicationContext());
         colorSpinner.setAdapter(colorAdapter);
 
         colorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -99,8 +95,8 @@ public class EditActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 Color[] colors = Color.class.getEnumConstants();
                 assert colors != null;
-                selectedColor = colors[i].getDisplayName();
-
+                task.setColorName(colors[i].getDisplayName());
+                task.setColorHex(colors[i].getHex());
             }
 
             @Override
@@ -133,7 +129,7 @@ public class EditActivity extends AppCompatActivity {
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                month = month + 1;
+//                month = month + 1;
                 String date = makeDateString(day, month, year);
                 dateButton.setText(date);
                 task.setDate(new Date(year, month, day));
@@ -153,31 +149,33 @@ public class EditActivity extends AppCompatActivity {
     }
 
     private String getMonthFormat(int month) {
-        if (month == 1)
-            return "January";
-        if (month == 2)
-            return "February";
-        if (month == 3)
-            return "March";
-        if (month == 4)
-            return "April";
-        if (month == 5)
-            return "May";
-        if (month == 6)
-            return "June";
-        if (month == 7)
-            return "Juli";
-        if (month == 8)
-            return "August";
-        if (month == 9)
-            return "September";
-        if (month == 10)
-            return "October";
-        if (month == 11)
-            return "November";
-        if (month == 12)
-            return "December";
+       switch (month) {
+           case 1:
+               return "January";
+           case 2:
+               return "February";
+           case 3:
+               return "March";
+           case 4:
+               return "April";
+           case 5:
+               return "May";
+           case 6:
+               return "June";
+           case 7:
+               return "Juli";
+           case 8:
+               return "August";
+           case 9:
+               return "September";
+           case 10:
+               return "October";
+           case 11:
+               return "November";
+           case 12:
+               return "December";
 
+       }
         return "January";
     }
 
