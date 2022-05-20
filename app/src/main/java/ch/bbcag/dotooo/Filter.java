@@ -72,7 +72,6 @@ public class Filter extends Fragment {
         completedSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                System.out.println(adapterView.getSelectedItem());
                 Boolean value = null;
                 if (adapterView.getSelectedItem().equals("Completed")) value = Boolean.TRUE;
                 else if (adapterView.getSelectedItem().equals("Uncompleted")) value = Boolean.FALSE;
@@ -95,7 +94,7 @@ public class Filter extends Fragment {
         colorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                System.out.println(adapterView.getSelectedItem());
+                ((MainActivity) requireActivity()).setFilter_color((Color) adapterView.getSelectedItem());
             }
 
             @Override
