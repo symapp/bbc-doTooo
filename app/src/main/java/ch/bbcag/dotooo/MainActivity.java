@@ -4,9 +4,7 @@ package ch.bbcag.dotooo;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.room.Transaction;
 
 
 import android.annotation.SuppressLint;
@@ -55,6 +53,12 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
 
     private ItemViewModel viewModel;
+
+    private Color filter_color;
+
+    private Date filter_date;
+
+    private Boolean filter_only_completed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,15 +142,33 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         }
     }
 
+    public void setFilter_color(Color filter_color) {
+        this.filter_color = filter_color;
+        initTaskListWithAllAndNotAddDay();
+    }
 
+    public void setFilter_date(Date filter_date) {
+        this.filter_date = filter_date;
+        initTaskListWithAllAndNotAddDay();
+    }
+
+    public void setFilter_only_completed(Boolean filter_only_completed) {
+        this.filter_only_completed = filter_only_completed;
+        initTaskListWithAllAndNotAddDay();
+    }
 
     private void filterTasks(String filterString) {
         taskAdapter.getFilter().filter(filterString);
     }
 
+    private void initTaskListWithAllAndNotAddDay() {
+        initTaskList((ArrayList<Task>) taskDao.getAll(), false);
+    }
+
     private void initTaskList(ArrayList<Task> allTasks, boolean addDay) {
 
-        allTasks.removeIf(Task::getDone);
+        if (filter_only_completed != null && !filter_only_completed) allTasks.removeIf(Task::getDone);
+        else if (filter_only_completed != null) allTasks.removeIf(task -> !task.getDone());
 
         ArrayList<Task> TasksWithDay = new ArrayList<>(allTasks);
         if (addDay) TasksWithDay = getFormattedTaskListByDay(allTasks);
@@ -248,7 +270,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         }
         // config other
         if (otherTasks.size() > 0) {
-            tasks.add(new Task("?notTask!Other!" + dayOfTheWeekTomorrow, "", new Date(), Color.BLACK.getDisplayName()));
+            tasks.add(new Task("?notTask!Other!", "", new Date(), Color.BLACK.getDisplayName()));
             tasks.addAll(otherTasks);
         }
 

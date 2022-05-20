@@ -73,6 +73,10 @@ public class Filter extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 System.out.println(adapterView.getSelectedItem());
+                Boolean value = null;
+                if (adapterView.getSelectedItem().equals("Completed")) value = Boolean.TRUE;
+                else if (adapterView.getSelectedItem().equals("Uncompleted")) value = Boolean.FALSE;
+                ((MainActivity) requireActivity()).setFilter_only_completed(value);
             }
 
             @Override
