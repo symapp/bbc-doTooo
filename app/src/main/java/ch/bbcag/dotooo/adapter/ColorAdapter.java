@@ -1,7 +1,7 @@
 package ch.bbcag.dotooo.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +9,6 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
-
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -47,6 +46,7 @@ public class ColorAdapter extends BaseAdapter {
         return 0;
     }
 
+    @SuppressLint({"ViewHolder", "InflateParams"})
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         view = inflater.inflate(R.layout.color_spinner_items, null);
@@ -58,8 +58,9 @@ public class ColorAdapter extends BaseAdapter {
             cardView.setCardBackgroundColor(android.graphics.Color.parseColor(colors.get(i).getHex()));
             name.setText(colors.get(i).getDisplayName());
         } else {
-            cardView.setCardBackgroundColor(android.graphics.Color.WHITE);
+            cardView.setCardBackgroundColor(android.graphics.Color.parseColor("#d1d1d1"));
             name.setText("All");
+            cardView.setRadius(100);
         }
 
         return view;

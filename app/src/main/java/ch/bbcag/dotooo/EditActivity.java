@@ -1,8 +1,5 @@
 package ch.bbcag.dotooo;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,13 +13,15 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
 import ch.bbcag.dotooo.adapter.ColorAdapter;
-import ch.bbcag.dotooo.dal.TaskRoomDao;
 import ch.bbcag.dotooo.dal.TaskRoomDatabase;
 import ch.bbcag.dotooo.entity.Color;
 import ch.bbcag.dotooo.entity.Task;
@@ -60,7 +59,6 @@ public class EditActivity extends AppCompatActivity {
 
         setValues();
     }
-
 
 
     private String getCorrectDateStringFromDate(Date date) {
@@ -186,7 +184,6 @@ public class EditActivity extends AppCompatActivity {
     public void openDatePicker(View view) {
         datePickerDialog.show();
     }
-
 
 
     private void redirectToHome() {

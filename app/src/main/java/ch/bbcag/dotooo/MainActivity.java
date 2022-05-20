@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private Color filter_color = null;
     private Date filter_date = null;
     private Boolean filter_onlyUncompleted = Boolean.TRUE;
+    private String searchQuery = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,13 +87,15 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     @Override
     public boolean onQueryTextSubmit(String s) {
-        filterTasks(s);
+        viewModel.setSelectedSearchQuery(s);
+        loadAllTasks();
         return true;
     }
 
     @Override
     public boolean onQueryTextChange(String s) {
-        filterTasks(s);
+        viewModel.setSelectedSearchQuery(s);
+        loadAllTasks();
         return false;
     }
 
@@ -117,6 +120,11 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             this.filter_onlyUncompleted = b;
             loadAllTasks();
         });
+
+        viewModel.getSelectedSearchQuery().observe(this, query -> {
+            this.searchQuery = query;
+            loadAllTasks();
+        });
     }
 
     private void toggleShowFilter() {
@@ -138,17 +146,13 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         }
     }
 
-    private void filterTasks(String filterString) {
-        taskAdapter.getFilter().filter(filterString);
-    }
-
     private void loadAllTasks() {
         initTaskList((ArrayList<Task>) taskDao.getAll());
     }
 
     private void initTaskList(ArrayList<Task> allTasks) {
 
-        if (isFiltering){
+        if (isFiltering) {
             // filter completed
             if (filter_onlyUncompleted != null && filter_onlyUncompleted)
                 allTasks.removeIf(Task::getDone);
@@ -158,20 +162,29 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             if (filter_color != null) {
                 allTasks.removeIf(task -> !task.getColorName().equals(filter_color.getDisplayName()));
             }
+
+            // filter date
+            if (filter_date != null) {
+                allTasks.removeIf(task -> {
+                    Calendar taskDate = Calendar.getInstance();
+                    taskDate.setTime(task.getDate());
+                    Calendar filterDate = Calendar.getInstance();
+                    filterDate.setTime(filter_date);
+
+                    return !(taskDate.get(Calendar.DAY_OF_YEAR) == filterDate.get(Calendar.DAY_OF_YEAR) &&
+                            taskDate.get(Calendar.YEAR) == filterDate.get(Calendar.YEAR));
+                });
+            }
         } else {
             allTasks.removeIf(Task::getDone);
         }
 
-        // filter date
-        if (filter_date != null) {
+        // filter by search query
+        if (!searchQuery.trim().equals("")) {
             allTasks.removeIf(task -> {
-                Calendar taskDate = Calendar.getInstance();
-                taskDate.setTime(task.getDate());
-                Calendar filterDate = Calendar.getInstance();
-                filterDate.setTime(filter_date);
-
-                return !(taskDate.get(Calendar.DAY_OF_YEAR) == filterDate.get(Calendar.DAY_OF_YEAR) &&
-                        taskDate.get(Calendar.YEAR) == filterDate.get(Calendar.YEAR));
+                if (task.getTitle().charAt(0) != '?' && (task.getTitle().toLowerCase().contains(searchQuery) || task.getDescription().toLowerCase().contains(searchQuery))) {
+                    return false;
+                } else return task.getTitle().charAt(0) != '?';
             });
         }
 
