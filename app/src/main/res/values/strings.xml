@@ -33,9 +33,9 @@
     <string name="task_name_hint">New task</string>
     <string name="late_title">Late</string>
     <string name="no_tasks">No tasks</string>
-    <string name="search_title">search</string>
-    <string name="search_hint">search</string>
-    <string name="filter_title">filter</string>
+    <string name="search_title">Search</string>
+    <string name="search_hint">Search</string>
+    <string name="filter_title">Filter</string>
     <string name="completed_title">STATUS</string>
     <string name="delete_title">Delete</string>
     <string name="edit_title">Edit</string>
