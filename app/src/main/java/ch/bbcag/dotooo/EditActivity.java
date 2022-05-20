@@ -38,8 +38,6 @@ public class EditActivity extends AppCompatActivity {
 
     private Button dateButton;
 
-    private Date selectedDate = new Date();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,7 +91,6 @@ public class EditActivity extends AppCompatActivity {
 
 
         ColorAdapter colorAdapter = new ColorAdapter(getApplicationContext());
-        colorSpinner.setSelection(5);
         colorSpinner.setAdapter(colorAdapter);
 
         colorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -101,8 +98,8 @@ public class EditActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 Color[] colors = Color.class.getEnumConstants();
                 assert colors != null;
-                selectedColor = colors[i].getDisplayName();
-
+                task.setColorName(colors[i].getDisplayName());
+                task.setColorHex(colors[i].getHex());
             }
 
             @Override
