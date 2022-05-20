@@ -10,6 +10,11 @@
 
 * [Dokumentation](docs/documentation.md)
 
+## Testing
+
+* [Testing](docs/testing.md)
+* [Testing](docs/testing.md)
+
 ## Daily Scrum
 
 9:00 (Mittwoch, Donnerstag und Freitag)
