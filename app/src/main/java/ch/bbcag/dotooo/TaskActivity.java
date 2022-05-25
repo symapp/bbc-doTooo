@@ -1,9 +1,5 @@
 package ch.bbcag.dotooo;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -12,6 +8,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -53,7 +53,7 @@ public class TaskActivity extends AppCompatActivity {
         task = TaskRoomDatabase.getInstance(getApplicationContext()).getTaskDao().getById(id);
 
         title = task.getTitle();
-        description = task.getDescription();
+        description = task.getDescription().length() > 0 ? task.getDescription() : "No Description";
         date = task.getDate();
         colorHex = task.getColorHex();
 
@@ -77,12 +77,12 @@ public class TaskActivity extends AppCompatActivity {
 
         int year = Integer.parseInt(formattedDate.substring(0, 4));
         int month = Integer.parseInt(formattedDate.substring(5, 7));
-        int day = Integer.parseInt(formattedDate.substring(8,10));
+        int day = Integer.parseInt(formattedDate.substring(8, 10));
 
-        year = year-1900;
+        year = year - 1900;
 
-        if(year < 1000) {
-            year = year+1900;
+        if (year < 1000) {
+            year = year + 1900;
         }
 
         return makeDateString(day, month, year);
