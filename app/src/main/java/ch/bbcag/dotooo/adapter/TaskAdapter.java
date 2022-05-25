@@ -1,175 +1,168 @@
 package ch.bbcag.dotooo.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.List;
 
 import ch.bbcag.dotooo.R;
+import ch.bbcag.dotooo.TaskActivity;
 import ch.bbcag.dotooo.entity.Task;
 
-public class TaskAdapter extends BaseAdapter implements View.OnClickListener, Filterable {
+public class TaskAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private final ArrayList<Task> originalTasks;
-    private ArrayList<Task> filteredTasks;
-    private final TaskFilter mFilter = new TaskFilter();
-    private final LayoutInflater mInflater;
+    public final ArrayList<Task> tasks;
 
-    public TaskAdapter(ArrayList<Task> tasks, Context context) {
-        this.originalTasks = tasks;
-        this.filteredTasks = tasks;
-        mInflater = LayoutInflater.from(context);
+    public class ViewHolderTask extends RecyclerView.ViewHolder {
+        private final TextView title;
+        private final CardView card;
+        private final ConstraintLayout container;
+
+        public ViewHolderTask(View itemView, Context context) {
+            super(itemView);
+            title = itemView.findViewById(R.id.task_name);
+            card = itemView.findViewById(R.id.color_card);
+            container = itemView.findViewById(R.id.task_container);
+
+            itemView.setOnClickListener(view -> {
+                int pos = getAbsoluteAdapterPosition();
+
+                if (pos != RecyclerView.NO_POSITION) {
+                    Task clickedTask = getTask(pos);
+
+                    Intent intent = new Intent(context, TaskActivity.class);
+                    intent.putExtra("taskId", clickedTask.getId());
+                    intent.putExtra("taskTitle", clickedTask.getTitle());
+                    intent.putExtra("taskDescription", clickedTask.getDescription());
+                    @SuppressLint("SimpleDateFormat")
+                    DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+                    intent.putExtra("taskDate", dateFormatter.format(clickedTask.getDate()));
+                    intent.putExtra("taskColorHex", clickedTask.getColorHex());
+                    context.startActivity(intent);
+                }
+            });
+        }
     }
 
-    @Override
-    public void onClick(View v) {}
+    public static class ViewHolderDayHeader extends RecyclerView.ViewHolder {
+        private final TextView title;
+        private final TextView subtitle;
 
-    @Override
-    public int getCount() {
-        return filteredTasks.size();
+        public ViewHolderDayHeader(View itemView) {
+            super(itemView);
+            title = itemView.findViewById(R.id.header_title);
+            subtitle = itemView.findViewById(R.id.header_subtitle);
+        }
     }
 
-    @Override
-    public Object getItem(int i) {
-        return filteredTasks.get(i);
+    public static class ViewHolderNoTasks extends RecyclerView.ViewHolder {
+        public ViewHolderNoTasks(View itemView) {
+            super(itemView);
+        }
     }
 
-    @Override
-    public long getItemId(int i) {
-        return i;
+    public TaskAdapter(ArrayList<Task> tasks) {
+        this.tasks = tasks;
     }
+
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        switch (viewType) {
+            case 1: return new ViewHolderTask(inflater.inflate(R.layout.task_row_item, parent, false), parent.getContext());
+            case 2: return new ViewHolderDayHeader(inflater.inflate(R.layout.day_row_item, parent, false));
+            default: return new ViewHolderNoTasks(inflater.inflate(R.layout.no_task_row_item, parent, false));
+        }
+    }
 
-        View currentItemView = convertView;
-
-        Task currentTaskPosition = (Task) getItem(position);
-
-
-        // set isTask
+    @Override
+    public int getItemViewType(int position) {
         // 1 -> task
         // 2 -> day
-        // 3 -> empty group
-        int isTask = 1;
-        if (currentTaskPosition.getTitle().charAt(0) == '?') {
-            if (currentTaskPosition.getTitle().startsWith("?notTask!No")) {
-                isTask = 3;
+        // 3 -> "No tasks"
+        String title = getTask(position).getTitle();
+        if (title.charAt(0) == '?') {
+            if (title.startsWith("?notTask!No")) {
+                return 3;
             } else {
-                isTask = 2;
+                return 2;
             }
+        } else {
+            return 1;
         }
+    }
 
+    @Override
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        Task task = getTask(position);
+        switch (holder.getItemViewType()) {
+            case 1:
+                ViewHolderTask taskViewHolder = (ViewHolderTask) holder;
+                taskViewHolder.title.setText(task.getTitle());
+                taskViewHolder.card.setCardBackgroundColor(Color.parseColor(task.getColorHex()));
 
-        // inflate
-        if (currentItemView == null || convertView.getTag() != null) {
-            if (isTask == 1) {
-                currentItemView = mInflater.inflate(R.layout.task_row_item, parent, false);
-            } else if (isTask == 2) {
-                currentItemView = mInflater.inflate(R.layout.day_row_item, parent, false);
-                currentItemView.setEnabled(false);
-            } else {
-                currentItemView = mInflater.inflate(R.layout.no_task_row_item, parent, false);
-                currentItemView.setEnabled(false);
-            }
+                if (task.getDone()) {
+                    taskViewHolder.title.setTextColor(Color.parseColor("#999999"));
+                    taskViewHolder.container.setBackgroundColor(Color.parseColor("#fafafa"));
 
-            currentItemView.setTag(isTask);
-        }
-
-
-        // set values
-        if (isTask == 1) {
-            TextView taskName = currentItemView.findViewById(R.id.task_name);
-            if (taskName != null) {
-                taskName.setText(currentTaskPosition.getTitle());
-                if (currentTaskPosition.getDone()) {
-                    taskName.setTextColor(Color.parseColor("#999999"));
-                    currentItemView.setBackgroundColor(Color.parseColor("#fafafa"));
-                }
-            }
-
-
-            CardView cardView = currentItemView.findViewById(R.id.color_card);
-            if (cardView != null){
-                cardView.setCardBackgroundColor(Color.parseColor(currentTaskPosition.getColorHex()));
-                if (currentTaskPosition.getDone()) {
-                    String color = currentTaskPosition.getColorHex();
+                    String color = task.getColorHex();
                     color = color.charAt(0) + "50" + color.substring(1);
-                    cardView.setCardBackgroundColor(Color.parseColor(color));
-                    cardView.setElevation(0f);
+                    taskViewHolder.card.setCardBackgroundColor(Color.parseColor(color));
+                    taskViewHolder.card.setElevation(0f);
                 }
-            }
-        } else if (isTask == 2) {
-            // get args
-            String title = currentTaskPosition.getTitle().substring(1);
-            String[] args = title.split("!");
-            String headerTitle = args[1];
-            String headerSubtitle = "";
-            if (args.length > 2) {
-                headerSubtitle = args[2];
-            }
+                return;
+            case 2:
+                ViewHolderDayHeader headerViewHolder = (ViewHolderDayHeader) holder;
 
-            TextView headerTitleTextView = currentItemView.findViewById(R.id.header_title);
-            if (headerTitleTextView != null) headerTitleTextView.setText(headerTitle);
+                String title = task.getTitle().substring(1);
+                String[] args = title.split("!");
+                String headerTitle = args[1];
+                String headerSubtitle = "";
+                if (args.length > 2) {
+                    headerSubtitle = args[2];
+                }
 
-            TextView headerSubtitleTextView = currentItemView.findViewById(R.id.header_subtitle);
-            if (headerSubtitleTextView != null) headerSubtitleTextView.setText((headerSubtitle));
+                headerViewHolder.title.setText(headerTitle);
+                headerViewHolder.subtitle.setText(headerSubtitle);
         }
-
-
-        return currentItemView;
     }
 
-    public Filter getFilter() {
-        return mFilter;
+    @Override
+    public int getItemCount() {
+        return tasks.size();
     }
 
-    private class TaskFilter extends Filter {
+    public Task getTask(int i) {
+        return tasks.get(i);
+    }
 
-        @Override
-        protected FilterResults performFiltering(CharSequence charSequence) {
+    public void removeItem(int position) {
+        tasks.remove(position);
+        notifyItemRemoved(position);
+    }
 
-            String filterString = charSequence.toString().toLowerCase();
+    public void restoreItem(Task task, int position) {
+        tasks.add(position, task);
+        notifyItemInserted(position);
+    }
 
-            FilterResults results = new FilterResults();
-
-            int count = ((List<Task>) originalTasks).size();
-            final ArrayList<Task> nlist = new ArrayList<>(count);
-
-            for (int i = 0; i < count; i++) {
-                Task task = originalTasks.get(i);
-                if (task.getTitle().charAt(0) != '?' && (task.getTitle().toLowerCase().contains(filterString) || task.getDescription().toLowerCase().contains(filterString))) {
-                    nlist.add(task);
-                } else if (task.getTitle().charAt(0) == '?') {
-                    nlist.add(task);
-                }
-            }
-
-            results.values = nlist;
-            results.count = nlist.size();
-
-            return results;
-        }
-
-        @SuppressWarnings("unchecked")
-        @Override
-        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-            filteredTasks = (ArrayList<Task>) filterResults.values;
-            notifyDataSetChanged();
-        }
+    public ArrayList<Task> getTasks() {
+        return tasks;
     }
 }

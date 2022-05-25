@@ -7,13 +7,18 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.ListView;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.SearchView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -63,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         initFloatingActionButton();
         initTaskList((ArrayList<Task>) taskDao.getAll());
         initViewModel();
+        enableSwipeToDelete();
     }
 
     @Override
@@ -189,26 +195,49 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             });
         }
 
-        ArrayList<Task> TasksWithDay = getFormattedTaskListByDay(allTasks);
+        ArrayList<Task> tasksWithDay = getFormattedTaskListByDay(allTasks);
 
-        ListView listView = findViewById(R.id.task_list);
-        taskAdapter = new TaskAdapter(TasksWithDay, getApplicationContext());
-        listView.setAdapter(taskAdapter);
-        listView.setOnItemClickListener((parent, v, position, id) -> {
-            Task selected = (Task) parent.getItemAtPosition(position);
+        RecyclerView recyclerView = findViewById(R.id.task_list);
+        taskAdapter = new TaskAdapter(tasksWithDay);
+        recyclerView.setAdapter(taskAdapter);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(linearLayoutManager);
 
-            // return if it's not a task
-            if (selected.getTitle().charAt(0) == '?') return;
+        SwipeToDeleteCallback swipeToDeleteCallback = new SwipeToDeleteCallback(this) {
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                final int position = viewHolder.getAbsoluteAdapterPosition();
+                final Task task = taskAdapter.getTasks().get(position);
 
-            // intent
-            Intent intent = new Intent(getApplicationContext(), TaskActivity.class);
-            intent.putExtra("taskId", selected.getId());
-            intent.putExtra("taskTitle", selected.getTitle());
-            intent.putExtra("taskDescription", selected.getDescription());
-            intent.putExtra("taskDate", dateFormatter.format(selected.getDate()));
-            intent.putExtra("taskColorHex", selected.getColorHex());
-            startActivity(intent);
-        });
+                System.out.println("removed");
+
+                taskAdapter.notifyItemChanged(position);
+            }
+        };
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipeToDeleteCallback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
+
+//        recyclerView.setOnItemClickListener((parent, v, position, id) -> {
+//            Task selected = (Task) parent.getItemAtPosition(position);
+//
+//            // return if it's not a task
+//            if (selected.getTitle().charAt(0) == '?') return;
+//
+//            // intent
+//            Intent intent = new Intent(getApplicationContext(), TaskActivity.class);
+//            intent.putExtra("taskId", selected.getId());
+//            intent.putExtra("taskTitle", selected.getTitle());
+//            intent.putExtra("taskDescription", selected.getDescription());
+//            intent.putExtra("taskDate", dateFormatter.format(selected.getDate()));
+//            intent.putExtra("taskColorHex", selected.getColorHex());
+//            startActivity(intent);
+//        });
+    }
+
+    private void enableSwipeToDelete() {
+
     }
 
     private ArrayList<Task> getFormattedTaskListByDay(ArrayList<Task> allTasks) {
