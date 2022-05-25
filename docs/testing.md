@@ -87,3 +87,53 @@ Ablauf:
 2. Der Tester klickt auf den grauen "Completed" Button.
 
 Erwartetes Resultat: Nach dem Klick auf den "Completed" Button wird der Tester zur Startseite weitergeleitet. Auf dieser ist das ToDo's welches der Tester gerade completed hat nicht mehr zu sehen.
+
+## Testprotokoll
+
+### Testlauf 1
+
+Tester:
+
+Ort/Datum:
+
+ID   |Erfolgreich|Bemerkungen
+| --- | --- | ---|
+T-01  |     |
+T-02  |     |
+T-03  |     |
+T-04  |     |
+T-05  |     |
+T-06  |     |
+T-07  |     |
+
+### Testlauf 2
+
+Tester:
+
+Ort/Datum:
+
+ID   |Erfolgreich|Bemerkungen
+| --- | --- | ---|
+T-01  |     |
+T-02  |     |
+T-03  |     |
+T-04  |     |
+T-05  |     |
+T-06  |     |
+T-07  |     |
+
+### Testlauf 3
+
+Tester:
+
+Ort/Datum:
+
+ID   |Erfolgreich|Bemerkungen
+| --- | --- | ---|
+T-01  |     |
+T-02  |     |
+T-03  |     |
+T-04  |     |
+T-05  |     |
+T-06  |     |
+T-07  |     |
