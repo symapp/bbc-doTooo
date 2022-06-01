@@ -65,57 +65,50 @@ public abstract class swipeCallback extends ItemTouchHelper.Callback {
 
         if (isCancelled) {
             clearCanvas(c, itemView.getRight() + dX, (float) itemView.getTop(), (float) itemView.getRight(), (float) itemView.getBottom());
-            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, false);
             return;
         }
 
+
         mBackground.setColor(backgroundColor);
+
+        int editIconTop = itemView.getTop() + (itemHeight - intrinsicHeight) / 2;
+        int editIconMargin = (itemHeight - intrinsicHeight) / 2;
+        int editIconBottom = editIconTop + intrinsicHeight;
+
+        int editIconLeft;
+        int editIconRight;
         if (dX < 0) {
             mBackground.setBounds(itemView.getRight() + (int) dX, itemView.getTop(), itemView.getRight(), itemView.getBottom());
-            mBackground.draw(c);
 
-            int editIconTop = itemView.getTop() + (itemHeight - intrinsicHeight) / 2;
-            int editIconMargin = (itemHeight - intrinsicHeight) / 2;
-            int editIconBottom = editIconTop + intrinsicHeight;
-
-            int editIconLeft = (int) (itemView.getRight() + editIconMargin * 2 + dX);
-            int editIconRight = (int) (itemView.getRight() + intrinsicWidth + editIconMargin * 2 + dX);
+            editIconLeft = (int) (itemView.getRight() + editIconMargin * 2 + dX);
+            editIconRight = (int) (itemView.getRight() + intrinsicWidth + editIconMargin * 2 + dX);
 
             if (editIconLeft < itemView.getRight() / 2 - intrinsicWidth / 2) {
                 editIconLeft = itemView.getRight() / 2 - intrinsicWidth / 2;
                 editIconRight = itemView.getRight() / 2 + intrinsicWidth / 2;
             }
-
-
-            editDrawable.setBounds(editIconLeft, editIconTop, editIconRight, editIconBottom);
-            editDrawable.draw(c);
         } else {
             mBackground.setBounds(itemView.getLeft(), itemView.getTop(), itemView.getLeft() + (int) dX, itemView.getBottom());
-            mBackground.draw(c);
 
-            int editIconTop = itemView.getTop() + (itemHeight - intrinsicHeight) / 2;
-            int editIconMargin = (itemHeight - intrinsicHeight) / 2;
-            int editIconBottom = editIconTop + intrinsicHeight;
-
-            int editIconLeft = (int) (itemView.getLeft() + dX - editIconMargin * 2 - intrinsicWidth);
-            int editIconRight = (int) (itemView.getLeft() + dX - editIconMargin * 2);
+            editIconLeft = (int) (itemView.getLeft() + dX - editIconMargin * 2 - intrinsicWidth);
+            editIconRight = (int) (itemView.getLeft() + dX - editIconMargin * 2);
 
             if (editIconLeft > itemView.getRight() / 2 - intrinsicWidth / 2) {
                 editIconLeft = itemView.getRight() / 2 - intrinsicWidth / 2;
                 editIconRight = itemView.getRight() / 2 + intrinsicWidth / 2;
             }
-
-            doneDrawable.setBounds(editIconLeft, editIconTop, editIconRight, editIconBottom);
-            doneDrawable.draw(c);
         }
+        mBackground.draw(c);
 
+        editDrawable.setBounds(editIconLeft, editIconTop, editIconRight, editIconBottom);
+        editDrawable.draw(c);
 
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
     }
 
     private void clearCanvas(Canvas c, Float left, Float top, Float right, Float bottom) {
         c.drawRect(left, top, right, bottom, mClearPaint);
-
     }
 
     @Override

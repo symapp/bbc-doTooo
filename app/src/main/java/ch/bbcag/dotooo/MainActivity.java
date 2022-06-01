@@ -220,18 +220,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         itemTouchHelper.attachToRecyclerView(recyclerView);
     }
 
-    private void redirectToDetails(Task task) {
-        Intent intent = new Intent(getApplicationContext(), TaskActivity.class);
-        intent.putExtra("taskId", task.getId());
-        intent.putExtra("taskTitle", task.getTitle());
-        intent.putExtra("taskDescription", task.getDescription());
-        @SuppressLint("SimpleDateFormat")
-        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
-        intent.putExtra("taskDate", dateFormatter.format(task.getDate()));
-        intent.putExtra("taskColorHex", task.getColorHex());
-        startActivity(intent);
-    }
-
     private void redirectToEdit(Task task) {
         Intent intent = new Intent(getApplicationContext(), EditActivity.class);
         Task selected = TaskRoomDatabase.getInstance(getApplicationContext()).getTaskDao().getById(task.getId());
