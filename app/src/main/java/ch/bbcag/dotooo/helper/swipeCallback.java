@@ -80,6 +80,7 @@ public abstract class swipeCallback extends ItemTouchHelper.Callback {
         int editIconRight;
         if (dX < 0) {
             mBackground.setBounds(itemView.getRight() + (int) dX, itemView.getTop(), itemView.getRight(), itemView.getBottom());
+            mBackground.draw(c);
 
             editIconLeft = (int) (itemView.getRight() + editIconMargin * 2 + dX);
             editIconRight = (int) (itemView.getRight() + intrinsicWidth + editIconMargin * 2 + dX);
@@ -88,8 +89,12 @@ public abstract class swipeCallback extends ItemTouchHelper.Callback {
                 editIconLeft = itemView.getRight() / 2 - intrinsicWidth / 2;
                 editIconRight = itemView.getRight() / 2 + intrinsicWidth / 2;
             }
+
+            editDrawable.setBounds(editIconLeft, editIconTop, editIconRight, editIconBottom);
+            editDrawable.draw(c);
         } else {
             mBackground.setBounds(itemView.getLeft(), itemView.getTop(), itemView.getLeft() + (int) dX, itemView.getBottom());
+            mBackground.draw(c);
 
             editIconLeft = (int) (itemView.getLeft() + dX - editIconMargin * 2 - intrinsicWidth);
             editIconRight = (int) (itemView.getLeft() + dX - editIconMargin * 2);
@@ -98,11 +103,10 @@ public abstract class swipeCallback extends ItemTouchHelper.Callback {
                 editIconLeft = itemView.getRight() / 2 - intrinsicWidth / 2;
                 editIconRight = itemView.getRight() / 2 + intrinsicWidth / 2;
             }
-        }
-        mBackground.draw(c);
 
-        editDrawable.setBounds(editIconLeft, editIconTop, editIconRight, editIconBottom);
-        editDrawable.draw(c);
+            doneDrawable.setBounds(editIconLeft, editIconTop, editIconRight, editIconBottom);
+            doneDrawable.draw(c);
+        }
 
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
     }
