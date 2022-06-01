@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
@@ -59,16 +60,19 @@ public class TaskActivity extends AppCompatActivity {
 
         setTitle(title);
 
-        TextView titleTextField = (TextView) findViewById(R.id.title);
+        TextView titleTextField = findViewById(R.id.title);
         titleTextField.setText(title);
-        TextView descriptionTextField = (TextView) findViewById(R.id.description);
+        TextView descriptionTextField = findViewById(R.id.description);
         descriptionTextField.setText(description);
 
-        TextView dateTextField = (TextView) findViewById(R.id.date);
+        TextView dateTextField = findViewById(R.id.date);
         dateTextField.setText(getDateAsString(date));
 
-        CardView colorCardView = (CardView) findViewById(R.id.detailColorView);
+        CardView colorCardView = findViewById(R.id.detailColorView);
         colorCardView.setCardBackgroundColor(Color.parseColor(colorHex));
+
+        Button button = findViewById(R.id.completeButton);
+        if (task.getDone()) button.setText("Mark uncompleted");
     }
 
     private String getDateAsString(Date date) {
@@ -138,7 +142,7 @@ public class TaskActivity extends AppCompatActivity {
             return true;
         }
         if (itemId == R.id.action_delete) {
-            delteTask();
+            deleteTask();
             redirectToHome();
             return true;
         }
@@ -149,7 +153,7 @@ public class TaskActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void delteTask() {
+    private void deleteTask() {
         TaskRoomDatabase.getInstance(getApplicationContext()).getTaskDao().deleteById(id);
     }
 
@@ -165,15 +169,9 @@ public class TaskActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
-    public void updateTaskById(Integer id) {
-        task.setDone(true);
+    public void toggleCompleted(View view) {
+        task.setDone(!task.getDone());
         TaskRoomDatabase.getInstance(getApplicationContext()).getTaskDao().update(task);
-    }
-
-
-    public void completeTask(View view) {
-        updateTaskById(id);
         redirectToHome();
     }
 }

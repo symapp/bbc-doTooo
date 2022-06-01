@@ -95,8 +95,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:backgroundTint="@color/DoToooBlue"
-        android:onClick="completeTask"
-        android:text="Mark complete"
+        android:onClick="toggleCompleted"
+        android:text="Mark completed"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline2" />
 
