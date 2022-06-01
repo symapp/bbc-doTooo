@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
@@ -44,6 +43,7 @@ public class TaskAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 if (pos != RecyclerView.NO_POSITION) {
                     Task clickedTask = getTask(pos);
 
+                    // redirect
                     Intent intent = new Intent(context, TaskActivity.class);
                     intent.putExtra("taskId", clickedTask.getId());
                     intent.putExtra("taskTitle", clickedTask.getTitle());
@@ -150,16 +150,6 @@ public class TaskAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public Task getTask(int i) {
         return tasks.get(i);
-    }
-
-    public void removeItem(int position) {
-        tasks.remove(position);
-        notifyItemRemoved(position);
-    }
-
-    public void restoreItem(Task task, int position) {
-        tasks.add(position, task);
-        notifyItemInserted(position);
     }
 
     public ArrayList<Task> getTasks() {

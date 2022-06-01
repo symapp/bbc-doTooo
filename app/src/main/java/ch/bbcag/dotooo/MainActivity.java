@@ -7,8 +7,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
 import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
@@ -35,6 +33,7 @@ import ch.bbcag.dotooo.dal.TaskRoomDao;
 import ch.bbcag.dotooo.dal.TaskRoomDatabase;
 import ch.bbcag.dotooo.entity.Color;
 import ch.bbcag.dotooo.entity.Task;
+import ch.bbcag.dotooo.helper.swipeCallback;
 import ch.bbcag.dotooo.viewmodel.FilterViewModel;
 
 public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
@@ -48,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private TaskRoomDao taskDao;
     private TaskAdapter taskAdapter;
 
-    private boolean isFiltering = false;
+    private boolean isFilterOpen = false;
     private FilterViewModel viewModel;
 
     private Color filter_color = null;
@@ -68,7 +67,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         initFloatingActionButton();
         initTaskList((ArrayList<Task>) taskDao.getAll());
         initViewModel();
-        enableSwipeToDelete();
     }
 
     @Override
@@ -138,9 +136,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         FilterFragment filterFragment = new FilterFragment();
         FragmentManager fm = getSupportFragmentManager();
 
-        isFiltering = !isFiltering;
+        isFilterOpen = !isFilterOpen;
 
-        if (isFiltering) {
+        if (isFilterOpen) {
             fm.beginTransaction()
                     .replace(R.id.fragment_container_view, filterFragment, null)
                     .commit();
@@ -159,31 +157,27 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     private void initTaskList(ArrayList<Task> allTasks) {
 
-        if (isFiltering) {
-            // filter completed
-            if (filter_onlyUncompleted != null && filter_onlyUncompleted)
-                allTasks.removeIf(Task::getDone);
-            else if (filter_onlyUncompleted != null) allTasks.removeIf(task -> !task.getDone());
-
-            // filter color
-            if (filter_color != null) {
-                allTasks.removeIf(task -> !task.getColorName().equals(filter_color.getDisplayName()));
-            }
-
-            // filter date
-            if (filter_date != null) {
-                allTasks.removeIf(task -> {
-                    Calendar taskDate = Calendar.getInstance();
-                    taskDate.setTime(task.getDate());
-                    Calendar filterDate = Calendar.getInstance();
-                    filterDate.setTime(filter_date);
-
-                    return !(taskDate.get(Calendar.DAY_OF_YEAR) == filterDate.get(Calendar.DAY_OF_YEAR) &&
-                            taskDate.get(Calendar.YEAR) == filterDate.get(Calendar.YEAR));
-                });
-            }
-        } else {
+        // filter completed
+        if (filter_onlyUncompleted != null && filter_onlyUncompleted)
             allTasks.removeIf(Task::getDone);
+        else if (filter_onlyUncompleted != null) allTasks.removeIf(task -> !task.getDone());
+
+        // filter color
+        if (filter_color != null) {
+            allTasks.removeIf(task -> !task.getColorName().equals(filter_color.getDisplayName()));
+        }
+
+        // filter date
+        if (filter_date != null) {
+            allTasks.removeIf(task -> {
+                Calendar taskDate = Calendar.getInstance();
+                taskDate.setTime(task.getDate());
+                Calendar filterDate = Calendar.getInstance();
+                filterDate.setTime(filter_date);
+
+                return !(taskDate.get(Calendar.DAY_OF_YEAR) == filterDate.get(Calendar.DAY_OF_YEAR) &&
+                        taskDate.get(Calendar.YEAR) == filterDate.get(Calendar.YEAR));
+            });
         }
 
         // filter by search query
@@ -204,40 +198,45 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        SwipeToDeleteCallback swipeToDeleteCallback = new SwipeToDeleteCallback(this) {
+        swipeCallback swipeToDeleteCallback = new swipeCallback(this) {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 final int position = viewHolder.getAbsoluteAdapterPosition();
                 final Task task = taskAdapter.getTasks().get(position);
 
-                System.out.println("removed");
+                if (direction == ItemTouchHelper.LEFT) {
+                    redirectToEdit(task);
+                    taskAdapter.notifyItemChanged(position);
+                } else if (direction == ItemTouchHelper.RIGHT) {
+                    task.setDone(!task.getDone());
+                    TaskRoomDatabase.getInstance(getApplicationContext()).getTaskDao().update(task);
 
-                taskAdapter.notifyItemChanged(position);
+                    loadAllTasks();
+                }
             }
         };
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipeToDeleteCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
-
-//        recyclerView.setOnItemClickListener((parent, v, position, id) -> {
-//            Task selected = (Task) parent.getItemAtPosition(position);
-//
-//            // return if it's not a task
-//            if (selected.getTitle().charAt(0) == '?') return;
-//
-//            // intent
-//            Intent intent = new Intent(getApplicationContext(), TaskActivity.class);
-//            intent.putExtra("taskId", selected.getId());
-//            intent.putExtra("taskTitle", selected.getTitle());
-//            intent.putExtra("taskDescription", selected.getDescription());
-//            intent.putExtra("taskDate", dateFormatter.format(selected.getDate()));
-//            intent.putExtra("taskColorHex", selected.getColorHex());
-//            startActivity(intent);
-//        });
     }
 
-    private void enableSwipeToDelete() {
+    private void redirectToDetails(Task task) {
+        Intent intent = new Intent(getApplicationContext(), TaskActivity.class);
+        intent.putExtra("taskId", task.getId());
+        intent.putExtra("taskTitle", task.getTitle());
+        intent.putExtra("taskDescription", task.getDescription());
+        @SuppressLint("SimpleDateFormat")
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+        intent.putExtra("taskDate", dateFormatter.format(task.getDate()));
+        intent.putExtra("taskColorHex", task.getColorHex());
+        startActivity(intent);
+    }
 
+    private void redirectToEdit(Task task) {
+        Intent intent = new Intent(getApplicationContext(), EditActivity.class);
+        Task selected = TaskRoomDatabase.getInstance(getApplicationContext()).getTaskDao().getById(task.getId());
+        intent.putExtra("taskId", selected.getId());
+        startActivity(intent);
     }
 
     private ArrayList<Task> getFormattedTaskListByDay(ArrayList<Task> allTasks) {
