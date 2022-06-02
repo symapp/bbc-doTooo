@@ -93,14 +93,8 @@ public class EditActivity extends AppCompatActivity {
         Color selectedColor = Color.valueOf(task.getColorName().toUpperCase(Locale.ROOT));
         for (int i = 0; i < colorAdapter.getCount(); i++) {
             Color color = (Color) colorAdapter.getItem(i);
-            if (selectedColor == null) {
-                if (color == null) {
-                    colorSpinner.setSelection(i);
-                }
-            } else {
-                if (color != null && color.equals(selectedColor)) {
-                    colorSpinner.setSelection(i);
-                }
+            if (color != null && color.equals(selectedColor)) {
+                colorSpinner.setSelection(i);
             }
         }
 
