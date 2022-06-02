@@ -132,7 +132,7 @@ T-09  |Ja   |
 
 Tester: Simão Dias Almeida
 
-Ort/Datum: Bern, 20.06.2022
+Ort/Datum: Bern, 02.06.2022
 
 ID   |Erfolgreich|Bemerkungen
 | --- | --- | ---|
@@ -148,18 +148,18 @@ T-09  | Ja  |
 
 ### Testlauf 3
 
-Tester:
+Tester: Jasmin Mortean
 
-Ort/Datum:
+Ort/Datum: Bern, 02.06.2022
 
 ID   |Erfolgreich|Bemerkungen
 | --- | --- | ---|
-T-01  |     |
-T-02  |     |
-T-03  |     |
-T-04  |     |
-T-05  |     |
-T-06  |     |
-T-07  |     |
-T-08  |     |
-T-09  |     |
+T-01  | Ja  |
+T-02  | Ja  |
+T-03  | Ja  |
+T-04  | Ja  |
+T-05  | Ja  |
+T-06  | Ja  |
+T-07  | Ja  |
+T-08  | Ja  |
+T-09  | Ja  |
