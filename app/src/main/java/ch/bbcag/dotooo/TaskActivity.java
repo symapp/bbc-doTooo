@@ -1,5 +1,7 @@
 package ch.bbcag.dotooo;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -35,28 +37,24 @@ public class TaskActivity extends AppCompatActivity {
 
     private String colorHex;
 
+    private AlertDialog.Builder errorDialogBuilder;
+
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_task);
+
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-    }
 
-    protected void onStart() {
-        super.onStart();
-        setContentView(R.layout.activity_task);
+        // setup errorDialogBuilder
+        errorDialogBuilder = new AlertDialog.Builder(this);
+        errorDialogBuilder.setTitle("Error").setPositiveButton(R.string.ok, null);
 
-        Intent intent = getIntent();
-        id = intent.getIntExtra("taskId", 0);
-
-        task = TaskRoomDatabase.getInstance(getApplicationContext()).getTaskDao().getById(id);
-
-        title = task.getTitle();
-        description = task.getDescription().length() > 0 ? task.getDescription() : "No Description";
-        date = task.getDate();
-        colorHex = task.getColorHex();
+        loadTask();
 
         setTitle(title);
 
@@ -76,8 +74,26 @@ public class TaskActivity extends AppCompatActivity {
         if (task.getDone()) button.setText("Mark uncompleted");
     }
 
+    private void loadTask() {
+        Intent intent = getIntent();
+        id = intent.getIntExtra("taskId", 0);
+
+        try {
+            task = TaskRoomDatabase.getInstance(getApplicationContext()).getTaskDao().getById(id);
+        } catch (Exception e) {
+            errorDialogBuilder.setMessage("Couldn't load task... Try again later.").create().show();
+            onBackPressed();
+            return;
+        }
+
+        title = task.getTitle();
+        description = task.getDescription().length() > 0 ? task.getDescription() : "No Description";
+        date = task.getDate();
+        colorHex = task.getColorHex();
+    }
+
     private String getDateAsString(Date date) {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        @SuppressLint("SimpleDateFormat") DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String formattedDate = dateFormat.format(date);
 
         int year = Integer.parseInt(formattedDate.substring(0, 4));
@@ -144,7 +160,7 @@ public class TaskActivity extends AppCompatActivity {
         }
         if (itemId == R.id.action_delete) {
             deleteTask();
-            redirectToHome();
+            onBackPressed();
             return true;
         }
         if (itemId == R.id.action_edit) {
@@ -155,24 +171,33 @@ public class TaskActivity extends AppCompatActivity {
     }
 
     private void deleteTask() {
-        TaskRoomDatabase.getInstance(getApplicationContext()).getTaskDao().deleteById(id);
-    }
-
-    public void redirectToHome() {
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        startActivity(intent);
+        try {
+            TaskRoomDatabase.getInstance(getApplicationContext()).getTaskDao().deleteById(id);
+        } catch (Exception e) {
+            errorDialogBuilder.setMessage("Couldn't delete task... Try again later.").create().show();
+        }
     }
 
     private void redirectToEdit() {
-        Intent intent = new Intent(getApplicationContext(), EditActivity.class);
-        Task selected = TaskRoomDatabase.getInstance(getApplicationContext()).getTaskDao().getById(id);
-        intent.putExtra("taskId", selected.getId());
-        startActivity(intent);
+        try {
+            Intent intent = new Intent(getApplicationContext(), EditActivity.class);
+            Task selected = TaskRoomDatabase.getInstance(getApplicationContext()).getTaskDao().getById(id);
+            intent.putExtra("taskId", selected.getId());
+            startActivity(intent);
+        } catch (Exception e) {
+            errorDialogBuilder.setMessage("Couldn't load task... Try again later.").create().show();
+        }
     }
 
     public void toggleCompleted(View view) {
-        task.setDone(!task.getDone());
-        TaskRoomDatabase.getInstance(getApplicationContext()).getTaskDao().update(task);
-        redirectToHome();
+        try {
+            task.setDone(!task.getDone());
+            TaskRoomDatabase.getInstance(getApplicationContext()).getTaskDao().update(task);
+        } catch (Exception e) {
+            errorDialogBuilder.setMessage("Couldn't update task... Try again later.").create().show();
+            return;
+        }
+
+        onBackPressed();
     }
 }

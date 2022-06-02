@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -22,7 +23,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.apache.commons.lang3.time.DateUtils;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -52,6 +52,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private Boolean filter_onlyUncompleted = Boolean.TRUE;
     private String searchQuery = "";
 
+    private AlertDialog.Builder errorDialogBuilder;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +62,10 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         // setup dao
         TaskRoomDatabase database = TaskRoomDatabase.getInstance(getApplicationContext());
         taskDao = database.getTaskDao();
+
+        // setup errorDialogBuilder
+        errorDialogBuilder = new AlertDialog.Builder(this);
+        errorDialogBuilder.setTitle("Error").setPositiveButton(R.string.ok, null);
 
         initFloatingActionButton();
         initViewModel();
@@ -155,7 +161,11 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     }
 
     private void loadAllTasks() {
-        initTaskList((ArrayList<Task>) taskDao.getAll());
+        try {
+            initTaskList((ArrayList<Task>) taskDao.getAll());
+        } catch (Exception e) {
+            errorDialogBuilder.setMessage("Couldn't load tasks... Try again later.").create().show();
+        }
     }
 
     private void initTaskList(ArrayList<Task> allTasks) {
@@ -212,7 +222,12 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                     taskAdapter.notifyItemChanged(position);
                 } else if (direction == ItemTouchHelper.RIGHT) {
                     task.setDone(!task.getDone());
-                    TaskRoomDatabase.getInstance(getApplicationContext()).getTaskDao().update(task);
+
+                    try {
+                        TaskRoomDatabase.getInstance(getApplicationContext()).getTaskDao().update(task);
+                    } catch (Exception e) {
+                        errorDialogBuilder.setMessage("Couldn't update task... Try again later.").create().show();
+                    }
 
                     loadAllTasks();
                 }
@@ -224,10 +239,15 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     }
 
     private void redirectToEdit(Task task) {
-        Intent intent = new Intent(getApplicationContext(), EditActivity.class);
-        Task selected = TaskRoomDatabase.getInstance(getApplicationContext()).getTaskDao().getById(task.getId());
-        intent.putExtra("taskId", selected.getId());
-        startActivity(intent);
+        try {
+            Intent intent = new Intent(getApplicationContext(), EditActivity.class);
+            Task selected = TaskRoomDatabase.getInstance(getApplicationContext()).getTaskDao().getById(task.getId());
+            intent.putExtra("taskId", selected.getId());
+            startActivity(intent);
+        } catch (Exception e) {
+            errorDialogBuilder.setMessage("Couldn't load task... Try again later.").create().show();
+        }
+
     }
 
     private ArrayList<Task> getFormattedTaskListByDay(ArrayList<Task> allTasks) {

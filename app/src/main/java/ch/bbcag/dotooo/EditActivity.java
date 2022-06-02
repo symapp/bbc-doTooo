@@ -1,6 +1,7 @@
 package ch.bbcag.dotooo;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,7 +30,6 @@ import ch.bbcag.dotooo.entity.Color;
 import ch.bbcag.dotooo.entity.Task;
 
 public class EditActivity extends AppCompatActivity {
-    private int id;
 
     private Task task;
 
@@ -37,22 +37,39 @@ public class EditActivity extends AppCompatActivity {
 
     private Button dateButton;
 
+    private AlertDialog.Builder errorDialogBuilder;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent intent = getIntent();
         setContentView(R.layout.activity_edit);
-        id = intent.getIntExtra("taskId", 0);
-        task = TaskRoomDatabase.getInstance(getApplicationContext()).getTaskDao().getById(id);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
+        // setup errorDialogBuilder
+        errorDialogBuilder = new AlertDialog.Builder(this);
+        errorDialogBuilder.setTitle("Error").setPositiveButton(R.string.ok, null);
+
+        loadTask();
         initButtons();
         initDatePicker();
         setValues();
+    }
+
+    private void loadTask() {
+        Intent intent = getIntent();
+
+        int id = intent.getIntExtra("taskId", 0);
+
+        try {
+            task = TaskRoomDatabase.getInstance(getApplicationContext()).getTaskDao().getById(id);
+        } catch (Exception e) {
+            errorDialogBuilder.setMessage("Couldn't load task... Try again later.").create().show();
+            onBackPressed();
+        }
     }
 
     private String getDateAsString(Date date) {
@@ -61,12 +78,12 @@ public class EditActivity extends AppCompatActivity {
 
         int year = Integer.parseInt(formattedDate.substring(0, 4));
         int month = Integer.parseInt(formattedDate.substring(5, 7));
-        int day = Integer.parseInt(formattedDate.substring(8,10));
+        int day = Integer.parseInt(formattedDate.substring(8, 10));
 
-        year = year-1900;
+        year = year - 1900;
 
-        if(year < 1000) {
-            year = year+1900;
+        if (year < 1000) {
+            year = year + 1900;
         }
 
         return makeDateString(day, month, year);
@@ -106,7 +123,8 @@ public class EditActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {}
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
         });
     }
 
@@ -116,7 +134,7 @@ public class EditActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveTask(view);
+                saveTask();
             }
         });
 
@@ -124,7 +142,7 @@ public class EditActivity extends AppCompatActivity {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                redirectToHome();
+                onBackPressed();
             }
         });
     }
@@ -155,33 +173,33 @@ public class EditActivity extends AppCompatActivity {
     }
 
     private String getMonthFormat(int month) {
-       switch (month) {
-           case 1:
-               return "January";
-           case 2:
-               return "February";
-           case 3:
-               return "March";
-           case 4:
-               return "April";
-           case 5:
-               return "May";
-           case 6:
-               return "June";
-           case 7:
-               return "Juli";
-           case 8:
-               return "August";
-           case 9:
-               return "September";
-           case 10:
-               return "October";
-           case 11:
-               return "November";
-           case 12:
-               return "December";
+        switch (month) {
+            case 1:
+                return "January";
+            case 2:
+                return "February";
+            case 3:
+                return "March";
+            case 4:
+                return "April";
+            case 5:
+                return "May";
+            case 6:
+                return "June";
+            case 7:
+                return "Juli";
+            case 8:
+                return "August";
+            case 9:
+                return "September";
+            case 10:
+                return "October";
+            case 11:
+                return "November";
+            case 12:
+                return "December";
 
-       }
+        }
         return "January";
     }
 
@@ -189,14 +207,7 @@ public class EditActivity extends AppCompatActivity {
         datePickerDialog.show();
     }
 
-
-    private void redirectToHome() {
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        startActivity(intent);
-    }
-
-
-    private void saveTask(View view) {
+    private void saveTask() {
         EditText editTextTitle = (EditText) findViewById(R.id.text_input_task_name);
         task.setTitle(editTextTitle.getText().toString());
         if (TextUtils.isEmpty(task.getTitle())) {
@@ -206,7 +217,12 @@ public class EditActivity extends AppCompatActivity {
         EditText editTextDescription = (EditText) findViewById(R.id.text_input_task_description);
         task.setDescription(editTextDescription.getText().toString());
 
-        TaskRoomDatabase.getInstance(getApplicationContext()).getTaskDao().update(task);
+        try {
+            TaskRoomDatabase.getInstance(getApplicationContext()).getTaskDao().update(task);
+        } catch (Exception e) {
+            errorDialogBuilder.setMessage("Couldn't update task... Try again later.").create().show();
+            return;
+        }
 
         this.onBackPressed();
     }

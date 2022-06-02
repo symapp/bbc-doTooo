@@ -1,23 +1,18 @@
 package ch.bbcag.dotooo;
 
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.DragEvent;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.MotionEventCompat;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -34,6 +29,8 @@ public class CreateTaskActivity extends AppCompatActivity {
     private Date selectedDate = new Date();
     private String selectedColor;
 
+    private AlertDialog.Builder errorDialogBuilder;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +46,10 @@ public class CreateTaskActivity extends AppCompatActivity {
         initDatePicker();
         dateButton = findViewById(R.id.datePickerButton);
         dateButton.setText(getTodaysDate());
+
+        // setup errorDialogBuilder
+        errorDialogBuilder = new AlertDialog.Builder(this);
+        errorDialogBuilder.setTitle("Error").setPositiveButton(R.string.ok, null);
 
         initColorSpinner();
         initButtons();
@@ -79,7 +80,7 @@ public class CreateTaskActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveTask(view);
+                saveTask();
             }
         });
 
@@ -87,14 +88,14 @@ public class CreateTaskActivity extends AppCompatActivity {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                redirectToHome();
+                onBackPressed();
             }
         });
     }
 
     private void initDatePicker() {
         DatePickerDialog.OnDateSetListener dateSetListener = (datePicker, year, month, day) -> {
-            selectedDate = new Date(year-1900, month, day);
+            selectedDate = new Date(year - 1900, month, day);
             month = month + 1;
             String date = makeDateString(day, month, year);
             dateButton.setText(date);
@@ -157,20 +158,16 @@ public class CreateTaskActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {}
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
         });
-    }
-
-    private void redirectToHome() {
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        startActivity(intent);
     }
 
     public void openDatePicker(View view) {
         datePickerDialog.show();
     }
 
-    private void saveTask(View view) {
+    private void saveTask() {
         EditText editTextTitle = findViewById(R.id.text_input_task_name);
         String title = editTextTitle.getText().toString();
         if (TextUtils.isEmpty(title)) {
@@ -180,8 +177,13 @@ public class CreateTaskActivity extends AppCompatActivity {
         EditText editTextDescription = findViewById(R.id.text_input_task_description);
         String description = editTextDescription.getText().toString();
 
-        TaskRoomDatabase.getInstance(getApplicationContext()).getTaskDao().insert(new Task(title, description, selectedDate, selectedColor));
+        try {
+            TaskRoomDatabase.getInstance(getApplicationContext()).getTaskDao().insert(new Task(title, description, selectedDate, selectedColor));
+        } catch (Exception e) {
+            errorDialogBuilder.setMessage("Couldn't save task... Try again later.").create().show();
+            return;
+        }
 
-        redirectToHome();
+        onBackPressed();
     }
 }
