@@ -40,5 +40,7 @@
     <string name="delete_title">Delete</string>
     <string name="edit_title">Edit</string>
     <string name="ok">Ok</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
 </resources>

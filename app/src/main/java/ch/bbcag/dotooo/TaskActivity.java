@@ -2,6 +2,7 @@ package ch.bbcag.dotooo;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -39,6 +40,7 @@ public class TaskActivity extends AppCompatActivity {
     private String colorHex;
 
     private AlertDialog.Builder errorDialogBuilder;
+    private AlertDialog.Builder confirmDialogBuilder;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -51,9 +53,15 @@ public class TaskActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        // setup errorDialogBuilder
+        // setup alertDialog builders
         errorDialogBuilder = new AlertDialog.Builder(this);
         errorDialogBuilder.setTitle("Error").setPositiveButton(R.string.ok, null);
+        confirmDialogBuilder = new AlertDialog.Builder(this);
+        confirmDialogBuilder.setTitle("Confirmation").setPositiveButton(R.string.yes, (dialogInterface, i) -> {
+            deleteTask();
+            onBackPressed();
+        });
+        confirmDialogBuilder.setNegativeButton(R.string.no, null);
 
         loadTask();
 
@@ -126,8 +134,7 @@ public class TaskActivity extends AppCompatActivity {
             return true;
         }
         if (itemId == R.id.action_delete) {
-            deleteTask();
-            onBackPressed();
+            confirmDialogBuilder.setMessage("Are you sure you want to delete this task?").create().show();
             return true;
         }
         if (itemId == R.id.action_edit) {

@@ -75,12 +75,12 @@ Wie können wir uns von der Konkurrenz abheben:
 ![App Struktur Beispiel](images/app-structure.png)
 
 ![Mockup Beispiel](images/mockup.png)
-> ***1. MainActivity***  
-> In der MainAcitivity werden alle ausstehenden ToDO's angezeigt. Ja nach dem wie der Benutzer die Filter einstellt sind nur spezifische ToDos zu sehen. Zudem ist eine Suchfunktion vorhanden. Zudem wird die Farbe/Wichtigkeit des ToDo's angezigt. </br>
-> ***2. ToDoACtivity***</br>
-> Wenn der Benutzer in der MainActivity auf ein ToDo klickt, gelangt er zu dieser Seite. Auf dieser Seite werden dem Benutzer alle Daten von dem gewählten ToDo angezeigt. In der Navigationsleiste werden zudem drei Icons angezeigt. Ein Icon um die Aufgabe als erledigt zu markieren, ein Icon um das ToDo zu bearbeiten, und ein Icon um das ToDO zu löschen. </br>
-> ***3. ToDoFormActivity***</br>
-> Auf dieser Seite befindet sich das Formular zum Erstellen oder Bearbeiten eines ToDO's. Es sind zwei Buttons vorhanden. Neben den Formularen ist ein Button zum Speichern vorhanden.</br>
+ ***1. MainActivity***  
+ In der MainAcitivity werden alle ausstehenden ToDO's angezeigt. Ja nach dem wie der Benutzer die Filter einstellt sind nur spezifische ToDos zu sehen. Zudem ist eine Suchfunktion vorhanden. Zudem wird die Farbe/Wichtigkeit des ToDo's angezigt. </br>
+ ***2. ToDoActivity***</br>
+ Wenn der Benutzer in der MainActivity auf ein ToDo klickt, gelangt er zu dieser Seite. Auf dieser Seite werden dem Benutzer alle Daten von dem gewählten ToDo angezeigt. In der Navigationsleiste werden zudem drei Icons angezeigt. Ein Icon um die Aufgabe als erledigt zu markieren, ein Icon um das ToDo zu bearbeiten, und ein Icon um das ToDO zu löschen. </br>
+ ***3. ToDoFormActivity***</br>
+ Auf dieser Seite befindet sich das Formular zum Erstellen oder Bearbeiten eines ToDO's. Es sind zwei Buttons vorhanden. Neben den Formularen ist ein Button zum Speichern vorhanden.</br>
 
 ## 5 Technische Realisierung
 
