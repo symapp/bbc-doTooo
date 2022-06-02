@@ -51,7 +51,7 @@ Ablauf:
 1. Falls noch kein ToDo erstellt wurde, erstellt der Tester ein ToDo wie bei T-03.
 2. Der Tester klickt auf der Startseite auf das eben erstellte ToDo.
 
-Erwartetes Resultat: Nach dem Klick auf das ToDo wird der Tester zur Detailseite des ToDo's weitergeleitet. Auf der Detailseite befinden sich in der ActionBar ein Pfeil, der Titel des ToDos, und drei Punkte. Unter der ActionBar ist ebenfalls der Titel des ToDo's zu sehen. Rechts neben dem Titel wird in einem Viereck die Farbe des ToDo's zu sehen. Unter dem Titel wird das Datum und die Description des ToDo's angezeigt. zudem wird ein grauer "Completed" Button angezeigt.
+Erwartetes Resultat: Nach dem Klick auf das ToDo wird der Tester zur Detailseite des ToDo's weitergeleitet. Auf der Detailseite befinden sich in der ActionBar ein Pfeil, der Titel des ToDos, ein Stift und ein Mülleimer. Unter der ActionBar ist ebenfalls der Titel des ToDo's zu sehen. Rechts neben dem Titel wird in einem Viereck die Farbe des ToDo's zu sehen. Unter dem Titel wird das Datum und die Description des ToDo's angezeigt. Zudem wird ein blauer "Completed" Button angezeigt.
 
 ### T-05
 
@@ -60,7 +60,7 @@ Vorbedingungen: Standart-Vorbedingungen, T-04 erfolgreich
 Ablauf:
 
 1. Fals sich der Tester noch nicht auf dem DetailScreen befindet, navigiert der Tester zu diesem wie bei T-04
-2. Der Tester klickt auf die drei Punkte und klickt anschliessend auf "Edit".
+2. Der Tester klickt auf das Stiftsymbol.
 
 Erwartetes Resultat: Nach dem Klick auf den "Edit" Button wird der Tester zur Editierseite des ToDo's weitergeleitet. Auf dieser ist das selbe Formular wie beim erstellen eines ToDo's zu sehen. Jedoch sind die bereits vorhandenen Daten in das Formular eingefüllt.
 
@@ -84,28 +84,51 @@ Vorbedingungen: Standart-Vorbedingungen, T-04 erfolgreich
 Ablauf:
 
 1. Falls sich der Tester noch nicht auf der Detailseite befindet, navigiert er zu dieser wie bei T-04.
-2. Der Tester klickt auf den grauen "Completed" Button.
+2. Der Tester klickt auf den blauen "Completed" Button.
 
 Erwartetes Resultat: Nach dem Klick auf den "Completed" Button wird der Tester zur Startseite weitergeleitet. Auf dieser ist das ToDo's welches der Tester gerade completed hat nicht mehr zu sehen.
+
+### T-08
+
+Vorbedingungen: Standart-Vorbedingungen, T-06 erfolgreich
+
+Ablauf:
+
+1. Falls der Tester noch kein ToDo erstellt hat, erstellt dieser ein ToDO wie bei T-03.
+2. Der Tester swipet auf dem ToDo von rechts nach links.
+
+Erwartetes Resultat: Der Tester wird zur Editierseite des ToDos's weitergeleitet.
+
+### T-09
+
+Vorbedingungen: Standart-Vorbedingungen, T-06 erfolgreich
+
+Ablauf:
+
+1. Falls der Tester noch kein ToDo erstellt hat, erstellt dieser ein ToDO wie bei T-03.
+2. Der Tester swipet auf dem ToDo von links nach rechts.
+
+Erwartetes Resultat: Das ToDo wird als "Completed" markiert und verschwindet von der Startseite.
 
 ## Testprotokoll
 
 ### Testlauf 1
 
-Tester:
+Tester: Mattia Gisiger
 
-Ort/Datum:
+Ort/Datum: Bern/02.06.2022
 
 ID   |Erfolgreich|Bemerkungen
 | --- | --- | ---|
-T-01  |     |
-T-02  |     |
-T-03  |     |
-T-04  |     |
-T-05  |     |
-T-06  |     |
-T-07  |     |
-
+T-01  |Ja   |
+T-02  |Ja   |
+T-03  |Ja   |
+T-04  |Ja   |
+T-05  |Ja   |
+T-06  |Ja   |
+T-07  |Ja   |
+T-08  |Ja   |
+T-09  |Ja   |
 ### Testlauf 2
 
 Tester:
@@ -121,6 +144,8 @@ T-04  |     |
 T-05  |     |
 T-06  |     |
 T-07  |     |
+T-08  |     |
+T-09  |     |
 
 ### Testlauf 3
 
@@ -137,3 +162,5 @@ T-04  |     |
 T-05  |     |
 T-06  |     |
 T-07  |     |
+T-08  |     |
+T-09  |     |
