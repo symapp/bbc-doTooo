@@ -75,6 +75,7 @@ Wie können wir uns von der Konkurrenz abheben:
 ![App Struktur Beispiel](images/app-structure.png)
 
 ![Mockup Beispiel](images/mockup.png)
+
  ***1. MainActivity***</br>
  In der MainActivity werden alle ausstehenden ToDO's angezeigt. Je nach dem wie der Benutzer die Filter einstellt, sind nur spezifische ToDos zu sehen. Zudem ist eine Such- und Filterfunktion vorhanden.</br>
  ***2. ToDoActivity***</br>

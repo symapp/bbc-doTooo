@@ -15,7 +15,7 @@ Ablauf:
 1. Der Tester öffnet das Projekt in Android Studio und wartet bis das Projekt vollständig geladen ist.
 2. Sobald das Projekt vollständig geladen ist, klickt den Tester auf den "Run" Button.
 
-Erwartetes Resultat: Die App buildet ohne Errors (Warnings sind in Ordnung). Anschliessen installiert und öffnet sich die App auf dem Android Emulator. Am oberen Rand des Startbildschirms ist eine Actionbar mit dem Titel "DoTooo" und eine Lupe zu sehen. In der unteren rechten Ecke ist ein FloatingActionButton mit einem Plus zu sehen. Zudem ist ein Abschnitt mit dem Titel "Today" zu sehen. Rechts neben dem "Today" Titel wird der aktuelle Tag (z.B Freitag) angezeigt. Darunter ist ein Listenelement mit dem Schriftzug "No tasks" zu sehen. Unter diesem Abschnitt ist das gleiche nur für den morgigen Tag zu sehen.
+Erwartetes Resultat: Die App buildet ohne Errors (Warnings sind in Ordnung). Anschliessen installiert und öffnet sich die App auf dem Android Emulator. Am oberen Rand des Startbildschirms ist eine Actionbar mit dem Titel "DoTooo", eine Lupe und ein Filtericon zu sehen. In der unteren rechten Ecke ist ein FloatingActionButton mit einem Plus zu sehen. Zudem ist ein Abschnitt mit dem Titel "Today" zu sehen. Rechts neben dem "Today" Titel wird der aktuelle Tag (z.B Freitag) angezeigt. Darunter ist ein Listenelement mit dem Schriftzug "No tasks" zu sehen. Unter diesem Abschnitt ist das gleiche nur für den morgigen Tag zu sehen.
 
 ### T-02
 
@@ -26,7 +26,7 @@ Ablauf:
 1. Falls die App noch nicht gestartet ist, startet der Tester die App wie bei T-01.
 2. Anschliessend klickt der Tester auf den Button in der unteren rechten Ecke des Bildschirms.
 
-Erwartetes Resultat: Es öffnet sich ein neuer Bildschirm mit dem ActionBar-Titel "Create Task". Es ist ein Textfeld mit dem Titel "Name", das heutige Datum, eine Auswahl mit der Standartauswahl "Grey", ein graues Viereck und ein Textfeld mit dem Titel "Description", ein blau ausgefüllter "Save"-Button und ein nicht ausgefüllter "Cancel"-Button zu sehen. Zudem befindet sich in der ActionBar links neben dem Titel ein Up-Button.
+Erwartetes Resultat: Es öffnet sich ein neuer Bildschirm mit dem ActionBar-Titel "Create Task". Es ist ein Textfeld mit dem Titel "Name", das heutige Datum, eine Auswahl mit der Standartauswahl "Grey", ein graues Viereck, und ein Textfeld mit dem Titel "Description", ein blau ausgefüllter "Save"-Button und ein nicht ausgefüllter "Cancel"-Button zu sehen. Zudem befindet sich in der ActionBar links neben dem Titel ein Up-Button.
 
 ### T-03
 
@@ -51,7 +51,7 @@ Ablauf:
 1. Falls noch kein ToDo erstellt wurde, erstellt der Tester ein ToDo wie bei T-03.
 2. Der Tester klickt auf der Startseite auf das eben erstellte ToDo.
 
-Erwartetes Resultat: Nach dem Klick auf das ToDo wird der Tester zur Detailseite des ToDo's weitergeleitet. Auf der Detailseite befinden sich in der ActionBar ein Pfeil, der Titel des ToDos, ein Stift und ein Mülleimer. Unter der ActionBar ist ebenfalls der Titel des ToDo's zu sehen. Rechts neben dem Titel wird in einem Viereck die Farbe des ToDo's zu sehen. Unter dem Titel wird das Datum und die Description des ToDo's angezeigt. Zudem wird ein blauer "Completed" Button angezeigt.
+Erwartetes Resultat: Nach dem Klick auf das ToDo wird der Tester zur Detailseite des ToDo's weitergeleitet. Auf der Detailseite befinden sich in der ActionBar ein Pfeil, der Titel des ToDos, ein Stift und ein Mülleimer. Unter der ActionBar ist ebenfalls der Titel des ToDo's zu sehen. Rechts neben dem Titel wird in einem Viereck die Farbe des ToDo's zu sehen. Unter dem Titel wird das Datum und die Description des ToDo's angezeigt. Zudem wird ein blauer "Mark completed" Button angezeigt.
 
 ### T-05
 
@@ -73,9 +73,8 @@ Ablauf:
 1. Falls sich der Tester noch nicht auf der Editierseite befindet, navigiert er zu dieser wie bei T-05.
 2. Der Tester verändert beliebige Werte des ToDo's.
 3. Anschliessend klickt der Tester auf den "Save" Button.
-4. Der Tester klickt auf der Startseite das editierte ToDo an.
 
-Erwartetes Resultat: Nach dem Klick auf den "Save" Button, wird der Tester zur Startseite weitergeleitet. Auf der Detailseite werden nun die editierten Werte korrekt angezeigt.
+Erwartetes Resultat: Nach dem Klick auf den "Save" Button, wird der Tester zur Detailseite des ToDo's weitergeleitet. Auf der Detailseite werden nun die editierten Werte korrekt angezeigt.
 
 ### T-07
 
@@ -84,9 +83,9 @@ Vorbedingungen: Standart-Vorbedingungen, T-04 erfolgreich
 Ablauf:
 
 1. Falls sich der Tester noch nicht auf der Detailseite befindet, navigiert er zu dieser wie bei T-04.
-2. Der Tester klickt auf den blauen "Completed" Button.
+2. Der Tester klickt auf den blauen "Mark completed" Button.
 
-Erwartetes Resultat: Nach dem Klick auf den "Completed" Button wird der Tester zur Startseite weitergeleitet. Auf dieser ist das ToDo's welches der Tester gerade completed hat nicht mehr zu sehen.
+Erwartetes Resultat: Nach dem Klick auf den "Mark completed" Button wird der Tester zur Startseite weitergeleitet. Auf dieser ist das ToDo's welches der Tester gerade completed hat nicht mehr zu sehen.
 
 ### T-08
 
@@ -116,7 +115,7 @@ Erwartetes Resultat: Das ToDo wird als "Completed" markiert und verschwindet von
 
 Tester: Mattia Gisiger
 
-Ort/Datum: Bern/02.06.2022
+Ort/Datum: Bern, 02.06.2022
 
 ID   |Erfolgreich|Bemerkungen
 | --- | --- | ---|
@@ -131,21 +130,21 @@ T-08  |Ja   |
 T-09  |Ja   |
 ### Testlauf 2
 
-Tester:
+Tester: Simão Dias Almeida
 
-Ort/Datum:
+Ort/Datum: Bern, 20.06.2022
 
 ID   |Erfolgreich|Bemerkungen
 | --- | --- | ---|
-T-01  |     |
-T-02  |     |
-T-03  |     |
-T-04  |     |
-T-05  |     |
-T-06  |     |
-T-07  |     |
-T-08  |     |
-T-09  |     |
+T-01  | Ja  |
+T-02  | Ja  |
+T-03  | Ja  |
+T-04  | Ja  |
+T-05  | Ja  |
+T-06  | Ja  |
+T-07  | Ja  |
+T-08  | Ja  |
+T-09  | Ja  |
 
 ### Testlauf 3
 

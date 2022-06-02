@@ -62,6 +62,11 @@ public class TaskActivity extends AppCompatActivity {
             onBackPressed();
         });
         confirmDialogBuilder.setNegativeButton(R.string.no, null);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
 
         loadTask();
         setupButtonsAndText();
