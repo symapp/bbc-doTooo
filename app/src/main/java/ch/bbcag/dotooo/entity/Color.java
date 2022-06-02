@@ -1,7 +1,7 @@
 package ch.bbcag.dotooo.entity;
 
 public enum Color {
-    GRAY("Grey", "#6b6b6b"),
+    GREY("Grey", "#6b6b6b"),
     RED("Red", "#d1422c"),
     BLUE("Blue", "#0400d4"),
     GREEN("Green", "#20bd4a"),

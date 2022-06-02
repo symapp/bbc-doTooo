@@ -20,6 +20,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import ch.bbcag.dotooo.adapter.ColorAdapter;
 import ch.bbcag.dotooo.dal.TaskRoomDatabase;
@@ -86,9 +87,22 @@ public class EditActivity extends AppCompatActivity {
     private void initColorSpinner() {
         Spinner colorSpinner = findViewById(R.id.color_picker);
 
-
         ColorAdapter colorAdapter = new ColorAdapter(getApplicationContext(), false);
         colorSpinner.setAdapter(colorAdapter);
+
+        Color selectedColor = Color.valueOf(task.getColorName().toUpperCase(Locale.ROOT));
+        for (int i = 0; i < colorAdapter.getCount(); i++) {
+            Color color = (Color) colorAdapter.getItem(i);
+            if (selectedColor == null) {
+                if (color == null) {
+                    colorSpinner.setSelection(i);
+                }
+            } else {
+                if (color != null && color.equals(selectedColor)) {
+                    colorSpinner.setSelection(i);
+                }
+            }
+        }
 
         colorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -202,7 +216,7 @@ public class EditActivity extends AppCompatActivity {
 
         TaskRoomDatabase.getInstance(getApplicationContext()).getTaskDao().update(task);
 
-        redirectToHome();
+        this.onBackPressed();
     }
 
 

@@ -4,7 +4,10 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.DragEvent;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -14,6 +17,7 @@ import android.widget.Spinner;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.MotionEventCompat;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -150,13 +154,10 @@ public class CreateTaskActivity extends AppCompatActivity {
                 Color[] colors = Color.class.getEnumConstants();
                 assert colors != null;
                 selectedColor = colors[i].getDisplayName();
-
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
+            public void onNothingSelected(AdapterView<?> adapterView) {}
         });
     }
 

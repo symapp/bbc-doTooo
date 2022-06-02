@@ -65,7 +65,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         taskDao = database.getTaskDao();
 
         initFloatingActionButton();
-        initTaskList((ArrayList<Task>) taskDao.getAll());
         initViewModel();
     }
 
@@ -88,6 +87,13 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         });
 
         return true;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        loadAllTasks();
     }
 
     @Override
