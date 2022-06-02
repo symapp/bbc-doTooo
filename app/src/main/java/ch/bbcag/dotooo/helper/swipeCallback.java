@@ -69,41 +69,49 @@ public abstract class swipeCallback extends ItemTouchHelper.Callback {
             return;
         }
 
-
         mBackground.setColor(backgroundColor);
 
+        // center icon vertically
         int editIconTop = itemView.getTop() + (itemHeight - intrinsicHeight) / 2;
         int editIconMargin = (itemHeight - intrinsicHeight) / 2;
         int editIconBottom = editIconTop + intrinsicHeight;
 
         int editIconLeft;
         int editIconRight;
-        if (dX < 0) {
+        if (dX < 0) { // if swiping direction == left
+            // draw background
             mBackground.setBounds(itemView.getRight() + (int) dX, itemView.getTop(), itemView.getRight(), itemView.getBottom());
             mBackground.draw(c);
 
+            // set icon to far left of blue background
             editIconLeft = (int) (itemView.getRight() + editIconMargin * 2 + dX);
             editIconRight = (int) (itemView.getRight() + intrinsicWidth + editIconMargin * 2 + dX);
 
-            if (editIconLeft < itemView.getRight() / 2 - intrinsicWidth / 2) {
+            if (editIconLeft < itemView.getRight() / 2 - intrinsicWidth / 2) { // if swiped of middle
+                // place icon in the middle
                 editIconLeft = itemView.getRight() / 2 - intrinsicWidth / 2;
                 editIconRight = itemView.getRight() / 2 + intrinsicWidth / 2;
             }
 
+            // draw edit icon
             editDrawable.setBounds(editIconLeft, editIconTop, editIconRight, editIconBottom);
             editDrawable.draw(c);
-        } else {
+        } else if (dX > 0) { // if swiping direction == right
+            // draw background
             mBackground.setBounds(itemView.getLeft(), itemView.getTop(), itemView.getLeft() + (int) dX, itemView.getBottom());
             mBackground.draw(c);
 
+            // set icon to far right of blue background
             editIconLeft = (int) (itemView.getLeft() + dX - editIconMargin * 2 - intrinsicWidth);
             editIconRight = (int) (itemView.getLeft() + dX - editIconMargin * 2);
 
-            if (editIconLeft > itemView.getRight() / 2 - intrinsicWidth / 2) {
+            if (editIconLeft > itemView.getRight() / 2 - intrinsicWidth / 2) { // if swiped over middle
+                // place icon in the middle
                 editIconLeft = itemView.getRight() / 2 - intrinsicWidth / 2;
                 editIconRight = itemView.getRight() / 2 + intrinsicWidth / 2;
             }
 
+            // draw done icon
             doneDrawable.setBounds(editIconLeft, editIconTop, editIconRight, editIconBottom);
             doneDrawable.draw(c);
         }

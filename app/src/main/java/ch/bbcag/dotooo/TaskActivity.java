@@ -64,6 +64,7 @@ public class TaskActivity extends AppCompatActivity {
         titleTextField.setText(title);
         TextView descriptionTextField = findViewById(R.id.description);
         descriptionTextField.setText(description);
+        if (task.getDescription().length() <= 0) descriptionTextField.setTextColor(Color.parseColor("#99000000"));
 
         TextView dateTextField = findViewById(R.id.date);
         dateTextField.setText(getDateAsString(date));

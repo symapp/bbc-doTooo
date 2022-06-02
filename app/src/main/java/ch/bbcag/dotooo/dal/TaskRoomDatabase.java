@@ -28,5 +28,4 @@ public abstract class TaskRoomDatabase extends RoomDatabase {
 
         return INSTANCE;
     }
-
 }

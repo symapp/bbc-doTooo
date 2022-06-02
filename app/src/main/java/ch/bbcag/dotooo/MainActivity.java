@@ -39,9 +39,6 @@ import ch.bbcag.dotooo.viewmodel.FilterViewModel;
 public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
     @SuppressLint("SimpleDateFormat")
-    DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
-
-    @SuppressLint("SimpleDateFormat")
     SimpleDateFormat weekDayFormatter = new SimpleDateFormat("EEEE");
 
     private TaskRoomDao taskDao;
@@ -65,7 +62,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         taskDao = database.getTaskDao();
 
         initFloatingActionButton();
-        initTaskList((ArrayList<Task>) taskDao.getAll());
         initViewModel();
     }
 
@@ -88,6 +84,13 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         });
 
         return true;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        loadAllTasks();
     }
 
     @Override

@@ -1,5 +1,6 @@
 package ch.bbcag.dotooo;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import ch.bbcag.dotooo.adapter.ColorAdapter;
 import ch.bbcag.dotooo.dal.TaskRoomDatabase;
@@ -47,17 +49,14 @@ public class EditActivity extends AppCompatActivity {
         if (actionBar != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
         initButtons();
-
         initDatePicker();
-        dateButton = findViewById(R.id.datePickerButton);
-        dateButton.setText(getDateAsString(task.getDate()));
-
         setValues();
     }
 
     private String getDateAsString(Date date) {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        @SuppressLint("SimpleDateFormat") DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String formattedDate = dateFormat.format(date);
 
         int year = Integer.parseInt(formattedDate.substring(0, 4));
@@ -86,9 +85,16 @@ public class EditActivity extends AppCompatActivity {
     private void initColorSpinner() {
         Spinner colorSpinner = findViewById(R.id.color_picker);
 
-
         ColorAdapter colorAdapter = new ColorAdapter(getApplicationContext(), false);
         colorSpinner.setAdapter(colorAdapter);
+
+        Color selectedColor = Color.valueOf(task.getColorName().toUpperCase(Locale.ROOT));
+        for (int i = 0; i < colorAdapter.getCount(); i++) {
+            Color color = (Color) colorAdapter.getItem(i);
+            if (color != null && color.equals(selectedColor)) {
+                colorSpinner.setSelection(i);
+            }
+        }
 
         colorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -100,9 +106,7 @@ public class EditActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
+            public void onNothingSelected(AdapterView<?> adapterView) {}
         });
     }
 
@@ -126,10 +130,12 @@ public class EditActivity extends AppCompatActivity {
     }
 
     private void initDatePicker() {
+        dateButton = findViewById(R.id.datePickerButton);
+        dateButton.setText(getDateAsString(task.getDate()));
+
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-//                month = month + 1;
                 String date = makeDateString(day, month, year);
                 dateButton.setText(date);
                 task.setDate(new Date(year, month, day));
@@ -202,7 +208,7 @@ public class EditActivity extends AppCompatActivity {
 
         TaskRoomDatabase.getInstance(getApplicationContext()).getTaskDao().update(task);
 
-        redirectToHome();
+        this.onBackPressed();
     }
 
 
