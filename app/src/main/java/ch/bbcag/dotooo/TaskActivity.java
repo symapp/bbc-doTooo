@@ -64,7 +64,10 @@ public class TaskActivity extends AppCompatActivity {
         confirmDialogBuilder.setNegativeButton(R.string.no, null);
 
         loadTask();
+        setupButtonsAndText();
+    }
 
+    private void setupButtonsAndText() {
         setTitle(title);
 
         TextView titleTextField = findViewById(R.id.title);

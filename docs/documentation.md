@@ -75,12 +75,12 @@ Wie können wir uns von der Konkurrenz abheben:
 ![App Struktur Beispiel](images/app-structure.png)
 
 ![Mockup Beispiel](images/mockup.png)
- ***1. MainActivity***  
- In der MainAcitivity werden alle ausstehenden ToDO's angezeigt. Ja nach dem wie der Benutzer die Filter einstellt sind nur spezifische ToDos zu sehen. Zudem ist eine Suchfunktion vorhanden. Zudem wird die Farbe/Wichtigkeit des ToDo's angezigt. </br>
+ ***1. MainActivity***</br>
+ In der MainActivity werden alle ausstehenden ToDO's angezeigt. Je nach dem wie der Benutzer die Filter einstellt, sind nur spezifische ToDos zu sehen. Zudem ist eine Such- und Filterfunktion vorhanden.</br>
  ***2. ToDoActivity***</br>
- Wenn der Benutzer in der MainActivity auf ein ToDo klickt, gelangt er zu dieser Seite. Auf dieser Seite werden dem Benutzer alle Daten von dem gewählten ToDo angezeigt. In der Navigationsleiste werden zudem drei Icons angezeigt. Ein Icon um die Aufgabe als erledigt zu markieren, ein Icon um das ToDo zu bearbeiten, und ein Icon um das ToDO zu löschen. </br>
- ***3. ToDoFormActivity***</br>
- Auf dieser Seite befindet sich das Formular zum Erstellen oder Bearbeiten eines ToDO's. Es sind zwei Buttons vorhanden. Neben den Formularen ist ein Button zum Speichern vorhanden.</br>
+ Wenn der Benutzer in der MainActivity auf ein ToDo klickt, gelangt er zu dieser Seite. Auf dieser Seite werden dem Benutzer alle Daten von dem gewählten ToDo angezeigt. In der Navigationsleiste werden zudem drei Icons angezeigt. Ein Icon um die Aufgabe als erledigt zu markieren, ein Icon um das ToDo zu bearbeiten, und ein Icon um das ToDo zu löschen. Wir haben aber danach entschieden, das Icon, um das ToDo als erledigt zu markieren, durch einen normalen Button unten rechts zu ersetzen. Die Absicht, das Todo zu löschen, wird mit einem Dialog bestätigt.</br>
+ ***3. CreateActivity & EditActivity***</br>
+ Auf diesen Seiten befinden sich die Formulare zum Erstellen oder Bearbeiten eines ToDO's. Es sind zwei Buttons vorhanden, für das Speichern und für das Abbrechen.</br>
 
 ## 5 Technische Realisierung
 
