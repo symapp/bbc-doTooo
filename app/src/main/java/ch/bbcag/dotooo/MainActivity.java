@@ -39,9 +39,6 @@ import ch.bbcag.dotooo.viewmodel.FilterViewModel;
 public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
     @SuppressLint("SimpleDateFormat")
-    DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
-
-    @SuppressLint("SimpleDateFormat")
     SimpleDateFormat weekDayFormatter = new SimpleDateFormat("EEEE");
 
     private TaskRoomDao taskDao;
