@@ -23,20 +23,26 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.apache.commons.lang3.time.DateUtils;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import ch.bbcag.dotooo.adapter.TaskAdapter;
 import ch.bbcag.dotooo.dal.TaskRoomDao;
 import ch.bbcag.dotooo.dal.TaskRoomDatabase;
 import ch.bbcag.dotooo.entity.Color;
 import ch.bbcag.dotooo.entity.Task;
+import ch.bbcag.dotooo.helper.DateFormatter;
 import ch.bbcag.dotooo.helper.swipeCallback;
 import ch.bbcag.dotooo.viewmodel.FilterViewModel;
 
 public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
+
+    @SuppressLint("SimpleDateFormat")
+    DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
 
     @SuppressLint("SimpleDateFormat")
     SimpleDateFormat weekDayFormatter = new SimpleDateFormat("EEEE");
@@ -302,31 +308,41 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
         ArrayList<Task> tasks = new ArrayList<>();
 
+        // config date if filtering by date
+        if (filter_date != null) {
+            Calendar filter_calendar= Calendar.getInstance();
+            filter_calendar.setTime(filter_date);
+
+            tasks.add(new Task("?notTask!" + DateFormatter.format(filter_date) + "!" + filter_calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault()), "", new Date(), Color.BLACK.getDisplayName()));
+        }
+
         // config late
         if (lateTasks.size() > 0) {
-            tasks.add(new Task("?notTask!Late!", "", new Date(), Color.BLACK.getDisplayName()));
+            if (filter_date == null) tasks.add(new Task("?notTask!Late!", "", new Date(), Color.BLACK.getDisplayName()));
             tasks.addAll(lateTasks);
         }
         // config today
-        tasks.add(new Task("?notTask!Today!" + dayOfTheWeekToday, "", new Date(), Color.BLACK.getDisplayName()));
+        if (filter_date == null) tasks.add(new Task("?notTask!Today!" + dayOfTheWeekToday, "", new Date(), Color.BLACK.getDisplayName()));
         if (todayTasks.size() > 0) {
             tasks.addAll(todayTasks);
         } else {
-            tasks.add(new Task("?notTask!No tasks today", "", new Date(), Color.BLACK.getDisplayName()));
+            if (filter_date == null) tasks.add(new Task("?notTask!No tasks", "", new Date(), Color.BLACK.getDisplayName()));
         }
         // config tomorrow
-        tasks.add(new Task("?notTask!Tomorrow!" + dayOfTheWeekTomorrow, "", new Date(), Color.BLACK.getDisplayName()));
+        if (filter_date == null) tasks.add(new Task("?notTask!Tomorrow!" + dayOfTheWeekTomorrow, "", new Date(), Color.BLACK.getDisplayName()));
         if (tomorrowTasks.size() > 0) {
             tasks.addAll(tomorrowTasks);
         } else {
-            tasks.add(new Task("?notTask!No tasks tomorrow", "", new Date(), Color.BLACK.getDisplayName()));
+            if (filter_date == null) tasks.add(new Task("?notTask!No tasks", "", new Date(), Color.BLACK.getDisplayName()));
         }
         // config other
         if (otherTasks.size() > 0) {
-            tasks.add(new Task("?notTask!Other!", "", new Date(), Color.BLACK.getDisplayName()));
+            if (filter_date == null) tasks.add(new Task("?notTask!Other!", "", new Date(), Color.BLACK.getDisplayName()));
             tasks.addAll(otherTasks);
         }
 
+        // add "no tasks" if no date filter is set and no real task is in list
+        if (filter_date != null && tasks.size() == 1) tasks.add(new Task("?notTask!No tasks", "", new Date(), Color.BLACK.getDisplayName()));
 
         return tasks;
     }

@@ -28,6 +28,7 @@ import ch.bbcag.dotooo.adapter.ColorAdapter;
 import ch.bbcag.dotooo.dal.TaskRoomDatabase;
 import ch.bbcag.dotooo.entity.Color;
 import ch.bbcag.dotooo.entity.Task;
+import ch.bbcag.dotooo.helper.DateFormatter;
 
 public class EditActivity extends AppCompatActivity {
 
@@ -86,7 +87,7 @@ public class EditActivity extends AppCompatActivity {
             year = year + 1900;
         }
 
-        return makeDateString(day, month, year);
+        return DateFormatter.makeDateString(day, month, year);
     }
 
     private void setValues() {
@@ -154,7 +155,7 @@ public class EditActivity extends AppCompatActivity {
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                String date = makeDateString(day, month, year);
+                String date = DateFormatter.makeDateString(day, month, year);
                 dateButton.setText(date);
                 task.setDate(new Date(year, month, day));
             }
@@ -166,41 +167,6 @@ public class EditActivity extends AppCompatActivity {
         int day = cal.get(Calendar.DAY_OF_MONTH);
 
         datePickerDialog = new DatePickerDialog(this, dateSetListener, year, month, day);
-    }
-
-    private String makeDateString(int day, int month, int year) {
-        return day + "th " + getMonthFormat(month) + " " + year;
-    }
-
-    private String getMonthFormat(int month) {
-        switch (month) {
-            case 1:
-                return "January";
-            case 2:
-                return "February";
-            case 3:
-                return "March";
-            case 4:
-                return "April";
-            case 5:
-                return "May";
-            case 6:
-                return "June";
-            case 7:
-                return "Juli";
-            case 8:
-                return "August";
-            case 9:
-                return "September";
-            case 10:
-                return "October";
-            case 11:
-                return "November";
-            case 12:
-                return "December";
-
-        }
-        return "January";
     }
 
     public void openDatePicker(View view) {
