@@ -189,6 +189,7 @@ public class TaskFormActivity extends AppCompatActivity {
     private void saveTask() {
         EditText editTextTitle = findViewById(R.id.text_input_task_name);
         String title = editTextTitle.getText().toString();
+        if (title.startsWith("?")) title = title.replace("?", "");
         if (TextUtils.isEmpty(title)) {
             title = "Unnamed Task";
         }
