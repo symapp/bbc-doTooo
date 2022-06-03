@@ -104,14 +104,14 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     @Override
     public boolean onQueryTextSubmit(String s) {
-        viewModel.setSelectedSearchQuery(s);
+        viewModel.setSelectedSearchQuery(s.trim());
         loadAllTasks();
         return true;
     }
 
     @Override
     public boolean onQueryTextChange(String s) {
-        viewModel.setSelectedSearchQuery(s);
+        viewModel.setSelectedSearchQuery(s.trim());
         loadAllTasks();
         return false;
     }
