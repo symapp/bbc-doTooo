@@ -162,7 +162,7 @@ public class TaskActivity extends AppCompatActivity {
 
     private void redirectToEdit() {
         try {
-            Intent intent = new Intent(getApplicationContext(), EditActivity.class);
+            Intent intent = new Intent(getApplicationContext(), TaskFormActivity.class);
             Task selected = TaskRoomDatabase.getInstance(getApplicationContext()).getTaskDao().getById(id);
             intent.putExtra("taskId", selected.getId());
             startActivity(intent);

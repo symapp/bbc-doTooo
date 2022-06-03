@@ -50,6 +50,15 @@ public class Task {
     public Task() {
     }
 
+    public void updateColorByName(String colorName) {
+        this.colorName = colorName;
+        for (Color color : Color.values()) {
+            if (color.getDisplayName().equals(colorName)) {
+                setColorHex(color.getHex());
+            }
+        }
+    }
+
     public String toString() {
         return title + " " + description + " " + date + " " + colorHex;
     }

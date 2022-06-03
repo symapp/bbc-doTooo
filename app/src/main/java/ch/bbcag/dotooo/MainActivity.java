@@ -246,7 +246,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     private void redirectToEdit(Task task) {
         try {
-            Intent intent = new Intent(getApplicationContext(), EditActivity.class);
+            Intent intent = new Intent(getApplicationContext(), TaskFormActivity.class);
             Task selected = TaskRoomDatabase.getInstance(getApplicationContext()).getTaskDao().getById(task.getId());
             intent.putExtra("taskId", selected.getId());
             startActivity(intent);
@@ -351,7 +351,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private void initFloatingActionButton() {
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
-            Intent intent = new Intent(getApplicationContext(), CreateTaskActivity.class);
+            Intent intent = new Intent(getApplicationContext(), TaskFormActivity.class);
             startActivity(intent);
         });
     }
