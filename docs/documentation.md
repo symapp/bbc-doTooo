@@ -89,3 +89,7 @@ Unsere Komplexe Komponente ist eine Room Datenbank. In ihr ist eine Entität, di
 Am wichtigsten sind die Klassen TaskRoomDatabase und TaskRoomDao. In der Klasse TaskRoomDatabase wird die Datenbank an sich erstellt. Zudem kann man durch die TaskRoomDatabse Klasse eine Datenkabnk Instanz erhalten. Im Interface TaskRoomDao sind die Funktionen enthalten durch welche man mit der Datenbank interagieren kann.
 
 ## 6 Fazit
+
+Unser Projekt lief sehr gut. Wir waren viel schneller fertig als gedacht. Wir konnten alle Funktionen implementieren, die App genügend testen und hatten auch genug Zeit für das Schreiben der Dokumentation. 
+Auch die Planung im Team verlief meistens ohne Probleme. Auch das Mockup welches vor Projektbeginn erstellt wurde konnten wir nahezu exakt umsetzen.
+Beim nächsten mal würden wir nicht viel anders machen.
