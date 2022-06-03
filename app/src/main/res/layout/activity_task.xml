@@ -58,7 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="DATE"
+            android:text="@string/input_title_date"
             app:layout_constraintLeft_toRightOf="@+id/guideline1"
             app:layout_constraintTop_toBottomOf="@+id/title" />
 
@@ -77,7 +77,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="DESCRIPTION"
+            android:text="@string/description_title"
             app:layout_constraintLeft_toRightOf="@+id/guideline1"
             app:layout_constraintTop_toBottomOf="@+id/date" />
 

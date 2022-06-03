@@ -15,7 +15,7 @@ Ablauf:
 1. Der Tester öffnet das Projekt in Android Studio und wartet bis das Projekt vollständig geladen ist.
 2. Sobald das Projekt vollständig geladen ist, klickt den Tester auf den "Run" Button.
 
-Erwartetes Resultat: Die App buildet ohne Errors (Warnings sind in Ordnung). Anschliessen installiert und öffnet sich die App auf dem Android Emulator. Am oberen Rand des Startbildschirms ist eine Actionbar mit dem Titel "DoTooo", eine Lupe und ein Filtericon zu sehen. In der unteren rechten Ecke ist ein FloatingActionButton mit einem Plus zu sehen. Zudem ist ein Abschnitt mit dem Titel "Today" zu sehen. Rechts neben dem "Today" Titel wird der aktuelle Tag (z.B Freitag) angezeigt. Darunter ist ein Listenelement mit dem Schriftzug "No tasks" zu sehen. Unter diesem Abschnitt ist das gleiche nur für den morgigen Tag zu sehen.
+Erwartetes Resultat: Die App buildet ohne Errors (Warnings sind in Ordnung). Anschliessen installiert und öffnet sich die App auf dem Android Emulator. Am oberen Rand des Startbildschirms ist eine Actionbar mit dem Titel "DoTooo", eine Lupe und ein Filtericon zu sehen. In der unteren rechten Ecke ist ein FloatingActionButton mit einem Plus zu sehen. Zudem ist ein Abschnitt mit dem Titel "Today" zu sehen. Rechts neben dem "Today" Titel wird der aktuelle Wochentag (z.B Freitag) angezeigt. Darunter ist ein Listenelement mit dem Schriftzug "No tasks" zu sehen. Unter diesem Abschnitt ist das gleiche nur für den morgigen Tag zu sehen.
 
 ### T-02
 
@@ -26,7 +26,7 @@ Ablauf:
 1. Falls die App noch nicht gestartet ist, startet der Tester die App wie bei T-01.
 2. Anschliessend klickt der Tester auf den Button in der unteren rechten Ecke des Bildschirms.
 
-Erwartetes Resultat: Es öffnet sich ein neuer Bildschirm mit dem ActionBar-Titel "Create Task". Es ist ein Textfeld mit dem Titel "Name", das heutige Datum, eine Auswahl mit der Standartauswahl "Grey", ein graues Viereck, und ein Textfeld mit dem Titel "Description", ein blau ausgefüllter "Save"-Button und ein nicht ausgefüllter "Cancel"-Button zu sehen. Zudem befindet sich in der ActionBar links neben dem Titel ein Up-Button.
+Erwartetes Resultat: Es öffnet sich ein neuer Bildschirm mit dem ActionBar-Titel "Create Task". Es ist ein Textfeld mit dem Titel "Title", das heutige Datum, eine Auswahl mit der Standartauswahl "Grey", ein graues Viereck, und ein Textfeld mit dem Titel "Description", ein blau ausgefüllter "Save"-Button und ein nicht ausgefüllter "Cancel"-Button zu sehen. Zudem befindet sich in der ActionBar links neben dem Titel ein Up-Button.
 
 ### T-03
 
