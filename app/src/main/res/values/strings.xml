@@ -27,7 +27,7 @@
     <string name="description_title">DESCRIPTION</string>
     <string name="input_title_color">COLOR</string>
     <string name="input_title_date">DATE</string>
-    <string name="input_title_name">NAME</string>
+    <string name="input_title_title">TITLE</string>
     <string name="main_activity_title">DoTooo</string>
     <string name="task_description_hint">Task description</string>
     <string name="task_name_hint">New task</string>
