@@ -5,8 +5,12 @@
     android:background="?android:attr/selectableItemBackground"
     android:clickable="true"
     android:focusable="true"
-    android:id="@+id/task_container"
     android:layout_height="48dp">
+
+    <View
+        android:id="@+id/task_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
     <TextView
         android:id="@+id/task_name"

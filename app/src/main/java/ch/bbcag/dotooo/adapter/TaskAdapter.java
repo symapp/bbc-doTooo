@@ -29,7 +29,7 @@ public class TaskAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public class ViewHolderTask extends RecyclerView.ViewHolder {
         private final TextView title;
         private final CardView card;
-        private final ConstraintLayout container;
+        private final View container;
 
         public ViewHolderTask(View itemView, Context context) {
             super(itemView);
@@ -119,7 +119,7 @@ public class TaskAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
                 if (task.getDone()) {
                     taskViewHolder.title.setTextColor(Color.parseColor("#999999"));
-                    taskViewHolder.container.setBackgroundColor(Color.parseColor("#fafafa"));
+                    taskViewHolder.container.setBackgroundColor(Color.parseColor("#11888888"));
 
                     String color = task.getColorHex();
                     color = color.charAt(0) + "50" + color.substring(1);
